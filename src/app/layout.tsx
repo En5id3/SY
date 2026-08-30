@@ -1,0 +1,48 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "SOCHYEAH | AI, Software & Growth Systems for Ambitious Businesses",
+  description: "We turn business problems and ideas into intelligent software systems, machine learning pipelines, and technical growth infrastructure.",
+  metadataBase: new URL("https://sochyeah.com"),
+  openGraph: {
+    title: "SOCHYEAH | AI, Software & Growth Systems",
+    description: "We turn business problems and ideas into intelligent software systems, machine learning pipelines, and technical growth infrastructure.",
+    type: "website",
+    locale: "en_US",
+    siteName: "SOCHYEAH",
+  }
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col bg-background text-foreground">
+        <Header />
+        <main className="flex-grow pt-[80px]">{children}</main>
+        <Footer />
+      </body>
+    </html>
+  );
+}
+
