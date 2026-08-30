@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="bg-white border-t border-border-light pt-20 pb-10">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           {/* Logo & Manifesto Column */}
           <div className="flex flex-col gap-6">
             <Link href="/" className="flex flex-col leading-[0.8] select-none outline-none self-start">
@@ -41,17 +41,6 @@ export default function Footer() {
               <li><Link href="/case-studies" className="hover:text-black transition-colors">Case Studies</Link></li>
               <li><Link href="/blog" className="hover:text-black transition-colors">Blog</Link></li>
               <li><Link href="/contact" className="hover:text-black transition-colors">Contact</Link></li>
-            </ul>
-          </div>
-
-          {/* Socials Column */}
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-black mb-6">Connect</h4>
-            <ul className="flex flex-col gap-3 text-xs text-color-text-secondary">
-              <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">LinkedIn</a></li>
-              <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">Instagram</a></li>
-              <li><a href="https://x.com" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">X (Twitter)</a></li>
-              <li><a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">GitHub</a></li>
             </ul>
           </div>
         </div>
