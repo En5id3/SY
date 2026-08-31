@@ -108,13 +108,13 @@ export default function SevaPortal() {
       {/* 1. Custom Seva Header */}
       <header className="sticky top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-border-light/80 py-4 px-6">
         <div className="max-w-[1200px] mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-3 select-none outline-none">
+          <a href="https://www.sochyeah.com" className="flex items-center gap-3 select-none outline-none">
             <div className="flex flex-col leading-[0.8] font-bold">
               <span className="font-sans font-light text-xl tracking-tighter text-black lowercase">soch</span>
               <span className="font-sans font-extrabold text-xl tracking-tighter text-black lowercase pl-5">yeah</span>
             </div>
             <span className="text-xs font-mono bg-black text-white px-2 py-0.5 rounded font-bold uppercase tracking-wider">SEVA</span>
-          </Link>
+          </a>
 
           <div className="text-[10px] font-mono text-color-text-muted hidden sm:block uppercase">
             PUBLIC INFORMATION HUB // GOVERNMENT SCHEMES
