@@ -21,23 +21,67 @@ const governmentSchemes: Scheme[] = [
     id: 'pmegp',
     name: 'Prime Minister Employment Generation Programme (PMEGP)',
     category: 'business',
-    agency: 'Ministry of MSME, Govt of India',
-    benefit: 'Funding up to ₹50 Lakhs for manufacturing units and ₹20 Lakhs for service units.',
-    subsidyRate: '15% to 35% based on rural/urban location and category.',
-    eligibility: 'Individuals above 18 years, at least VIII standard pass for projects above ₹10 Lakhs.',
-    details: 'A credit-linked subsidy scheme for setting up new micro-enterprises to generate rural and urban employment.',
-    docs: ['Aadhaar Card', 'Project Report Summary', 'Educational Certificates', 'Special Category Certificate (if applicable)']
+    agency: 'Ministry of MSME, Govt of India / KVIC',
+    benefit: 'Subsidy for setting up new micro-enterprises. Manufacturing units eligible up to ₹50 Lakhs; Service units eligible up to ₹20 Lakhs.',
+    subsidyRate: 'Urban Area: 15% (Gen) / 25% (Special). Rural Area: 25% (Gen) / 35% (Special). Margin money is back-ended.',
+    eligibility: 'Individuals above 18 years. Min VIII standard pass for projects >₹10L (mfg) or >₹5L (srv). Only new units eligible. Bank credit-link is mandatory.',
+    details: 'A credit-linked subsidy scheme promoting rural and urban entrepreneurship. Promoter contribution: 10% (General), 5% (Special). Requires compulsory EDP training.',
+    docs: ['Aadhaar Card', 'Detailed Project Report (DPR)', 'VIII Pass Education Certificate', 'Caste/Special Category Certificate', 'Rural Area Certificate from Gram Panchayat']
   },
   {
     id: 'cgtmse',
     name: 'Credit Guarantee Fund Trust for Micro & Small Enterprises (CGTMSE)',
     category: 'business',
-    agency: 'SIDBI & Ministry of MSME',
-    benefit: 'Collateral-free business credit up to ₹5 Crores for eligible micro and small businesses.',
-    subsidyRate: 'Credit guarantee cover of up to 75% to 85% of the loan amount.',
-    eligibility: 'New and existing Micro and Small Enterprises engaged in manufacturing or service activities.',
-    details: 'Enables financial institutions to lend to first-generation entrepreneurs without demanding collateral or third-party guarantees.',
-    docs: ['Udyam Registration', 'GSTIN Details', 'Income Tax Returns (Past 2 Years)', 'Business Project Report']
+    agency: 'SIDBI & Ministry of MSME, Govt of India',
+    benefit: 'Collateral-free business credit (working capital and term loans) up to ₹5 Crores.',
+    subsidyRate: 'Guarantees 75% to 85% of credit risk. Annual Guarantee Fee (AGF) starts at 0.37% depending on loan slab.',
+    eligibility: 'New and existing Micro & Small Enterprises (MSEs) in manufacturing or service. Borrower must not have default history on banking credits.',
+    details: 'Enables financial institutions to lend to entrepreneurs without requiring collateral security or third-party guarantees. Covers up to 85% for women-owned units.',
+    docs: ['Udyam Registration Certificate', 'GSTIN Details', 'Income Tax Returns (Past 2 Years)', 'Project Cost Reports & Bank Sanction Letter']
+  },
+  {
+    id: 'startup-seed-fund',
+    name: 'Startup India Seed Fund Scheme (SISFS)',
+    category: 'business',
+    agency: 'DPIIT, Ministry of Commerce & Industry',
+    benefit: 'Grants up to ₹20 Lakhs for validation/prototype development; Debt/convertible debentures up to ₹50 Lakhs for market entry.',
+    subsidyRate: '100% direct seed funding disbursed via selected Incubator channels.',
+    eligibility: 'DPIIT-recognized startup incorporated less than 2 years ago. Must have a viable prototype or business plan. Shareholding of Indian promoters must be min 51%.',
+    details: 'Financial assistance for startups for proof of concept, prototype development, product trials, market entry, and commercialization. Excludes units receiving >₹10L external gov grants.',
+    docs: ['DPIIT Recognition Certificate', 'Incubator Nomination Form', 'Detailed Prototype Pitch Deck', 'Incorporation Certificate & PAN Card']
+  },
+  {
+    id: 'zed-certification',
+    name: 'MSME Sustainable (ZED) Certification Scheme',
+    category: 'business',
+    agency: 'Ministry of MSME, Govt of India',
+    benefit: 'Financial subsidy on certification costs to encourage Zero Defect Zero Effect environmental practices.',
+    subsidyRate: 'Subsidy rate: 80% for Micro, 60% for Small, and 50% for Medium enterprises. Additional 10% for women/SC/ST owned units.',
+    eligibility: 'Any enterprise registered under Udyam. Covers certification assessments on 20 key parameters including quality control and waste management.',
+    details: 'Provides a structured roadmap to guide MSMEs to reduce waste, increase productivity, save energy, and obtain global standards recognition.',
+    docs: ['Udyam Registration Certificate', 'PAN and GST Certificates', 'Plant Layout Photographs', 'ZED Assessment Checklists']
+  },
+  {
+    id: 'pm-surya-ghar',
+    name: 'PM Surya Ghar: Muft Bijli Yojana (Rooftop Solar)',
+    category: 'energy',
+    agency: 'Ministry of New & Renewable Energy (MNRE)',
+    benefit: 'Cash subsidies for residential solar grid installations, supplying up to 300 units of free power monthly.',
+    subsidyRate: '₹30,000 per kW for systems up to 2 kW; ₹18,000 for additional kW. Maximum total subsidy capped at ₹78,000.',
+    eligibility: 'Residential households with adequate roof space. Domestic Content Requirement (DCR) rules apply: solar modules must be manufactured in India.',
+    details: 'Supports local clean energy production. Net-metering setup with utility boards allows consumers to export surplus energy to the grid.',
+    docs: ['Recent Electricity Connection Bill', 'Land Registry Copy', 'Aadhaar Card', 'Rooftop Structural Stability Certificate']
+  },
+  {
+    id: 'pm-kusum',
+    name: 'PM-KUSUM (Agricultural Solar Pumps Component-B)',
+    category: 'energy',
+    agency: 'MNRE & State Nodal Renewable Agencies',
+    benefit: 'Financial subsidies to install standalone solar water pumps up to 7.5 HP capacity to replace diesel farming pumps.',
+    subsidyRate: 'Central Subsidy: 30%, State Subsidy: 30%, Bank Loan: 30%. Farmer contribution: 10%. (Central Subsidy is 50% in Hilly/NE States).',
+    eligibility: 'Individual farmers, farmer groups, cooperatives, and water user associations owning cultivable land with water sources.',
+    details: 'Secures irrigation facilities for farmers while reducing agricultural carbon footprints and dependence on state grid subsidies.',
+    docs: ['Land Khasra Jamabandi (Farad)', 'Aadhaar Card', 'Bank Passbook Details', 'Groundwater Depth Feasibility Report']
   },
   {
     id: 'pmjay',
@@ -45,32 +89,43 @@ const governmentSchemes: Scheme[] = [
     category: 'health',
     agency: 'National Health Authority (NHA)',
     benefit: 'Free health coverage up to ₹5 Lakhs per family per year for secondary and tertiary care hospitalization.',
-    subsidyRate: '100% cashless treatment at all empaneled public and private hospitals.',
-    eligibility: 'Families identified based on deprivation and occupational criteria in SECC 2011 database.',
-    details: 'The largest public health insurance scheme in the world, providing access to major surgeries and medical therapies.',
-    docs: ['Aadhaar Card', 'Ration Card', 'PM-JAY Letter / E-Card', 'Mobile Number linked to Aadhaar']
+    subsidyRate: '100% cashless treatment at all empaneled public and private hospitals nationwide.',
+    eligibility: 'Families identified based on deprivation and occupational criteria in SECC 2011 database. No limits on family size or age.',
+    details: 'Covers over 1,900 medical procedures including surgery, oncologist therapies, and medications from day one with no pre-existing conditions exclusion.',
+    docs: ['Aadhaar Card', 'Ration Card (showing family listing)', 'PM-JAY Golden Card / Letter', 'Active Mobile Number']
   },
   {
-    id: 'solar-rooftop',
-    name: 'National Grid Connected Rooftop Solar Scheme',
-    category: 'energy',
-    agency: 'Ministry of New & Renewable Energy (MNRE)',
-    benefit: 'Subsidy support for installing solar panel grids on residential roofs or corporate buildings.',
-    subsidyRate: 'Direct subsidy of ₹30,000 to ₹78,000 depending on kW system capacity (up to 3kW).',
-    eligibility: 'Residential households, housing societies, and small commercial establishments.',
-    details: 'Encourages solar generation at source to reduce grid load, with net-metering options to sell excess power back to utility boards.',
-    docs: ['Electricity Connection Bill', 'Land Registry Copy', 'Aadhaar Card', 'Rooftop Photo Layout']
+    id: 'pmjay-senior-cover',
+    name: 'Ayushman Bharat Senior Citizen Health Cover (70+)',
+    category: 'health',
+    agency: 'Ministry of Health & Family Welfare',
+    benefit: 'Distinct healthcare top-up card providing up to ₹5 Lakhs per year exclusively for elderly care.',
+    subsidyRate: '100% cashless health insurance cover with no premium cost.',
+    eligibility: 'All Indian citizens aged 70 years and above. Provided irrespective of family income or economic deprivation criteria.',
+    details: 'Special top-up cover for seniors. If the family is already covered under PM-JAY, an additional ₹5L top-up is credited specifically for the elder.',
+    docs: ['Aadhaar Card (containing verified birth date)', 'Age Verification Certificate', 'Mobile Number']
   },
   {
-    id: 'pm-kisan-man-dhan',
-    name: 'PM Kisan Maan-Dhan Yojana (PM-KMY)',
+    id: 'cold-storage-nhb',
+    name: 'NHB Subsidy for Cold Storage & Horticulture (MIDH)',
     category: 'agriculture',
-    agency: 'Ministry of Agriculture & Farmers Welfare',
-    benefit: 'Assured pension of ₹3,000 per month after reaching 60 years of age.',
-    subsidyRate: '50% contribution matching by the Central Government.',
-    eligibility: 'Small and marginal farmers owning cultivable land up to 2 hectares, aged 18 to 40 years.',
-    details: 'A voluntary and contributory pension scheme to provide social security to farmers during their old age.',
-    docs: ['Aadhaar Card', 'Bank Passbook Details', 'Land Possession Document', 'Mobile Number']
+    agency: 'National Horticulture Board (NHB)',
+    benefit: 'Financial subsidies for building or modernizing cold storage facilities for horticultural produce.',
+    subsidyRate: 'Back-ended capital subsidy: 35% of project cost (50% in case of hilly areas, NE states, and Scheduled Areas).',
+    eligibility: 'Individual promoters, FPOs, cooperatives, and corporations. Project must be linked with a commercial bank term loan.',
+    details: 'Supports preservation infrastructure. Minimum cold storage chamber capacity must be 5,000 MT (relaxable in hilly regions).',
+    docs: ['Bank Term Loan Sanction Letter', 'Registered Land Ownership Title (min 15 year lease)', 'Detailed Project Report (DPR)', 'Basic Engineering Design Report']
+  },
+  {
+    id: 'pmfme-food',
+    name: 'PM Formalisation of Micro Food Processing Enterprises (PMFME)',
+    category: 'agriculture',
+    agency: 'Ministry of Food Processing Industries (MoFPI)',
+    benefit: 'Credit-linked capital subsidy for setting up or upgrading micro food processing units.',
+    subsidyRate: 'Subsidy rate: 35% of eligible project cost. Maximum subsidy capped at ₹10 Lakhs per enterprise.',
+    eligibility: 'Micro-units with plant machinery investment under ₹1 Crore. Individual entrepreneurs, SHGs, FPOs, and cooperatives are eligible.',
+    details: 'Supports food processing units with technology upgrades, packaging, and marketing resources, emphasizing One District One Product (ODOP).',
+    docs: ['Udyam Registration Certificate', 'FSSAI License', 'Income Statements & PAN Card', 'Land Ownership or Registered Lease Deeds']
   }
 ];
 
