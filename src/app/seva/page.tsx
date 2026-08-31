@@ -133,10 +133,6 @@ export default function SevaPortal() {
   const [selectedCat, setSelectedCat] = useState<'all' | 'business' | 'health' | 'energy' | 'agriculture'>('all');
   const [query, setQuery] = useState('');
   
-  // Calculator States
-  const [calcType, setCalcType] = useState<'machinery' | 'solar'>('machinery');
-  const [investment, setInvestment] = useState<number>(500000);
-
   const filteredSchemes = governmentSchemes.filter((sc) => {
     const matchesCat = selectedCat === 'all' || sc.category === selectedCat;
     const matchesQuery = sc.name.toLowerCase().includes(query.toLowerCase()) || 
@@ -145,18 +141,6 @@ export default function SevaPortal() {
     return matchesCat && matchesQuery;
   });
 
-  // Calculate Subsidy
-  const getEstimatedSubsidy = () => {
-    if (calcType === 'solar') {
-      // Solar rates flat caps
-      if (investment <= 100000) return 30000;
-      if (investment <= 200000) return 60000;
-      return 78000;
-    } else {
-      // Machinery: PMEGP rates (approx 25% avg)
-      return Math.round(investment * 0.25);
-    }
-  };
 
   return (
     <div className="bg-[#fafafa] min-h-screen text-black antialiased">
@@ -189,80 +173,13 @@ export default function SevaPortal() {
         <div className="max-w-[800px] mb-16 flex flex-col gap-6">
           <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">PUBLIC WELFARE SERVICE</span>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-black uppercase leading-tight">
-            SCHEME DIRECTORY & SUBSIDY CALCULATOR.
+            GOVERNMENT SCHEMES DIRECTORY.
           </h1>
           <p className="sub-editorial text-color-text-secondary leading-relaxed font-semibold">
             Helping small businesses, farmers, and residential communities locate central and state subsidies to optimize operational capital and health coverage.
           </p>
         </div>
 
-        {/* 3. Interactive Subsidy Estimator Panel */}
-        <section className="mb-20 border border-border-light bg-white rounded-lg p-6 md:p-8 shadow-sm">
-          <div className="max-w-[600px] mb-8">
-            <span className="text-[9px] font-bold tracking-wider text-neutral-400 uppercase">Interactive Calculator</span>
-            <h2 className="text-xl md:text-2xl font-extrabold text-black uppercase tracking-tight mt-1 mb-2">
-              Subsidy Estimator
-            </h2>
-            <p className="text-xs text-color-text-secondary leading-relaxed">
-              Drag the slider representing your planned capital expenditure to estimate government subsidy allocations.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            {/* Control Column */}
-            <div className="flex flex-col gap-6 bg-neutral-50 border border-neutral-100 rounded-lg p-5">
-              <div className="flex gap-2">
-                <button
-                  onClick={() => { setCalcType('machinery'); setInvestment(500000); }}
-                  className={`flex-1 text-[10px] font-bold uppercase tracking-wider py-2.5 rounded border transition-colors ${
-                    calcType === 'machinery' ? 'bg-black text-white border-black' : 'bg-white border-neutral-200 text-color-text-secondary hover:border-black'
-                  }`}
-                >
-                  Machinery (MSME)
-                </button>
-                <button
-                  onClick={() => { setCalcType('solar'); setInvestment(150000); }}
-                  className={`flex-1 text-[10px] font-bold uppercase tracking-wider py-2.5 rounded border transition-colors ${
-                    calcType === 'solar' ? 'bg-black text-white border-black' : 'bg-white border-neutral-200 text-color-text-secondary hover:border-black'
-                  }`}
-                >
-                  Residential Solar
-                </button>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between text-xs font-mono">
-                  <span className="text-neutral-400 uppercase">Capital Investment:</span>
-                  <span className="text-black font-bold">₹{investment.toLocaleString()}</span>
-                </div>
-                <input 
-                  type="range"
-                  min={calcType === 'solar' ? 50000 : 100000}
-                  max={calcType === 'solar' ? 500000 : 2500000}
-                  step={10000}
-                  value={investment}
-                  onChange={(e) => setInvestment(Number(e.target.value))}
-                  className="w-full accent-black cursor-pointer h-1 bg-neutral-200 rounded-lg appearance-none"
-                />
-              </div>
-            </div>
-
-            {/* Calculations Outcome Output */}
-            <div className="border border-border-light rounded-lg p-6 bg-white flex flex-col justify-between min-h-[160px] relative overflow-hidden">
-              <span className="absolute top-2 right-2 text-[8px] font-mono text-neutral-300">ESTIMATED_SUPPORT_OUTPUT</span>
-              <div>
-                <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-wider block">Estimated Gov Subsidy</span>
-                <div className="text-3xl md:text-4xl font-extrabold text-black mt-2">
-                  ₹{getEstimatedSubsidy().toLocaleString()}
-                </div>
-              </div>
-              <div className="border-t border-neutral-100 pt-4 flex justify-between items-center text-[10px] font-mono mt-4">
-                <span className="text-neutral-400 uppercase">Estimated Subsidy Rate:</span>
-                <span className="text-black font-bold">{calcType === 'solar' ? 'Slab-Based' : 'Avg ~25%'}</span>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* 4. Schemes Index directory */}
         <section className="border-t border-border-light pt-16">
