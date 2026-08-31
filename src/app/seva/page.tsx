@@ -180,6 +180,27 @@ export default function SevaPortal() {
           </p>
         </div>
 
+        {/* Unified Application Portal Callout Box */}
+        <div className="mb-16 border border-border-light bg-white rounded-lg p-6 md:p-8 flex flex-col md:flex-row gap-6 justify-between items-center shadow-sm">
+          <div className="max-w-[700px] flex flex-col gap-2">
+            <span className="text-[9px] font-bold tracking-wider text-neutral-400 uppercase">Official Portal</span>
+            <h2 className="text-lg font-extrabold text-black uppercase tracking-tight">
+              Unified National Application Hub
+            </h2>
+            <p className="text-xs text-color-text-secondary leading-relaxed">
+              All welfare, health, and business subsidy programs listed in this directory can be verified and directly applied for online via the central government platform.
+            </p>
+          </div>
+          <a 
+            href="https://www.myscheme.gov.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full md:w-auto text-center text-xs font-bold uppercase tracking-wider bg-black text-white hover:bg-neutral-800 transition-colors px-6 py-4 rounded whitespace-nowrap"
+          >
+            Apply on National Portal (myScheme.gov.in)
+          </a>
+        </div>
+
 
         {/* 4. Schemes Index directory */}
         <section className="border-t border-border-light pt-16">
@@ -245,8 +266,8 @@ export default function SevaPortal() {
                   </div>
                 </div>
 
-                {/* Right side checklists and ctas */}
-                <div className="flex-[2] bg-neutral-50/50 border border-neutral-100 rounded-lg p-6 flex flex-col justify-between min-h-[200px]">
+                {/* Right side checklists */}
+                <div className="flex-[2] bg-neutral-50/50 border border-neutral-100 rounded-lg p-6 flex flex-col justify-center">
                   <div>
                     <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-wider block mb-3">Required Documents Checklist</span>
                     <ul className="flex flex-col gap-2">
@@ -258,15 +279,6 @@ export default function SevaPortal() {
                       ))}
                     </ul>
                   </div>
-
-                  <a 
-                    href="https://www.myscheme.gov.in"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full text-center text-xs font-bold uppercase tracking-wider bg-black text-white hover:bg-neutral-800 transition-colors py-3 rounded mt-6 inline-block"
-                  >
-                    View Official Application
-                  </a>
                 </div>
               </div>
             ))}
