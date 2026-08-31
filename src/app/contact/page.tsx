@@ -81,7 +81,7 @@ export default function Contact() {
           </div>
 
           <div className="text-[10px] text-color-text-muted leading-relaxed">
-            Looking for a career? We are always seeking curious systems engineers and growth specialists. Email your CV to <a href="mailto:build@sochyeah.com" className="underline hover:text-black">build@sochyeah.com</a>.
+            Looking for a career? We are always seeking curious systems engineers and growth specialists. Email your CV to <a href="mailto:soch9yeah@gmail.com" className="underline hover:text-black">soch9yeah@gmail.com</a>.
           </div>
         </div>
 
