@@ -23,14 +23,11 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { label: 'Home', href: '/' },
     { label: 'Services', href: '/services' },
     { label: 'Case Studies', href: '/case-studies' },
-    { label: 'About', href: '/about' },
     { label: 'Process', href: '/process' },
     { label: 'Industries', href: '/industries' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Contact', href: '/contact' }
+    { label: 'About', href: '/about' }
   ];
 
   const isActive = (href: string) => {
