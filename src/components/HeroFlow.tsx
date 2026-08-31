@@ -139,8 +139,8 @@ export default function HeroFlow() {
                 />
                 <text 
                   x={node.cx} 
-                  y={node.cy + 4} 
-                  className={`text-[8px] font-bold text-center select-none pointer-events-none transition-colors duration-200 ${
+                  y={node.cy + 3.5} 
+                  className={`text-[10px] font-bold text-center select-none pointer-events-none transition-colors duration-200 ${
                     isActive ? 'fill-white font-extrabold' : 'fill-neutral-400 group-hover:fill-black'
                   }`}
                   textAnchor="middle"
@@ -151,10 +151,6 @@ export default function HeroFlow() {
             );
           })}
         </svg>
-
-        {/* Small floating technical grid overlays for aesthetics */}
-        <div className="absolute top-2 left-2 text-[8px] font-mono text-neutral-300">SYSTEMS_ORCHESTRATION_GRID v1.02</div>
-        <div className="absolute bottom-2 right-2 text-[8px] font-mono text-neutral-300">LATENCY: 0ms // EDGE CACHING ACTIVE</div>
       </div>
 
       {/* Synchronized Detail Box */}

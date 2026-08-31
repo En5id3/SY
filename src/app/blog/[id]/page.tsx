@@ -113,11 +113,11 @@ export default async function BlogPostPage({ params }: PageProps) {
       {/* Article Metrics Benchmarks Panel */}
       {post.metrics && (
         <div className="mb-10 border border-border-light bg-white rounded-lg p-5 shadow-sm">
-          <span className="text-[8px] font-bold tracking-wider text-neutral-400 uppercase">System Benchmarks & Data Points</span>
+          <span className="text-[10px] font-bold tracking-wider text-neutral-400 uppercase">System Benchmarks & Data Points</span>
           <div className="grid grid-cols-3 gap-6 mt-3">
             {post.metrics.map((m, idx) => (
               <div key={idx} className="border-r border-neutral-100 last:border-r-0 pr-4">
-                <span className="text-[8px] text-color-text-muted uppercase font-mono block leading-none">{m.label}</span>
+                <span className="text-[9px] text-color-text-muted uppercase font-mono block leading-none">{m.label}</span>
                 <span className="text-base font-extrabold text-black block mt-1.5">{m.value}</span>
               </div>
             ))}
@@ -198,8 +198,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             <div className="flex flex-col gap-6">
               {post.faqs.map((faq, idx) => (
                 <div key={idx} className="flex flex-col gap-2">
-                  <span className="text-[11px] font-bold text-black uppercase">Q: {faq.q}</span>
-                  <p className="text-[11px] text-color-text-secondary leading-relaxed pl-4 border-l border-neutral-200">
+                  <span className="text-xs font-bold text-black uppercase">Q: {faq.q}</span>
+                  <p className="text-xs text-color-text-secondary leading-relaxed pl-4 border-l border-neutral-200">
                     A: {faq.a}
                   </p>
                 </div>
@@ -213,7 +213,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       <section className="bg-black text-white rounded-lg p-8 md:p-12 text-center mt-20">
         <div className="max-w-[500px] mx-auto flex flex-col gap-6 items-center">
           <h3 className="text-lg font-bold uppercase tracking-tighter">Build this architecture</h3>
-          <p className="text-[10px] text-neutral-400 leading-relaxed">
+          <p className="text-xs text-neutral-400 leading-relaxed">
             Need similar AI integrations, API streaming pipelines, or database architectures configured for your business operations?
           </p>
           <Link 

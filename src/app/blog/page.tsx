@@ -87,10 +87,10 @@ export default function Blog() {
               )}
 
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-400 bg-neutral-50 border border-neutral-100 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 bg-neutral-50 border border-neutral-100 px-2 py-0.5 rounded">
                   {post.category}
                 </span>
-                <span className="text-[9px] font-mono text-color-text-muted flex items-center gap-1">
+                <span className="text-[10px] font-mono text-color-text-muted flex items-center gap-1">
                   <Clock size={10} /> {post.readTime}
                 </span>
               </div>
@@ -101,7 +101,7 @@ export default function Blog() {
                 </Link>
               </h3>
 
-              <p className="text-[11px] text-color-text-secondary leading-relaxed mb-4 line-clamp-3">
+              <p className="text-xs text-color-text-secondary leading-relaxed mb-4 line-clamp-3">
                 {post.summary}
               </p>
 
@@ -110,8 +110,8 @@ export default function Blog() {
                 <div className="flex gap-4 mb-4 border-t border-neutral-100 pt-3">
                   {post.metrics.slice(0, 2).map((m, idx) => (
                     <div key={idx} className="font-mono">
-                      <div className="text-[8px] text-color-text-muted uppercase leading-none">{m.label}</div>
-                      <div className="text-[10px] font-bold text-black mt-1">{m.value}</div>
+                      <div className="text-[9px] text-color-text-muted uppercase leading-none">{m.label}</div>
+                      <div className="text-xs font-bold text-black mt-1">{m.value}</div>
                     </div>
                   ))}
                 </div>
@@ -119,7 +119,7 @@ export default function Blog() {
             </div>
 
             <div className="flex items-center justify-between border-t border-neutral-100 pt-4 mt-auto">
-              <span className="text-[9px] font-mono text-color-text-muted flex items-center gap-1">
+              <span className="text-[10px] font-mono text-color-text-muted flex items-center gap-1">
                 <Calendar size={10} /> {post.date}
               </span>
               <Link 
