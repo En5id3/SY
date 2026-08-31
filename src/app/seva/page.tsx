@@ -120,12 +120,12 @@ export default function SevaPortal() {
             PUBLIC INFORMATION HUB // GOVERNMENT SCHEMES
           </div>
           
-          <Link 
-            href="/contact" 
+          <a 
+            href="https://sochyeah.com/contact" 
             className="text-[10px] font-bold uppercase tracking-wider bg-black text-white hover:bg-neutral-800 transition-colors px-4 py-2 rounded"
           >
             Request Assistance
-          </Link>
+          </a>
         </div>
       </header>
 
@@ -308,12 +308,12 @@ export default function SevaPortal() {
             <p className="text-xs text-neutral-400 leading-relaxed">
               We compile and structure project reports for banking audits, setup Udyam micro registrations, and optimize government applications for corporate client units.
             </p>
-            <Link 
-              href="/contact" 
-              className="text-xs font-bold uppercase tracking-wider bg-white text-black hover:bg-neutral-100 transition-colors px-6 py-3 rounded mt-2"
+            <a 
+              href="https://sochyeah.com/contact" 
+              className="text-xs font-bold uppercase tracking-wider bg-white text-black hover:bg-neutral-100 transition-colors px-6 py-3 rounded mt-2 inline-block"
             >
               Consult Our Systems Partners
-            </Link>
+            </a>
           </div>
         </section>
       </main>
