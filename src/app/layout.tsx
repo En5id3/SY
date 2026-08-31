@@ -27,20 +27,25 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({
+import { headers } from "next/headers";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const isSevaSubdomain = headersList.get("x-seva-subdomain") === "true";
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <Header />
-        <main className="flex-grow pt-[80px]">{children}</main>
-        <Footer />
+        {!isSevaSubdomain && <Header />}
+        <main className={`flex-grow ${isSevaSubdomain ? "" : "pt-[80px]"}`}>{children}</main>
+        {!isSevaSubdomain && <Footer />}
       </body>
     </html>
   );
