@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Bot, User, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 
 interface DemoConversation {
   role: 'user' | 'ai';
@@ -14,216 +15,173 @@ interface DemoConversation {
 interface DemoPersona {
   id: string;
   name: string;
+  tag: string;
   messages: DemoConversation[];
 }
 
 const personas: DemoPersona[] = [
   {
     id: 'receptionist',
-    name: 'AI Receptionist',
+    name: 'Voice AI Assistant',
+    tag: 'Telephony & Calendar',
     messages: [
-      { role: 'user', text: 'Hey, I want to book an alignment call tomorrow afternoon if possible.' },
+      { role: 'user', text: 'Hey, I want to book an architecture evaluation call tomorrow afternoon.' },
       { 
         role: 'ai', 
-        text: 'Let me check... We have openings tomorrow at 2:00 PM and 4:30 PM. Do either of those work for you?', 
+        text: 'Checking engineer calendars... We have slots available tomorrow at 2:00 PM and 4:30 PM. Which time fits your schedule best?', 
         step: 'UNDERSTAND', 
-        stepDetail: 'Parsed request: booking_enquiry, timeline: tomorrow_afternoon.' 
+        stepDetail: 'Parsed intent: booking_enquiry | Parameters: date=tomorrow_afternoon' 
       },
-      { role: 'user', text: '4:30 PM works. What details do you need?' },
+      { role: 'user', text: '4:30 PM works. What info do you need from me?' },
       { 
         role: 'ai', 
-        text: 'Perfect. I have scheduled that for tomorrow at 4:30 PM. I\'ve sent a calendar invite and SMS confirmation to your number.', 
+        text: 'Confirmed. I have reserved 4:30 PM for you. I dispatched a Google Meet invite and calendar confirmation to your email.', 
         step: 'ACT', 
-        stepDetail: 'Executing database calendar insert. Dispatched SMS scheduler Webhook.' 
+        stepDetail: 'Executed DB calendar lock. Webhook dispatched to SMS & CRM pipeline.' 
       }
     ]
   },
   {
     id: 'document',
-    name: 'AI Document Assistant',
+    name: 'RAG Knowledge Agent',
+    tag: 'Enterprise Retrieval',
     messages: [
-      { role: 'user', text: 'What is our policy on data encryption for compliance audits?' },
+      { role: 'user', text: 'What is our encryption standard for multi-tenant database clusters?' },
       { 
         role: 'ai', 
-        text: 'Searching manuals... Page 14 of the Compliance PDF states that all production databases must run AES-256 encryption at rest and TLS 1.3 in transit.', 
+        text: 'According to page 14 of the Compliance PDF, all production PostgreSQL instances enforce AES-256 encryption at rest and TLS 1.3 in transit.', 
         step: 'REASON', 
-        stepDetail: 'Retrieving context chunks. Top source: compliance_policy_2026.pdf (Similarity: 0.94)' 
+        stepDetail: 'Vector search on cluster: security_handbook_2026.pdf (Cosine Similarity: 0.94)' 
       },
-      { role: 'user', text: 'Great. Are there regular audit logs compiled?' },
+      { role: 'user', text: 'Where are audit snapshots archived?' },
       { 
         role: 'ai', 
-        text: 'Yes, section 4.2 states audit logs are automatically compiled weekly and retained in read-only cold storage for 7 years.', 
+        text: 'Section 4.2 states audit snapshots are automatically bundled weekly and retained in read-only cold storage with 7-year immutable locks.', 
         step: 'UNDERSTAND', 
-        stepDetail: 'Query parsed: audit_logs_retention. Fetching document sections 4.0-4.5.' 
+        stepDetail: 'Parsed query: snapshot_retention_policy | Retrieved chunks 4.0-4.5' 
       }
     ]
   },
   {
     id: 'sales',
-    name: 'AI Sales Agent',
+    name: 'Autonomous Sales Qualifier',
+    tag: 'CRM & Lead Scoring',
     messages: [
-      { role: 'user', text: 'I\'m looking to build a SaaS MVP in 6 weeks. Do you guys do that?' },
+      { role: 'user', text: 'We are looking to launch an enterprise SaaS MVP in 6 weeks.' },
       { 
         role: 'ai', 
-        text: 'Absolutely. We specialize in fast-turnaround product sprints. I\'d love to ask: what is your target industry and estimated budget tier?', 
+        text: 'That aligns with our rapid sprint model. What is your target sector and expected database concurrency?', 
         step: 'UNDERSTAND', 
-        stepDetail: 'Lead qualification triggered. Intent class: SaaS_development. Budget query active.' 
+        stepDetail: 'Lead qualification triggered | Intent: SaaS_MVP_sprint' 
       },
-      { role: 'user', text: 'It\'s in logistics, and our budget is around $35k.' },
+      { role: 'user', text: 'Healthcare logistics, expecting ~5,000 daily active users initially.' },
       { 
         role: 'ai', 
-        text: 'That fits our Grow tier perfectly. Let\'s schedule a brief call with our lead systems engineer to map out your core MVP features.', 
+        text: 'Understood. We will configure an auto-scaling serverless backend with HIPAA compliance. Routing your request to our lead systems engineer.', 
         step: 'ACT', 
-        stepDetail: 'Lead details logged to CRM. Dynamic lead score: 92/100 (High Intent). Routing to scheduling calendar.' 
-      }
-    ]
-  },
-  {
-    id: 'analyst',
-    name: 'AI Data Analyst',
-    messages: [
-      { role: 'user', text: 'Show me total sales forecast trends for next quarter.' },
-      { 
-        role: 'ai', 
-        text: 'Running regressions... Based on historical sales and cyclic Q4 retail patterns, we forecast $240k in sales, a 14% increase from Q3.', 
-        step: 'REASON', 
-        stepDetail: 'Executing Python stats models on tables: transaction_records, cyclic_retail_trends.' 
-      },
-      { role: 'user', text: 'What is driving the 14% surge?' },
-      { 
-        role: 'ai', 
-        text: 'The increase is primarily driven by seasonal order spikes in our apparel segments, which historical data maps at +22% every November.', 
-        step: 'UNDERSTAND', 
-        stepDetail: 'Query parsed: drivers_of_growth. Compiling feature weights: apparel_volume, seasonality.' 
+        stepDetail: 'Lead logged to CRM | Lead Score: 94/100 (High Intent) | Team notified.' 
       }
     ]
   }
 ];
 
 export default function AIDemo() {
-  const [selectedId, setSelectedId] = useState('receptionist');
-  const [visibleCount, setVisibleCount] = useState(1);
-  const [currentStep, setCurrentStep] = useState<'UNDERSTAND' | 'REASON' | 'ACT' | null>(null);
-  const [stepText, setStepText] = useState('');
+  const [activePersona, setActivePersona] = useState<string>('receptionist');
 
-  const persona = personas.find(p => p.id === selectedId) || personas[0];
-
-  useEffect(() => {
-    setVisibleCount(1);
-    setCurrentStep(null);
-    setStepText('');
-  }, [selectedId]);
-
-  useEffect(() => {
-    if (visibleCount > persona.messages.length) return;
-
-    const currentMsg = persona.messages[visibleCount - 1];
-    
-    if (currentMsg.role === 'ai') {
-      if (currentMsg.step) {
-        setCurrentStep(currentMsg.step);
-        setStepText(currentMsg.stepDetail || '');
-      }
-      
-      const timer = setTimeout(() => {
-        if (visibleCount < persona.messages.length) {
-          setVisibleCount(prev => prev + 1);
-        }
-      }, 4000);
-      return () => clearTimeout(timer);
-    } else {
-      const timer = setTimeout(() => {
-        if (visibleCount < persona.messages.length) {
-          setVisibleCount(prev => prev + 1);
-        }
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [visibleCount, selectedId, persona]);
+  const current = personas.find((p) => p.id === activePersona) || personas[0];
 
   return (
-    <div className="border border-border-light bg-white rounded-lg overflow-hidden shadow-sm flex flex-col md:flex-row min-h-[440px]">
-      {/* Persona Menu Panel */}
-      <div className="w-full md:w-1/3 bg-neutral-50/50 border-r border-border-light p-5 flex flex-col gap-2">
-        <h4 className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-4">
-          Select AI Agent Profile
-        </h4>
-        {personas.map((p) => (
-          <button
-            key={p.id}
-            onClick={() => setSelectedId(p.id)}
-            className={`text-left text-xs font-semibold px-4 py-3 rounded transition-all duration-150 ${
-              selectedId === p.id 
-                ? 'bg-black text-white' 
-                : 'text-color-text-secondary hover:bg-neutral-100 hover:text-black'
-            }`}
-          >
-            {p.name}
-          </button>
-        ))}
+    <div className="border border-purple-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-sm shadow-purple-900/5">
+      {/* Top Controls: Persona Tabs */}
+      <div className="flex flex-wrap gap-2.5 pb-6 mb-6 border-b border-slate-100">
+        {personas.map((p) => {
+          const isActive = activePersona === p.id;
+          return (
+            <button
+              key={p.id}
+              onClick={() => setActivePersona(p.id)}
+              className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 flex items-center gap-2 ${
+                isActive
+                  ? 'bg-purple-900 text-white shadow-sm shadow-purple-950/20'
+                  : 'bg-purple-50/50 text-slate-600 border border-purple-100 hover:bg-purple-100/60 hover:text-purple-950'
+              }`}
+            >
+              <Sparkles size={12} className={isActive ? 'text-purple-300' : 'text-purple-600'} />
+              <span>{p.name}</span>
+              <span className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded-full ${
+                isActive ? 'bg-purple-800 text-purple-200' : 'bg-white text-slate-400'
+              }`}>
+                {p.tag}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* Simulator Chat Window */}
-      <div className="w-full md:w-2/3 flex flex-col justify-between p-6">
-        {/* Chat Feed */}
-        <div className="flex flex-col gap-4 flex-grow justify-end pb-6 overflow-y-auto max-h-[300px]">
-          <AnimatePresence initial={false}>
-            {persona.messages.slice(0, visibleCount).map((msg, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`flex flex-col max-w-[80%] ${
-                  msg.role === 'user' ? 'self-end items-end' : 'self-start items-start'
+      {/* Main Conversation Stream */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activePersona}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.25 }}
+          className="flex flex-col gap-4 min-h-[280px]"
+        >
+          {current.messages.map((msg, idx) => (
+            <div
+              key={idx}
+              className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} gap-1.5`}
+            >
+              <div
+                className={`max-w-[85%] md:max-w-[75%] p-4 rounded-2xl text-xs leading-relaxed ${
+                  msg.role === 'user'
+                    ? 'bg-slate-100 text-slate-900 rounded-br-xs font-medium'
+                    : 'bg-purple-50/40 border border-purple-100 text-slate-800 rounded-bl-xs shadow-xs'
                 }`}
               >
-                <div className={`text-xs px-4 py-3 rounded-lg leading-relaxed ${
-                  msg.role === 'user' 
-                    ? 'bg-neutral-100 text-black rounded-tr-none' 
-                    : 'bg-black text-white rounded-tl-none font-medium'
-                }`}>
-                  {msg.text}
+                <div className="flex items-center gap-1.5 mb-1 text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                  {msg.role === 'user' ? (
+                    <>
+                      <User size={11} className="text-slate-500" />
+                      <span>User Request</span>
+                    </>
+                  ) : (
+                    <>
+                      <Bot size={11} className="text-purple-700" />
+                      <span className="text-purple-900 font-bold">SOCHYEAH AI Engine</span>
+                    </>
+                  )}
                 </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+                <p className="text-slate-800">{msg.text}</p>
+              </div>
 
-        {/* Reasoning and Act Flow Status Bar */}
-        <div className="border-t border-border-light pt-4 mt-auto">
-          {currentStep && (
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }}
-              className="flex items-start gap-3 mb-4 bg-neutral-50 border border-border-light rounded p-3 text-[10px] font-mono"
-            >
-              <span className={`px-2 py-0.5 rounded font-bold text-white ${
-                currentStep === 'UNDERSTAND' ? 'bg-indigo-600' :
-                currentStep === 'REASON' ? 'bg-orange-500' : 'bg-green-600'
-              }`}>
-                {currentStep}
-              </span>
-              <span className="text-color-text-secondary flex-grow leading-relaxed">
-                {stepText}
-              </span>
-            </motion.div>
-          )}
+              {/* Cognitive Step Meta Tag */}
+              {msg.step && msg.stepDetail && (
+                <div className="flex items-center gap-2 text-[10px] font-mono text-purple-800 bg-purple-100/60 px-3 py-1 rounded-full border border-purple-200/50 mt-0.5">
+                  <span className="font-bold uppercase tracking-wider px-1.5 py-0.5 bg-purple-900 text-white rounded text-[8px]">
+                    {msg.step}
+                  </span>
+                  <span className="truncate max-w-[320px] md:max-w-[500px]">{msg.stepDetail}</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
 
-          <div className="flex justify-between items-center gap-4">
-            <button 
-              onClick={() => setVisibleCount(1)}
-              className="text-[10px] font-semibold uppercase tracking-wider text-color-text-muted hover:text-black transition-colors"
-            >
-              Replay Flow
-            </button>
-            <Link 
-              href="/contact"
-              className="text-[10px] font-bold uppercase tracking-wider bg-black text-white px-4 py-2 rounded hover:bg-neutral-800 transition-colors"
-            >
-              BUILD SOMETHING LIKE THIS
-            </Link>
-          </div>
-        </div>
+      {/* Bottom CTA Strip */}
+      <div className="mt-8 pt-5 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+        <span className="text-slate-500 font-medium">
+          Ready to deploy customized reasoning models inside your stack?
+        </span>
+        <Link
+          href="/contact"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-900 hover:text-purple-700 transition-colors uppercase tracking-wider"
+        >
+          <span>Schedule an Architecture Sprint</span>
+          <ArrowRight size={13} />
+        </Link>
       </div>
     </div>
   );

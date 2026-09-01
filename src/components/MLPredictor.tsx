@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Play, RotateCcw } from 'lucide-react';
+import { Play, RotateCcw, Cpu, Sparkles } from 'lucide-react';
 
 interface FeatureInput {
   name: string;
@@ -25,13 +25,13 @@ export default function MLPredictor() {
     if (!isPlaying) return;
 
     // Step transitions simulation
-    const t1 = setTimeout(() => setStep(1), 1000);
-    const t2 = setTimeout(() => setStep(2), 2200);
+    const t1 = setTimeout(() => setStep(1), 900);
+    const t2 = setTimeout(() => setStep(2), 2000);
     const t3 = setTimeout(() => {
       setStep(3);
-      setOutputVal('+18.4% Revenue Forecast');
+      setOutputVal('+18.4% Revenue Growth');
       setIsPlaying(false);
-    }, 3500);
+    }, 3200);
 
     return () => {
       clearTimeout(t1);
@@ -47,28 +47,33 @@ export default function MLPredictor() {
   };
 
   return (
-    <div className="border border-border-light bg-white rounded-lg p-6 shadow-sm flex flex-col gap-6">
-      <div className="flex justify-between items-center border-b border-border-light pb-4">
+    <div className="border border-purple-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-sm shadow-purple-900/5 flex flex-col gap-6">
+      <div className="flex justify-between items-center border-b border-slate-100 pb-4">
         <div>
-          <h4 className="text-xs font-bold text-black uppercase tracking-wider">Predictor Laboratory</h4>
-          <p className="text-[10px] text-color-text-muted mt-1 leading-normal uppercase">Simulating matrix computations on customer data tables</p>
+          <span className="text-[10px] font-mono font-bold text-purple-700 uppercase tracking-widest block">
+            PREDICTOR LABORATORY
+          </span>
+          <h4 className="text-sm font-bold text-slate-900 mt-0.5">
+            Matrix Computations on Production Telemetry
+          </h4>
         </div>
         <div className="flex gap-2">
           {step === 3 ? (
             <button 
               onClick={handleReset}
-              className="p-2 border border-border-light rounded hover:bg-neutral-50 transition-colors"
+              className="p-2.5 border border-purple-200 rounded-full hover:bg-purple-50 transition-colors"
               title="Reset Simulator"
             >
-              <RotateCcw size={14} className="text-black" />
+              <RotateCcw size={14} className="text-purple-900" />
             </button>
           ) : (
             <button 
               onClick={() => setIsPlaying(true)}
               disabled={isPlaying}
-              className="px-4 py-2 bg-black text-white text-[10px] font-bold uppercase tracking-wider rounded hover:bg-neutral-800 disabled:bg-neutral-300 transition-colors flex items-center gap-2"
+              className="px-5 py-2.5 bg-purple-900 text-white text-xs font-bold uppercase tracking-wider rounded-full hover:bg-purple-950 disabled:bg-slate-300 transition-all shadow-sm shadow-purple-950/15 flex items-center gap-2"
             >
-              <Play size={10} fill="white" /> {isPlaying ? 'Computing...' : 'Run Predict'}
+              <Play size={11} fill="white" />
+              <span>{isPlaying ? 'Computing...' : 'Run Simulation'}</span>
             </button>
           )}
         </div>
@@ -77,14 +82,16 @@ export default function MLPredictor() {
       {/* Main visual flowchart grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch min-h-[160px]">
         {/* Left Column: Data features */}
-        <div className="flex flex-col gap-2 bg-neutral-50/50 border border-neutral-100 rounded-lg p-4 justify-center">
-          <span className="text-[8px] font-bold text-neutral-400 uppercase mb-2">01 // Input Vectors</span>
+        <div className="flex flex-col gap-2.5 bg-purple-50/30 border border-purple-100/60 rounded-xl p-4 justify-center">
+          <span className="text-[9px] font-mono font-bold text-purple-800 uppercase tracking-wider mb-1">
+            01 // Input Feature Vectors
+          </span>
           {initialFeatures.map((feat, idx) => (
-            <div key={idx} className="flex justify-between items-center text-[10px] font-mono border-b border-neutral-100 pb-1">
-              <span className="text-color-text-secondary">{feat.name}</span>
+            <div key={idx} className="flex justify-between items-center text-xs font-mono border-b border-purple-100/40 pb-1.5 last:border-b-0">
+              <span className="text-slate-600">{feat.name}</span>
               <motion.span 
-                animate={isPlaying && step === 0 ? { color: '#4f46e5', fontWeight: 'bold' } : {}}
-                className="text-black font-semibold"
+                animate={isPlaying && step === 0 ? { color: '#7e22ce', scale: 1.1, fontWeight: 'bold' } : {}}
+                className="text-slate-900 font-semibold"
               >
                 {feat.val}
               </motion.span>
@@ -93,49 +100,43 @@ export default function MLPredictor() {
         </div>
 
         {/* Middle Column: Model logic processing node */}
-        <div className="flex flex-col items-center justify-center border border-border-light rounded-lg p-4 relative overflow-hidden bg-white">
-          <span className="absolute top-2 text-[8px] font-mono text-neutral-300">02 // MODEL_NEURAL_LAYER</span>
+        <div className="flex flex-col items-center justify-center border border-purple-100/80 rounded-xl p-5 relative overflow-hidden bg-white shadow-xs">
+          <span className="absolute top-2.5 text-[8px] font-mono text-slate-400 uppercase tracking-wider">
+            02 // MODEL_NEURAL_LAYER
+          </span>
           
           {/* Animated rings inside the layer */}
-          <div className="relative w-16 h-16 rounded-full border border-border-light flex items-center justify-center">
-            <motion.div 
-              animate={isPlaying && step >= 1 ? { rotate: 360 } : {}}
-              transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
-              className="absolute inset-1 rounded-full border-t border-b border-black"
+          <div className="relative w-18 h-18 rounded-full border border-purple-200 flex items-center justify-center mt-3">
+            <motion.div
+              animate={isPlaying ? { rotate: 360 } : {}}
+              transition={{ repeat: Infinity, duration: 3, ease: 'linear' }}
+              className="absolute inset-0 rounded-full border-t-2 border-purple-600"
             />
-            <motion.div 
-              animate={isPlaying && step >= 2 ? { scale: [1, 1.1, 1] } : {}}
-              transition={{ repeat: Infinity, duration: 1 }}
-              className={`w-6 h-6 rounded-full transition-colors duration-300 ${
-                step === 1 ? 'bg-indigo-600' :
-                step === 2 ? 'bg-orange-500' : 
-                step === 3 ? 'bg-green-600' : 'bg-neutral-100'
-              }`}
-            />
+            <Cpu size={22} className={isPlaying ? 'text-purple-700 animate-pulse' : 'text-slate-400'} />
           </div>
 
-          <div className="text-[9px] font-mono text-neutral-400 mt-4 uppercase">
-            {step === 0 && 'Awaiting trigger'}
-            {step === 1 && 'Weighting features...'}
-            {step === 2 && 'Computing probabilities...'}
-            {step === 3 && 'Execution complete'}
-          </div>
+          <span className="text-[10px] font-mono text-purple-900 font-bold mt-3">
+            {step === 0 && 'Awaiting Input'}
+            {step === 1 && 'Weight Extraction...'}
+            {step === 2 && 'Regression Scoring...'}
+            {step === 3 && 'Inference Complete'}
+          </span>
         </div>
 
-        {/* Right Column: Prediction Output */}
-        <div className="flex flex-col justify-between bg-neutral-50/50 border border-neutral-100 rounded-lg p-4">
-          <span className="text-[8px] font-bold text-neutral-400 uppercase">03 // Outputs</span>
-          <div className="my-auto text-center">
-            <motion.div 
-              animate={step === 3 ? { scale: [1, 1.05, 1] } : {}}
-              className={`text-xs font-bold leading-normal transition-colors duration-300 ${
-                step === 3 ? 'text-black font-extrabold text-sm' : 'text-neutral-300'
-              }`}
-            >
+        {/* Right Column: Output result score */}
+        <div className="flex flex-col justify-between border border-purple-100/80 rounded-xl p-5 bg-gradient-to-br from-white to-purple-50/40 shadow-xs">
+          <div>
+            <span className="text-[9px] font-mono font-bold text-purple-800 uppercase tracking-wider block">
+              03 // Predictive Outcome
+            </span>
+            <div className="text-lg md:text-xl font-extrabold text-slate-900 mt-3 font-sans">
               {outputVal}
-            </motion.div>
+            </div>
           </div>
-          <span className="text-[8px] font-mono text-neutral-400 text-right">MODEL_ACCURACY: 94.6%</span>
+          <div className="border-t border-purple-100/60 pt-3 flex justify-between items-center text-[10px] font-mono text-slate-500">
+            <span>Confidence Index</span>
+            <span className="font-bold text-purple-900">{step === 3 ? '98.2%' : '---'}</span>
+          </div>
         </div>
       </div>
     </div>

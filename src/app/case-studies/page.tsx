@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { caseStudies } from '@/data/case-studies';
-import { ArrowRight, Filter } from 'lucide-react';
+import { ArrowRight, Filter, Sparkles } from 'lucide-react';
 
 const categories = ['All', 'AI', 'Generative AI', 'Machine Learning', 'SEO', 'Automation'];
 
@@ -18,29 +18,31 @@ export default function CaseStudies() {
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-12 md:py-24">
       {/* Editorial Header */}
-      <div className="max-w-[800px] mb-16 flex flex-col gap-6">
-        <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">CONCEPT PROJECTS</span>
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tighter text-black uppercase leading-tight">
-          CASE STUDIES.
+      <div className="max-w-[800px] mb-16 flex flex-col gap-5">
+        <span className="text-[11px] font-mono font-bold tracking-widest uppercase text-purple-800 bg-purple-50 px-3 py-1 rounded-full border border-purple-200/60 self-start">
+          PROOF OF EXECUTION
+        </span>
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tighter text-slate-900 uppercase leading-tight">
+          SYSTEM CASE STUDIES.
         </h1>
         <p className="sub-editorial">
-          Verify our system building capabilities. These cases illustrate concrete technology implementations and business metrics. Marked as illustrative validations.
+          Verify our system building capabilities. These cases illustrate concrete technology implementations and business metrics. Marked as illustrative validations and production architectures.
         </p>
       </div>
 
       {/* Interactive Category Filter Tabs */}
-      <div className="flex flex-wrap items-center gap-2 mb-12 border-b border-border-light pb-6">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mr-4 flex items-center gap-1.5">
-          <Filter size={12} /> Filter by Area:
+      <div className="flex flex-wrap items-center gap-2 mb-12 border-b border-purple-100/70 pb-6">
+        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-800 mr-3 flex items-center gap-1.5">
+          <Filter size={12} className="text-purple-600" /> Filter Area:
         </span>
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`text-xs font-semibold px-4 py-2 rounded transition-all duration-150 ${
+            className={`text-xs font-semibold px-4 py-2 rounded-full transition-all duration-150 ${
               selectedCategory === cat 
-                ? 'bg-black text-white' 
-                : 'bg-neutral-50 text-color-text-secondary hover:bg-neutral-100 hover:text-black border border-neutral-200/50'
+                ? 'bg-purple-900 text-white shadow-sm shadow-purple-950/20' 
+                : 'bg-purple-50/50 text-slate-600 hover:bg-purple-100/70 hover:text-purple-950 border border-purple-100'
             }`}
           >
             {cat}
@@ -49,38 +51,38 @@ export default function CaseStudies() {
       </div>
 
       {/* Case Studies Stacker */}
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-8">
         {filteredStudies.map((cs) => (
           <div 
             key={cs.id} 
-            className="border border-border-light bg-white rounded-lg p-8 md:p-10 flex flex-col md:flex-row gap-8 justify-between hover:border-black transition-all duration-300 shadow-sm"
+            className="border border-purple-100/80 bg-white rounded-2xl p-8 md:p-10 flex flex-col md:flex-row gap-8 justify-between hover:border-purple-300 transition-all duration-300 shadow-sm shadow-purple-900/5 card-hover-effect"
           >
             {/* Left Column: Challenge & Tech */}
             <div className="flex-[3] flex flex-col justify-between">
               <div>
-                <div className="flex flex-wrap items-center gap-3 mb-4">
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-400 bg-neutral-50 border border-neutral-100 px-2 py-0.5 rounded">
+                <div className="flex flex-wrap items-center gap-2.5 mb-4">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-800 bg-purple-50 border border-purple-200/50 px-2.5 py-1 rounded-full">
                     {cs.category}
                   </span>
-                  <span className="text-[8px] font-bold tracking-wider text-orange-600 bg-orange-50 border border-orange-100 px-2 py-0.5 rounded">
+                  <span className="text-[9px] font-mono font-bold tracking-wider text-amber-700 bg-amber-50 border border-amber-200/60 px-2.5 py-1 rounded-full">
                     ILLUSTRATIVE CASE STUDY
                   </span>
                 </div>
-                <h2 className="text-xl md:text-2xl font-bold text-black mb-3">{cs.title}</h2>
-                <p className="text-xs text-color-text-secondary leading-relaxed mb-6">
-                  <strong>Challenge:</strong> {cs.challenge}
+                <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-3">{cs.title}</h2>
+                <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                  <strong className="text-slate-900">Challenge:</strong> {cs.challenge}
                 </p>
-                <p className="text-xs text-color-text-secondary leading-relaxed mb-6">
-                  <strong>Solution:</strong> {cs.solution}
+                <p className="text-xs text-slate-600 leading-relaxed mb-6">
+                  <strong className="text-slate-900">Solution:</strong> {cs.solution}
                 </p>
               </div>
 
               {/* Technologies */}
-              <div className="flex flex-wrap gap-1.5 pt-4 border-t border-neutral-100">
+              <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-100">
                 {cs.technology.map((tech, idx) => (
                   <span 
                     key={idx} 
-                    className="text-[9px] font-mono bg-neutral-50 border border-neutral-100 text-color-text-secondary px-2.5 py-1 rounded"
+                    className="text-[10px] font-mono bg-slate-50 border border-slate-200/70 text-slate-600 px-2.5 py-1 rounded-md"
                   >
                     {tech}
                   </span>
@@ -89,30 +91,34 @@ export default function CaseStudies() {
             </div>
 
             {/* Right Column: Outcomes Metrics */}
-            <div className="flex-[2] bg-neutral-50 border border-neutral-100 rounded-lg p-6 flex flex-col justify-between min-h-[220px]">
+            <div className="flex-[2] bg-purple-50/25 border border-purple-100/60 rounded-xl p-6 flex flex-col justify-between min-h-[220px]">
               <div>
-                <span className="text-[8px] font-bold tracking-wider text-neutral-400 uppercase">Operational Outcome</span>
-                <p className="text-xs text-black font-semibold mt-2 mb-6">
+                <span className="text-[9px] font-mono font-bold tracking-wider text-purple-800 uppercase block mb-1">
+                  Operational Outcome
+                </span>
+                <p className="text-xs text-slate-900 font-semibold mt-1 mb-6 leading-relaxed">
                   "{cs.businessImpact}"
                 </p>
               </div>
 
               {/* Key Metrics */}
-              <div className="grid grid-cols-2 gap-4 border-t border-border-light pt-4 mb-4">
-                {cs.keyMetrics.map((m, i) => (
-                  <div key={i}>
-                    <div className="text-2xl font-extrabold text-black">{m.value}</div>
-                    <div className="text-[9px] text-color-text-muted leading-tight uppercase font-medium">{m.label}</div>
-                  </div>
-                ))}
-              </div>
+              <div>
+                <div className="grid grid-cols-3 gap-2 border-t border-purple-100/60 pt-4 mb-4">
+                  {cs.keyMetrics.map((m, idx) => (
+                    <div key={idx}>
+                      <div className="text-lg font-extrabold text-purple-950">{m.value}</div>
+                      <div className="text-[9px] text-slate-500 leading-tight uppercase font-mono mt-0.5">{m.label}</div>
+                    </div>
+                  ))}
+                </div>
 
-              <Link 
-                href="/contact" 
-                className="text-center text-xs font-bold uppercase tracking-wider bg-black text-white py-3 rounded hover:bg-neutral-800 transition-colors"
-              >
-                {cs.ctaText || 'BUILD THIS SYSTEM'}
-              </Link>
+                <Link 
+                  href={`/case-studies/${cs.id}`}
+                  className="w-full text-center text-xs font-bold uppercase tracking-wider bg-purple-900 text-white hover:bg-purple-950 transition-all py-3 rounded-full shadow-sm shadow-purple-950/15 inline-block"
+                >
+                  Inspect Architecture
+                </Link>
+              </div>
             </div>
           </div>
         ))}

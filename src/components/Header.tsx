@@ -40,14 +40,18 @@ export default function Header() {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
       scrolled 
-        ? 'bg-white/80 backdrop-blur-md border-border-light/80 py-4' 
-        : 'bg-transparent border-transparent py-6'
+        ? 'bg-white/85 backdrop-blur-md border-purple-100/70 shadow-xs py-3.5' 
+        : 'bg-white/60 backdrop-blur-sm border-transparent py-5'
     }`}>
       <div className="max-w-[1200px] mx-auto px-6 flex justify-between items-center">
         {/* Typographic Stacked Logo */}
-        <Link href="/" className="flex flex-col leading-[0.8] select-none outline-none" onClick={() => setIsOpen(false)}>
-          <span className="font-sans font-light text-2xl tracking-tighter text-black lowercase">soch</span>
-          <span className="font-sans font-extrabold text-2xl tracking-tighter text-black lowercase pl-7">yeah</span>
+        <Link href="/" className="flex flex-col leading-[0.8] select-none outline-none group" onClick={() => setIsOpen(false)}>
+          <span className="font-sans font-light text-2xl tracking-tighter text-slate-900 lowercase group-hover:text-purple-900 transition-colors">
+            soch
+          </span>
+          <span className="font-sans font-extrabold text-2xl tracking-tighter text-slate-900 lowercase pl-7 group-hover:text-purple-700 transition-colors">
+            yeah
+          </span>
         </Link>
 
         {/* Desktop Links */}
@@ -56,8 +60,10 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm font-medium transition-colors duration-200 hover:text-black ${
-                isActive(link.href) ? 'text-black font-semibold' : 'text-color-text-secondary'
+              className={`text-sm font-medium transition-colors duration-200 ${
+                isActive(link.href) 
+                  ? 'text-purple-900 font-bold' 
+                  : 'text-slate-600 hover:text-purple-800'
               }`}
             >
               {link.label}
@@ -69,7 +75,7 @@ export default function Header() {
         <div className="hidden md:flex items-center">
           <Link 
             href="/contact" 
-            className="text-xs font-bold uppercase tracking-wider bg-black text-white hover:bg-neutral-800 transition-colors px-6 py-3 rounded"
+            className="text-xs font-bold uppercase tracking-wider bg-purple-900 text-white hover:bg-purple-950 transition-all px-6 py-2.5 rounded-full shadow-sm shadow-purple-950/15 hover:shadow-md hover:scale-[1.02]"
           >
             START A PROJECT
           </Link>
@@ -77,34 +83,37 @@ export default function Header() {
 
         {/* Mobile Menu Icon */}
         <button 
-          className="md:hidden text-black outline-none p-1" 
+          className="md:hidden text-slate-900 outline-none p-1.5 rounded-lg hover:bg-purple-50 transition-colors" 
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle Navigation Menu"
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          {isOpen ? <X size={24} className="text-purple-900" /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Drawer Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 top-[76px] bg-white z-40 md:hidden flex flex-col px-6 py-8 border-t border-border-light">
-          <nav className="flex flex-col gap-6 text-xl font-medium mb-10">
+        <div className="fixed inset-0 top-[70px] bg-white/95 backdrop-blur-lg z-40 md:hidden flex flex-col px-6 py-8 border-t border-purple-100/70">
+          <nav className="flex flex-col gap-5 text-lg font-medium mb-10">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`transition-colors py-2 border-b border-neutral-100 ${
-                  isActive(link.href) ? 'text-black font-semibold' : 'text-color-text-secondary'
+                className={`transition-colors py-2.5 border-b border-purple-50/80 flex items-center justify-between ${
+                  isActive(link.href) 
+                    ? 'text-purple-900 font-bold' 
+                    : 'text-slate-600 hover:text-purple-800'
                 }`}
                 onClick={() => setIsOpen(false)}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {isActive(link.href) && <span className="w-2 h-2 rounded-full bg-purple-700" />}
               </Link>
             ))}
           </nav>
           <Link 
             href="/contact" 
-            className="w-full text-center text-sm font-bold uppercase tracking-wider bg-black text-white py-4 rounded"
+            className="w-full text-center text-xs font-bold uppercase tracking-wider bg-purple-900 text-white py-3.5 rounded-full shadow-sm shadow-purple-950/20"
             onClick={() => setIsOpen(false)}
           >
             START A PROJECT

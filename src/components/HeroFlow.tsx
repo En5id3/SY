@@ -1,37 +1,44 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface NodeDetail {
   title: string;
+  stage: string;
   desc: string;
 }
 
 const nodeDetails: Record<string, NodeDetail> = {
   idea: {
-    title: '01 / IDEA (THINK)',
-    desc: 'Understanding raw business goals, extracting core requirements, and mapping strategic technology solutions before coding begins.'
+    stage: '01 // THINK',
+    title: 'IDEA & STRATEGY',
+    desc: 'Extracting core business objectives, auditing bottlenecks, and drafting clean technical architecture before writing a single line of code.'
   },
   data: {
-    title: '02 / DATA (STRUCTURE)',
-    desc: 'Setting up database schemas, scaling data warehouses, and establishing real-time operational streams.'
+    stage: '02 // STRUCTURE',
+    title: 'DATA & INFRASTRUCTURE',
+    desc: 'Designing scalable PostgreSQL/vector databases, cloud pipelines, and real-time operational state models.'
   },
   ai: {
-    title: '03 / AI (INTELLIGENCE)',
-    desc: 'Deploying custom LLMs, building semantic search index graphs, and implementing autonomous cognitive agents.'
+    stage: '03 // INTELLIGENCE',
+    title: 'AI & COGNITION',
+    desc: 'Deploying custom LLMs, RAG knowledge retrieval graphs, and autonomous multi-agent task execution flows.'
   },
   software: {
-    title: '04 / SOFTWARE (BUILD)',
-    desc: 'Developing fast, stable web systems, SaaS platforms, internal operations portals, and secure backend APIs.'
+    stage: '04 // BUILD',
+    title: 'SOFTWARE ENGINEERING',
+    desc: 'Engineering high-performance Next.js interfaces, secure microservice APIs, and enterprise internal operational dashboards.'
   },
   automation: {
-    title: '05 / AUTOMATION (SYSTEMS)',
-    desc: 'Connecting fragmented applications, scheduling workflows, and eliminating manual entries.'
+    stage: '05 // ACCELERATE',
+    title: 'PROCESS AUTOMATION',
+    desc: 'Integrating disparate enterprise software layers to eliminate repetitive manual overhead and ensure zero-latency execution.'
   },
   growth: {
-    title: '06 / GROWTH (SCALE)',
-    desc: 'Implementing programmatic SEO routing, optimizing layout conversions, and ranking inside traditional and AI search engines.'
+    stage: '06 // SCALE',
+    title: 'DISTRIBUTION & SCALE',
+    desc: 'Deploying programmatic SEO systems, conversion rate optimization, and indexing models for organic compounding growth.'
   }
 };
 
@@ -43,70 +50,75 @@ export default function HeroFlow() {
     { id: 'data', cx: 140, cy: 110, label: 'DATA' },
     { id: 'ai', cx: 220, cy: 200, label: 'AI' },
     { id: 'software', cx: 300, cy: 110, label: 'SOFTWARE' },
-    { id: 'automation', cx: 380, cy: 200, label: 'AUTOMATION' },
+    { id: 'automation', cx: 380, cy: 200, label: 'AUTOMATE' },
     { id: 'growth', cx: 440, cy: 110, label: 'GROWTH' }
   ];
 
   return (
-    <div className="w-full flex flex-col gap-6">
-      {/* Dynamic Visualizer SVG */}
-      <div className="relative border border-border-light bg-white rounded-lg p-6 flex items-center justify-center min-h-[300px] shadow-sm overflow-hidden">
-        <svg className="w-full max-w-[480px] h-[260px] select-none" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* SVG Filter for Glow Effect */}
+    <div className="w-full flex flex-col gap-5">
+      {/* Dynamic Visualizer SVG Card */}
+      <div className="relative border border-purple-100/80 bg-white rounded-2xl p-6 flex flex-col items-center justify-center min-h-[300px] shadow-sm shadow-purple-900/5 card-hover-effect overflow-hidden">
+        
+        {/* Subtle Ambient Background Glow */}
+        <div className="absolute inset-0 bg-radial from-purple-500/3 via-transparent to-transparent pointer-events-none" />
+
+        <svg className="w-full max-w-[480px] h-[240px] select-none" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* SVG Glow Filters & Gradients */}
           <defs>
-            <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
+            <filter id="purple-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3.5" result="blur" />
               <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
+
+            <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#7e22ce" />
+              <stop offset="100%" stopColor="#a855f7" />
+            </linearGradient>
           </defs>
 
-          {/* Animated Connecting Flow Lines */}
+          {/* Base Inactive Flow Lines */}
           <path 
             d="M 60 200 C 100 155, 100 155, 140 110" 
-            stroke="#e5e7eb" 
-            strokeWidth="1.5"
-            filter={activeNode === 'idea' || activeNode === 'data' ? 'url(#glow-filter)' : undefined}
-            className={`transition-all duration-300 ${activeNode === 'idea' || activeNode === 'data' ? 'stroke-indigo-600 stroke-[2.5px]' : ''}`}
+            stroke="#ede9fe" 
+            strokeWidth="2"
+            className="transition-colors duration-300"
           />
           <path 
             d="M 140 110 C 180 155, 180 155, 220 200" 
-            stroke="#e5e7eb" 
-            strokeWidth="1.5"
-            filter={activeNode === 'data' || activeNode === 'ai' ? 'url(#glow-filter)' : undefined}
-            className={`transition-all duration-300 ${activeNode === 'data' || activeNode === 'ai' ? 'stroke-indigo-600 stroke-[2.5px]' : ''}`}
+            stroke="#ede9fe" 
+            strokeWidth="2"
+            className="transition-colors duration-300"
           />
           <path 
             d="M 220 200 C 260 155, 260 155, 300 110" 
-            stroke="#e5e7eb" 
-            strokeWidth="1.5"
-            filter={activeNode === 'ai' || activeNode === 'software' ? 'url(#glow-filter)' : undefined}
-            className={`transition-all duration-300 ${activeNode === 'ai' || activeNode === 'software' ? 'stroke-indigo-600 stroke-[2.5px]' : ''}`}
+            stroke="#ede9fe" 
+            strokeWidth="2"
+            className="transition-colors duration-300"
           />
           <path 
             d="M 300 110 C 340 155, 340 155, 380 200" 
-            stroke="#e5e7eb" 
-            strokeWidth="1.5"
-            filter={activeNode === 'software' || activeNode === 'automation' ? 'url(#glow-filter)' : undefined}
-            className={`transition-all duration-300 ${activeNode === 'software' || activeNode === 'automation' ? 'stroke-indigo-600 stroke-[2.5px]' : ''}`}
+            stroke="#ede9fe" 
+            strokeWidth="2"
+            className="transition-colors duration-300"
           />
           <path 
             d="M 380 200 C 410 155, 410 155, 440 110" 
-            stroke="#e5e7eb" 
-            strokeWidth="1.5"
-            filter={activeNode === 'automation' || activeNode === 'growth' ? 'url(#glow-filter)' : undefined}
-            className={`transition-all duration-300 ${activeNode === 'automation' || activeNode === 'growth' ? 'stroke-indigo-600 stroke-[2.5px]' : ''}`}
+            stroke="#ede9fe" 
+            strokeWidth="2"
+            className="transition-colors duration-300"
           />
 
-          {/* Animating Dash Overlay representing data packet flow */}
+          {/* Active Highlight Connection Path */}
           <path 
             d="M 60 200 C 100 155, 100 155, 140 110 C 180 155, 180 155, 220 200 C 260 155, 260 155, 300 110 C 340 155, 340 155, 380 200 C 410 155, 410 155, 440 110" 
-            stroke="#6366f1" 
-            strokeWidth="2"
+            stroke="url(#purple-gradient)" 
+            strokeWidth="2.5"
             className="flow-dash"
-            opacity="0.8"
+            opacity="0.9"
+            filter="url(#purple-glow)"
           />
 
           {/* Interactive Nodes */}
@@ -117,31 +129,37 @@ export default function HeroFlow() {
                 key={node.id} 
                 className="cursor-pointer group"
                 onMouseEnter={() => setActiveNode(node.id)}
+                onClick={() => setActiveNode(node.id)}
               >
-                <circle 
-                  cx={node.cx} 
-                  cy={node.cy} 
-                  r="24" 
-                  fill={isActive ? '#4f46e5' : '#ffffff'} 
-                  stroke={isActive ? '#4f46e5' : '#e5e7eb'}
-                  strokeWidth="2"
-                  filter={isActive ? 'url(#glow-filter)' : undefined}
-                  className="transition-colors duration-200 group-hover:stroke-indigo-600"
-                />
+                {/* Outer Halo Pulse */}
                 <circle 
                   cx={node.cx} 
                   cy={node.cy} 
                   r="30" 
                   fill="transparent" 
-                  stroke={isActive ? 'rgba(79, 70, 229, 0.25)' : 'transparent'}
-                  strokeWidth="2.5"
-                  className="transition-all duration-200"
+                  stroke={isActive ? 'rgba(126, 34, 206, 0.25)' : 'transparent'}
+                  strokeWidth="2"
+                  className="transition-all duration-300"
                 />
+
+                {/* Main Node Circle */}
+                <circle 
+                  cx={node.cx} 
+                  cy={node.cy} 
+                  r="23" 
+                  fill={isActive ? '#6b21a8' : '#ffffff'} 
+                  stroke={isActive ? '#7e22ce' : '#cbd5e1'}
+                  strokeWidth={isActive ? '2.5' : '1.5'}
+                  filter={isActive ? 'url(#purple-glow)' : undefined}
+                  className="transition-all duration-300 group-hover:stroke-purple-600"
+                />
+
+                {/* Node Label Text */}
                 <text 
                   x={node.cx} 
                   y={node.cy + 3.5} 
-                  className={`text-[10px] font-bold text-center select-none pointer-events-none transition-colors duration-200 ${
-                    isActive ? 'fill-white font-extrabold' : 'fill-neutral-400 group-hover:fill-black'
+                  className={`text-[10px] font-mono font-bold text-center select-none pointer-events-none transition-colors duration-200 ${
+                    isActive ? 'fill-white font-extrabold' : 'fill-slate-500 group-hover:fill-purple-900'
                   }`}
                   textAnchor="middle"
                 >
@@ -151,16 +169,41 @@ export default function HeroFlow() {
             );
           })}
         </svg>
+
+        <div className="flex items-center gap-2 mt-2">
+          <span className="text-[10px] font-mono text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-200/50">
+            Hover over nodes to inspect system stages
+          </span>
+        </div>
       </div>
 
       {/* Synchronized Detail Box */}
-      <div className="border border-border-light bg-white rounded-lg p-5 shadow-sm min-h-[96px] transition-all duration-150">
-        <h4 className="text-xs font-bold uppercase tracking-wider text-black mb-1">
-          {nodeDetails[activeNode]?.title}
-        </h4>
-        <p className="text-xs text-color-text-secondary leading-relaxed">
-          {nodeDetails[activeNode]?.desc}
-        </p>
+      <div className="border border-purple-100/80 bg-white rounded-2xl p-5 shadow-sm shadow-purple-900/5 card-hover-effect">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeNode}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="flex flex-col gap-1.5"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono font-bold text-purple-700 tracking-wider">
+                {nodeDetails[activeNode].stage}
+              </span>
+              <span className="text-[10px] font-mono text-slate-400 uppercase">
+                Architecture Node
+              </span>
+            </div>
+            <h4 className="text-sm font-bold text-slate-900">
+              {nodeDetails[activeNode].title}
+            </h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              {nodeDetails[activeNode].desc}
+            </p>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

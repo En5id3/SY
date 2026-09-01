@@ -23,35 +23,35 @@ export default function Industries() {
     {
       id: 'saas',
       name: 'SaaS & Startups',
-      problems: 'High client churn, rising acquisition costs, and slow feature velocity.',
-      aiOpps: 'Build AI copilots and knowledge assistants within the main app.',
+      problems: 'High client churn, rising acquisition costs, and slow feature engineering velocity.',
+      aiOpps: 'Build embedded AI copilots and RAG knowledge assistants within the main app.',
       softwareOpps: 'Rapid MVP engineering cycles, modular frontends, and API developer tools.',
-      automationOpps: 'Automate billing logs, tier checks, and onboarding emails.',
-      growthOpps: 'Technical and programmatic SEO page routing grids.',
+      automationOpps: 'Automate billing logs, tier checks, and onboarding workflows.',
+      growthOpps: 'Technical and programmatic SEO page routing networks.',
       caseStudy: 'SEO Growth Engine / SaaS MVP Blueprint',
-      icon: <Cpu className="w-5 h-5 text-black" />
+      icon: <Cpu className="w-5 h-5" />
     },
     {
       id: 'finance',
       name: 'Finance & Compliance',
-      problems: 'Manual audit checks, compliance document audits, and data entry errors.',
+      problems: 'Manual audit checks, compliance document analysis, and data entry human errors.',
       aiOpps: 'Secure document retrieval-augmented generation (RAG) indices.',
       softwareOpps: 'Portals for customer onboarding documents, secure database queries.',
       automationOpps: 'Automate risk alerts, verify uploaded certificates.',
       growthOpps: 'Search visibility for commercial compliance intent terms.',
       caseStudy: 'AI Document Assistant / Compliance Copilot',
-      icon: <ShieldCheck className="w-5 h-5 text-black" />
+      icon: <ShieldCheck className="w-5 h-5" />
     },
     {
       id: 'healthcare',
       name: 'Healthcare Systems',
       problems: 'Scheduling bottlenecks, repetitive patient queries, and complex report logging.',
-      aiOpps: 'AI voice receptionists and FAQs handlers.',
+      aiOpps: 'Voice AI receptionists and multi-lingual FAQ triage agents.',
       softwareOpps: 'Patient management consoles, schedule database grids.',
       automationOpps: 'Automate call logs, sync calendar entries to EHR systems.',
       growthOpps: 'Local patient intent SEO and service indexing.',
       caseStudy: 'AI Receptionist for Service Business',
-      icon: <HeartPulse className="w-5 h-5 text-black" />
+      icon: <HeartPulse className="w-5 h-5" />
     },
     {
       id: 'realestate',
@@ -62,7 +62,7 @@ export default function Industries() {
       automationOpps: 'Automate lead score alerts, dispatch text response workflows.',
       growthOpps: 'Local area and city directory programmatic indexing.',
       caseStudy: 'AI Sales Lead Automation',
-      icon: <Building2 className="w-5 h-5 text-black" />
+      icon: <Building2 className="w-5 h-5" />
     },
     {
       id: 'ecommerce',
@@ -73,7 +73,7 @@ export default function Industries() {
       automationOpps: 'Automate stock reorders, sync catalog data updates.',
       growthOpps: 'Technical crawling optimizations and schema rich snippet markups.',
       caseStudy: 'Personalized Product Recommendations',
-      icon: <ShoppingBag className="w-5 h-5 text-black" />
+      icon: <ShoppingBag className="w-5 h-5" />
     },
     {
       id: 'logistics',
@@ -84,7 +84,7 @@ export default function Industries() {
       automationOpps: 'Automate driver route logs, sync shipment tables.',
       growthOpps: 'Organic visibility targeting industry supply-chain queries.',
       caseStudy: 'Business Analytics Platform / ML Anomaly Detector',
-      icon: <Truck className="w-5 h-5 text-black" />
+      icon: <Truck className="w-5 h-5" />
     }
   ];
 
@@ -93,74 +93,82 @@ export default function Industries() {
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-12 md:py-24">
       {/* Editorial Header */}
-      <div className="max-w-[800px] mb-20 flex flex-col gap-6">
-        <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">INDUSTRIES ALIGNMENT</span>
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tighter text-black uppercase leading-tight">
+      <div className="max-w-[800px] mb-20 flex flex-col gap-5">
+        <span className="text-[11px] font-mono font-bold tracking-widest uppercase text-purple-800 bg-purple-50 px-3 py-1 rounded-full border border-purple-200/60 self-start">
+          INDUSTRY SOLUTIONS
+        </span>
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tighter text-slate-900 uppercase leading-tight">
           SECTOR CAPABILITIES.
         </h1>
         <p className="sub-editorial">
-          We configure AI, software systems, and technical organic traffic funnels across core business verticals. Verify how we align opportunities.
+          We configure AI, software systems, and technical organic traffic funnels across core business verticals. Verify how we align high-leverage opportunities.
         </p>
       </div>
 
       {/* Main Grid: Selector tabs and details */}
       <div className="flex flex-col lg:flex-row gap-8 items-stretch">
         {/* Left Side: Selectors */}
-        <div className="w-full lg:w-1/3 flex flex-col gap-2 bg-neutral-50/50 border border-border-light rounded-lg p-5">
-          <span className="text-[8px] font-bold tracking-wider text-neutral-400 uppercase mb-4">Select Business Sector</span>
+        <div className="w-full lg:w-1/3 flex flex-col gap-2 bg-purple-50/25 border border-purple-100/70 rounded-2xl p-5">
+          <span className="text-[9px] font-mono font-bold tracking-wider text-purple-800 uppercase mb-3">
+            01 // Select Business Sector
+          </span>
           {industries.map((ind) => (
             <button
               key={ind.id}
               onClick={() => setActiveInd(ind.id)}
-              className={`text-left text-xs font-semibold px-4 py-3 rounded transition-all duration-150 flex items-center gap-3 ${
+              className={`text-left text-xs font-semibold px-4 py-3 rounded-xl transition-all duration-200 flex items-center gap-3 ${
                 activeInd === ind.id 
-                  ? 'bg-black text-white' 
-                  : 'text-color-text-secondary hover:bg-neutral-100 hover:text-black'
+                  ? 'bg-purple-900 text-white shadow-sm shadow-purple-950/20 font-bold' 
+                  : 'text-slate-600 hover:bg-purple-100/50 hover:text-purple-950'
               }`}
             >
-              {ind.icon}
-              {ind.name}
+              <span className={activeInd === ind.id ? 'text-purple-300' : 'text-purple-700'}>
+                {ind.icon}
+              </span>
+              <span>{ind.name}</span>
             </button>
           ))}
         </div>
 
         {/* Right Side: Details Card */}
-        <div className="w-full lg:w-2/3 bg-white border border-border-light rounded-lg p-8 flex flex-col justify-between shadow-sm relative overflow-hidden">
-          <span className="absolute top-2 right-2 text-[8px] font-mono text-neutral-300">SECTOR_OPPORTUNITIES_MAP</span>
-
+        <div className="w-full lg:w-2/3 bg-white border border-purple-100/80 rounded-2xl p-8 flex flex-col justify-between shadow-sm shadow-purple-900/5 relative overflow-hidden">
           <div>
-            <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-400">INDUSTRY PARAMETERS</span>
-            <h2 className="text-2xl font-bold text-black mt-2 mb-6">{current.name}</h2>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-800 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-200/50">
+                INDUSTRY PARAMETERS
+              </span>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-6">{current.name}</h2>
             
             {/* Split layout: Problems & Ops */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              <div>
-                <h4 className="text-xs font-bold text-black uppercase tracking-wider mb-2">Common Problems</h4>
-                <p className="text-xs text-color-text-secondary leading-relaxed">{current.problems}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="border border-purple-50 bg-purple-50/15 rounded-xl p-4">
+                <h4 className="text-xs font-mono font-bold text-purple-900 uppercase tracking-wider mb-2">Common Problems</h4>
+                <p className="text-xs text-slate-600 leading-relaxed">{current.problems}</p>
               </div>
-              <div>
-                <h4 className="text-xs font-bold text-black uppercase tracking-wider mb-2">AI Opportunities</h4>
-                <p className="text-xs text-color-text-secondary leading-relaxed">{current.aiOpps}</p>
+              <div className="border border-purple-50 bg-purple-50/15 rounded-xl p-4">
+                <h4 className="text-xs font-mono font-bold text-purple-900 uppercase tracking-wider mb-2">AI Opportunities</h4>
+                <p className="text-xs text-slate-600 leading-relaxed">{current.aiOpps}</p>
               </div>
-              <div>
-                <h4 className="text-xs font-bold text-black uppercase tracking-wider mb-2">Software Systems</h4>
-                <p className="text-xs text-color-text-secondary leading-relaxed">{current.softwareOpps}</p>
+              <div className="border border-purple-50 bg-purple-50/15 rounded-xl p-4">
+                <h4 className="text-xs font-mono font-bold text-purple-900 uppercase tracking-wider mb-2">Software Systems</h4>
+                <p className="text-xs text-slate-600 leading-relaxed">{current.softwareOpps}</p>
               </div>
-              <div>
-                <h4 className="text-xs font-bold text-black uppercase tracking-wider mb-2">Crawl & Growth</h4>
-                <p className="text-xs text-color-text-secondary leading-relaxed">{current.growthOpps}</p>
+              <div className="border border-purple-50 bg-purple-50/15 rounded-xl p-4">
+                <h4 className="text-xs font-mono font-bold text-purple-900 uppercase tracking-wider mb-2">Crawl & Growth</h4>
+                <p className="text-xs text-slate-600 leading-relaxed">{current.growthOpps}</p>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-border-light pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs">
+          <div className="border-t border-purple-100/70 pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs">
             <div>
-              <span className="text-[8px] font-mono text-neutral-400 block uppercase">Reference Case</span>
-              <span className="text-black font-semibold uppercase">{current.caseStudy}</span>
+              <span className="text-[9px] font-mono text-slate-400 block uppercase">Reference Architecture Case</span>
+              <span className="text-purple-950 font-bold uppercase">{current.caseStudy}</span>
             </div>
             <Link 
               href="/contact" 
-              className="text-center text-xs font-bold uppercase tracking-wider bg-black text-white px-6 py-3 rounded hover:bg-neutral-800 transition-colors w-full sm:w-auto"
+              className="text-center text-xs font-bold uppercase tracking-wider bg-purple-900 text-white px-6 py-3 rounded-full hover:bg-purple-950 transition-all shadow-sm shadow-purple-950/15 w-full sm:w-auto"
             >
               Start Sector Project
             </Link>
