@@ -2,202 +2,241 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Cpu, Database, Sparkles, Server, Zap } from 'lucide-react';
 
-interface NodeDetail {
-  title: string;
+interface SystemNode {
+  id: string;
   stage: string;
-  type: 'purple' | 'blue' | 'indigo';
-  colorHex: string;
+  title: string;
+  metric: string;
+  metricLabel: string;
   desc: string;
+  type: 'purple' | 'blue' | 'indigo';
+  color: string;
+  cx: number;
+  cy: number;
+  icon: React.ReactNode;
 }
 
-const nodeDetails: Record<string, NodeDetail> = {
-  idea: {
-    stage: '01 // THINK (SOCH)',
-    title: 'IDEA & STRATEGY',
+const systemNodes: SystemNode[] = [
+  {
+    id: 'strategy',
+    stage: '01 // REASONING',
+    title: 'COGNITIVE STRATEGY',
+    metric: '< 180ms',
+    metricLabel: 'Decision Latency',
+    desc: 'Deep architecture modeling and context grounding before a line of code is written.',
     type: 'purple',
-    colorHex: '#7e22ce',
-    desc: 'Extracting core business objectives, auditing bottlenecks, and drafting clean technical architecture before writing a single line of code.'
+    color: '#7c3aed',
+    cx: 55,
+    cy: 160,
+    icon: <Sparkles className="w-3.5 h-3.5" />
   },
-  data: {
-    stage: '02 // STRUCTURE (DATA)',
-    title: 'DATA & INFRASTRUCTURE',
-    type: 'blue',
-    colorHex: '#2563eb',
-    desc: 'Designing scalable PostgreSQL/vector databases, cloud pipelines, and real-time operational state models.'
-  },
-  ai: {
-    stage: '03 // INTELLIGENCE (SOCH)',
-    title: 'AI & COGNITION',
-    type: 'purple',
-    colorHex: '#9333ea',
-    desc: 'Deploying custom LLMs, RAG knowledge retrieval graphs, and autonomous multi-agent task execution flows.'
-  },
-  software: {
-    stage: '04 // BUILD (YEAH)',
-    title: 'SOFTWARE ENGINEERING',
+  {
+    id: 'data',
+    stage: '02 // STORAGE',
+    title: 'VECTOR & SQL MATRIX',
+    metric: '10.2M',
+    metricLabel: 'Indexed Vectors',
+    desc: 'Sub-millisecond hybrid retrieval combining vector similarity and transactional PostgreSQL.',
     type: 'indigo',
-    colorHex: '#4f46e5',
-    desc: 'Engineering high-performance Next.js interfaces, secure microservice APIs, and enterprise internal operational dashboards.'
+    color: '#4f46e5',
+    cx: 145,
+    cy: 80,
+    icon: <Database className="w-3.5 h-3.5" />
   },
-  automation: {
-    stage: '05 // ACCELERATE (YEAH)',
-    title: 'PROCESS AUTOMATION',
-    type: 'blue',
-    colorHex: '#0284c7',
-    desc: 'Integrating disparate enterprise software layers to eliminate repetitive manual overhead and ensure zero-latency execution.'
+  {
+    id: 'ai-core',
+    stage: '03 // INTELLIGENCE',
+    title: 'AUTONOMOUS AI CORE',
+    metric: '99.98%',
+    metricLabel: 'Execution Precision',
+    desc: 'Multi-agent orchestration graphs equipped with tool-calling and API triggers.',
+    type: 'purple',
+    color: '#9333ea',
+    cx: 235,
+    cy: 160,
+    icon: <Cpu className="w-3.5 h-3.5" />
   },
-  growth: {
-    stage: '06 // SCALE (GROWTH)',
-    title: 'DISTRIBUTION & SCALE',
+  {
+    id: 'cloud',
+    stage: '04 // PRODUCTION',
+    title: 'MISSION-CRITICAL API',
+    metric: '99.99%',
+    metricLabel: 'Edge Availability',
+    desc: 'Serverless global edge routing with automated self-healing and zero cold-start latency.',
     type: 'blue',
-    colorHex: '#0ea5e9',
-    desc: 'Deploying programmatic SEO systems, conversion rate optimization, and indexing models for organic compounding growth.'
+    color: '#2563eb',
+    cx: 325,
+    cy: 80,
+    icon: <Server className="w-3.5 h-3.5" />
+  },
+  {
+    id: 'scale',
+    stage: '05 // VELOCITY',
+    title: 'COMPOUNDING REACH',
+    metric: '14.2x',
+    metricLabel: 'Organic Scaling',
+    desc: 'Database-driven programmatic distribution networks capturing category search demand.',
+    type: 'blue',
+    color: '#0284c7',
+    cx: 415,
+    cy: 160,
+    icon: <Zap className="w-3.5 h-3.5" />
   }
-};
+];
 
 export default function HeroFlow() {
-  const [activeNode, setActiveNode] = useState<string>('idea');
+  const [activeNodeId, setActiveNodeId] = useState<string>('ai-core');
 
-  const nodes = [
-    { id: 'idea', cx: 60, cy: 200, label: 'IDEA', type: 'purple', color: '#7e22ce' },
-    { id: 'data', cx: 140, cy: 110, label: 'DATA', type: 'blue', color: '#2563eb' },
-    { id: 'ai', cx: 220, cy: 200, label: 'AI', type: 'purple', color: '#9333ea' },
-    { id: 'software', cx: 300, cy: 110, label: 'SOFTWARE', type: 'indigo', color: '#4f46e5' },
-    { id: 'automation', cx: 380, cy: 200, label: 'AUTOMATE', type: 'blue', color: '#0284c7' },
-    { id: 'growth', cx: 440, cy: 110, label: 'GROWTH', type: 'blue', color: '#0ea5e9' }
-  ];
-
-  const currentDetail = nodeDetails[activeNode] || nodeDetails['idea'];
+  const active = systemNodes.find(n => n.id === activeNodeId) || systemNodes[2];
 
   return (
-    <div className="w-full flex flex-col gap-5">
-      {/* Dynamic Visualizer SVG Card */}
-      <div className="relative border border-indigo-100/80 bg-white rounded-2xl p-6 flex flex-col items-center justify-center min-h-[300px] shadow-sm shadow-indigo-900/5 card-hover-effect overflow-hidden">
+    <div className="w-full flex flex-col gap-4 select-none">
+      {/* Visualizer Container */}
+      <div className="relative border border-indigo-100/90 bg-white/90 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-xl shadow-indigo-950/5 card-hover-effect overflow-hidden">
         
-        {/* Subtle Dual Ambient Background Glow (Purple Left, Blue Right) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/4 via-transparent to-blue-500/4 pointer-events-none" />
+        {/* Ambient Radial Mesh Behind Vector Canvas */}
+        <div className="absolute -top-24 -left-24 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <svg className="w-full max-w-[480px] h-[240px] select-none" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* SVG Glow Filters & Gradients */}
-          <defs>
-            <filter id="dual-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3.5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-
-            {/* Seamless Purple to Blue Intelligent Pipeline Gradient */}
-            <linearGradient id="purple-blue-pipe" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#7e22ce" />
-              <stop offset="35%" stopColor="#4f46e5" />
-              <stop offset="70%" stopColor="#2563eb" />
-              <stop offset="100%" stopColor="#0284c7" />
-            </linearGradient>
-          </defs>
-
-          {/* Base Inactive Flow Lines */}
-          <path d="M 60 200 C 100 155, 100 155, 140 110" stroke="#e0e7ff" strokeWidth="2" />
-          <path d="M 140 110 C 180 155, 180 155, 220 200" stroke="#e0e7ff" strokeWidth="2" />
-          <path d="M 220 200 C 260 155, 260 155, 300 110" stroke="#e0e7ff" strokeWidth="2" />
-          <path d="M 300 110 C 340 155, 340 155, 380 200" stroke="#e0e7ff" strokeWidth="2" />
-          <path d="M 380 200 C 410 155, 410 155, 440 110" stroke="#e0e7ff" strokeWidth="2" />
-
-          {/* Active Highlight Connection Path with Purple-to-Blue Gradient */}
-          <path 
-            d="M 60 200 C 100 155, 100 155, 140 110 C 180 155, 180 155, 220 200 C 260 155, 260 155, 300 110 C 340 155, 340 155, 380 200 C 410 155, 410 155, 440 110" 
-            stroke="url(#purple-blue-pipe)" 
-            strokeWidth="2.5"
-            className="flow-dash"
-            opacity="0.95"
-            filter="url(#dual-glow)"
-          />
-
-          {/* Interactive Nodes */}
-          {nodes.map((node) => {
-            const isActive = activeNode === node.id;
-            return (
-              <g 
-                key={node.id} 
-                className="cursor-pointer group"
-                onMouseEnter={() => setActiveNode(node.id)}
-                onClick={() => setActiveNode(node.id)}
-              >
-                {/* Outer Halo Pulse */}
-                <circle 
-                  cx={node.cx} 
-                  cy={node.cy} 
-                  r="30" 
-                  fill="transparent" 
-                  stroke={isActive ? (node.type === 'purple' ? 'rgba(126, 34, 206, 0.25)' : 'rgba(37, 99, 235, 0.25)') : 'transparent'}
-                  strokeWidth="2"
-                  className="transition-all duration-300"
-                />
-
-                {/* Main Node Circle */}
-                <circle 
-                  cx={node.cx} 
-                  cy={node.cy} 
-                  r="23" 
-                  fill={isActive ? node.color : '#ffffff'} 
-                  stroke={isActive ? node.color : '#cbd5e1'}
-                  strokeWidth={isActive ? '2.5' : '1.5'}
-                  filter={isActive ? 'url(#dual-glow)' : undefined}
-                  className="transition-all duration-300 group-hover:stroke-indigo-600"
-                />
-
-                {/* Node Label Text */}
-                <text 
-                  x={node.cx} 
-                  y={node.cy + 3.5} 
-                  className={`text-[10px] font-mono font-bold text-center select-none pointer-events-none transition-colors duration-200 ${
-                    isActive ? 'fill-white font-extrabold' : 'fill-slate-500 group-hover:fill-slate-900'
-                  }`}
-                  textAnchor="middle"
-                >
-                  {node.label.substring(0, 3)}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-
-        <div className="flex items-center gap-2 mt-2">
-          <span className="text-[10px] font-mono text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200/50">
-            Hover over nodes to inspect system stages
-          </span>
+        {/* Top Telemetry Header */}
+        <div className="flex items-center justify-between border-b border-indigo-50/90 pb-4 mb-2">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[10px] font-mono font-bold tracking-widest text-slate-500 uppercase">
+              LIVE SYSTEM TOPOLOGY
+            </span>
+          </div>
+          <div className="flex items-center gap-4 text-[10px] font-mono text-slate-400">
+            <span>UPTIME <strong className="text-slate-900 font-semibold">99.99%</strong></span>
+            <span className="hidden sm:inline">THROUGHPUT <strong className="text-slate-900 font-semibold">48k req/s</strong></span>
+          </div>
         </div>
-      </div>
 
-      {/* Synchronized Detail Box */}
-      <div className="border border-indigo-100/80 bg-white rounded-2xl p-5 shadow-sm shadow-indigo-900/5 card-hover-effect">
+        {/* SVG Pipeline Canvas */}
+        <div className="relative w-full h-[210px] flex items-center justify-center my-2">
+          <svg 
+            className="w-full h-full max-w-[460px] overflow-visible" 
+            viewBox="0 0 470 240" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <filter id="hero-glow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+
+              <linearGradient id="beam-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#7c3aed" />
+                <stop offset="35%" stopColor="#4f46e5" />
+                <stop offset="70%" stopColor="#2563eb" />
+                <stop offset="100%" stopColor="#0284c7" />
+              </linearGradient>
+            </defs>
+
+            {/* Inactive Base Tracks */}
+            <path d="M 55 160 C 100 120, 100 120, 145 80" stroke="#e0e7ff" strokeWidth="2" strokeDasharray="3 3" />
+            <path d="M 145 80 C 190 120, 190 120, 235 160" stroke="#e0e7ff" strokeWidth="2" strokeDasharray="3 3" />
+            <path d="M 235 160 C 280 120, 280 120, 325 80" stroke="#e0e7ff" strokeWidth="2" strokeDasharray="3 3" />
+            <path d="M 325 80 C 370 120, 370 120, 415 160" stroke="#e0e7ff" strokeWidth="2" strokeDasharray="3 3" />
+
+            {/* Glowing Active Beam with Smooth Dash Stream */}
+            <path 
+              d="M 55 160 C 100 120, 100 120, 145 80 C 190 120, 190 120, 235 160 C 280 120, 280 120, 325 80 C 370 120, 370 120, 415 160" 
+              stroke="url(#beam-gradient)" 
+              strokeWidth="2.5" 
+              className="flow-dash"
+              opacity="0.9"
+              filter="url(#hero-glow)"
+            />
+
+            {/* Interactive Telemetry Nodes */}
+            {systemNodes.map((node) => {
+              const isActive = activeNodeId === node.id;
+              return (
+                <g 
+                  key={node.id} 
+                  className="cursor-pointer group"
+                  onMouseEnter={() => setActiveNodeId(node.id)}
+                  onClick={() => setActiveNodeId(node.id)}
+                >
+                  {/* Outer Pulsing Halo Ring */}
+                  {isActive && (
+                    <circle 
+                      cx={node.cx} 
+                      cy={node.cy} 
+                      r="28" 
+                      fill="none" 
+                      stroke={node.color} 
+                      strokeWidth="1.5"
+                      strokeOpacity="0.25"
+                      className="animate-ping"
+                      style={{ transformOrigin: `${node.cx}px ${node.cy}px` }}
+                    />
+                  )}
+
+                  {/* Main Node Housing */}
+                  <circle 
+                    cx={node.cx} 
+                    cy={node.cy} 
+                    r="21" 
+                    fill={isActive ? node.color : '#ffffff'} 
+                    stroke={isActive ? node.color : '#cbd5e1'} 
+                    strokeWidth={isActive ? '2.5' : '1.5'}
+                    filter={isActive ? 'url(#hero-glow)' : undefined}
+                    className="transition-all duration-300 group-hover:scale-110"
+                    style={{ transformOrigin: `${node.cx}px ${node.cy}px` }}
+                  />
+
+                  {/* Node Label Abbreviation */}
+                  <text 
+                    x={node.cx} 
+                    y={node.cy + 3.5} 
+                    className={`text-[9px] font-mono font-bold select-none pointer-events-none transition-colors ${
+                      isActive ? 'fill-white font-extrabold' : 'fill-slate-500 group-hover:fill-slate-900'
+                    }`}
+                    textAnchor="middle"
+                  >
+                    {node.title.substring(0, 3)}
+                  </text>
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+
+        {/* Live Node Telemetry Readout */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeNode}
-            initial={{ opacity: 0, y: 6 }}
+            key={active.id}
+            initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
+            exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.2 }}
-            className="flex flex-col gap-1.5"
+            className="border-t border-indigo-50/90 pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3"
           >
-            <div className="flex items-center justify-between">
-              <span className={`text-[11px] font-mono font-bold tracking-wider ${
-                currentDetail.type === 'purple' ? 'text-purple-700' : 'text-blue-700'
+            <div className="flex flex-col">
+              <span className={`text-[10px] font-mono font-bold tracking-wider ${
+                active.type === 'purple' ? 'text-purple-700' : 'text-blue-700'
               }`}>
-                {currentDetail.stage}
+                {active.stage}
               </span>
-              <span className="text-[10px] font-mono text-slate-400 uppercase">
-                {currentDetail.type === 'purple' ? 'Cognitive Layer' : 'Engineering Layer'}
-              </span>
+              <h4 className="text-xs font-bold text-slate-900 uppercase tracking-tight">
+                {active.title}
+              </h4>
             </div>
-            <h4 className="text-sm font-bold text-slate-900">
-              {currentDetail.title}
-            </h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              {currentDetail.desc}
-            </p>
+
+            <div className="flex items-center gap-4 bg-slate-50/80 px-3.5 py-1.5 rounded-xl border border-slate-200/60">
+              <div className="text-right">
+                <span className="text-[9px] font-mono text-slate-400 uppercase block">{active.metricLabel}</span>
+                <span className="text-xs font-mono font-extrabold text-slate-900">{active.metric}</span>
+              </div>
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>

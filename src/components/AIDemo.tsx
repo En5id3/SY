@@ -3,207 +3,161 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, User, Sparkles, ArrowRight } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle2, Shield, Activity, Terminal } from 'lucide-react';
 
-interface DemoConversation {
-  role: 'user' | 'ai';
-  text: string;
-  step?: 'UNDERSTAND' | 'REASON' | 'ACT';
-  stepDetail?: string;
-}
-
-interface DemoPersona {
+interface Scenario {
   id: string;
   name: string;
-  tag: string;
-  theme: 'blue' | 'purple' | 'indigo';
-  messages: DemoConversation[];
+  badge: string;
+  query: string;
+  response: string;
+  toolCall: string;
+  latency: string;
+  precision: string;
 }
 
-const personas: DemoPersona[] = [
+const scenarios: Scenario[] = [
   {
-    id: 'receptionist',
-    name: 'Voice AI Assistant',
-    tag: 'Telephony & Calendar',
-    theme: 'blue',
-    messages: [
-      { role: 'user', text: 'Hey, I want to book an architecture evaluation call tomorrow afternoon.' },
-      { 
-        role: 'ai', 
-        text: 'Checking engineer calendars... We have slots available tomorrow at 2:00 PM and 4:30 PM. Which time fits your schedule best?', 
-        step: 'UNDERSTAND', 
-        stepDetail: 'Parsed intent: booking_enquiry | Parameters: date=tomorrow_afternoon' 
-      },
-      { role: 'user', text: '4:30 PM works. What info do you need from me?' },
-      { 
-        role: 'ai', 
-        text: 'Confirmed. I have reserved 4:30 PM for you. I dispatched a Google Meet invite and calendar confirmation to your email.', 
-        step: 'ACT', 
-        stepDetail: 'Executed DB calendar lock. Webhook dispatched to SMS & CRM pipeline.' 
-      }
-    ]
+    id: 'agent',
+    name: 'Autonomous Multi-Agent Core',
+    badge: 'ORCHESTRATION',
+    query: 'Route inbound client payload, verify credit tier, and trigger calendar lock.',
+    response: 'Evaluated client telemetry. Risk score: 0.02 (Low). Dispatched API lock to primary PostgreSQL scheduler and initiated secure SMS confirmation.',
+    toolCall: 'exec_tool: db_schedule_lock(user_id="usr_8921", slot="2026-09-02T14:30:00Z")',
+    latency: '168ms',
+    precision: '99.98%'
   },
   {
-    id: 'document',
-    name: 'RAG Knowledge Agent',
-    tag: 'Enterprise Retrieval',
-    theme: 'purple',
-    messages: [
-      { role: 'user', text: 'What is our encryption standard for multi-tenant database clusters?' },
-      { 
-        role: 'ai', 
-        text: 'According to page 14 of the Compliance PDF, all production PostgreSQL instances enforce AES-256 encryption at rest and TLS 1.3 in transit.', 
-        step: 'REASON', 
-        stepDetail: 'Vector search on cluster: security_handbook_2026.pdf (Cosine Similarity: 0.94)' 
-      },
-      { role: 'user', text: 'Where are audit snapshots archived?' },
-      { 
-        role: 'ai', 
-        text: 'Section 4.2 states audit snapshots are automatically bundled weekly and retained in read-only cold storage with 7-year immutable locks.', 
-        step: 'UNDERSTAND', 
-        stepDetail: 'Parsed query: snapshot_retention_policy | Retrieved chunks 4.0-4.5' 
-      }
-    ]
+    id: 'rag',
+    name: 'Enterprise Knowledge RAG',
+    badge: 'SEMANTIC RETRIEVAL',
+    query: 'Retrieve compliance requirements for multi-tenant database partitioning.',
+    response: 'According to Section 4.2 of the Global ISO Framework, data partitions must enforce isolated tenant schemas with AES-256 at rest and zero cross-tenant query keys.',
+    toolCall: 'vector_search: cosine_sim(embedding, cluster="compliance_iso_2026", top_k=4)',
+    latency: '142ms',
+    precision: '99.99%'
   },
   {
-    id: 'sales',
-    name: 'Autonomous Sales Qualifier',
-    tag: 'CRM & Lead Scoring',
-    theme: 'indigo',
-    messages: [
-      { role: 'user', text: 'We are looking to launch an enterprise SaaS MVP in 6 weeks.' },
-      { 
-        role: 'ai', 
-        text: 'That aligns with our rapid sprint model. What is your target sector and expected database concurrency?', 
-        step: 'UNDERSTAND', 
-        stepDetail: 'Lead qualification triggered | Intent: SaaS_MVP_sprint' 
-      },
-      { role: 'user', text: 'Healthcare logistics, expecting ~5,000 daily active users initially.' },
-      { 
-        role: 'ai', 
-        text: 'Understood. We will configure an auto-scaling serverless backend with HIPAA compliance. Routing your request to our lead systems engineer.', 
-        step: 'ACT', 
-        stepDetail: 'Lead logged to CRM | Lead Score: 94/100 (High Intent) | Team notified.' 
-      }
-    ]
+    id: 'voice',
+    name: 'Streaming Voice Telephony',
+    badge: 'SUB-200MS VOICE',
+    query: 'User dial-in via Twilio SIP trunk inquiring about urgent capacity booking.',
+    response: 'Good afternoon. I can confirm we have a 4:30 PM slot open with our lead engineer today. Would you like me to reserve it directly?',
+    toolCall: 'stream_tts: elevenlabs_ws_pipeline(audio_buffer_size=128B, format="mu-law")',
+    latency: '185ms',
+    precision: '99.94%'
   }
 ];
 
 export default function AIDemo() {
-  const [activePersona, setActivePersona] = useState<string>('receptionist');
+  const [activeId, setActiveId] = useState<string>('agent');
 
-  const current = personas.find((p) => p.id === activePersona) || personas[0];
-
-  const getStepBadge = (step?: 'UNDERSTAND' | 'REASON' | 'ACT') => {
-    if (step === 'UNDERSTAND') {
-      return 'bg-blue-700 text-white';
-    }
-    if (step === 'REASON') {
-      return 'bg-purple-700 text-white';
-    }
-    return 'bg-indigo-700 text-white';
-  };
-
-  const getPersonaBtnClass = (p: DemoPersona) => {
-    const isActive = activePersona === p.id;
-    if (!isActive) {
-      return 'bg-white text-slate-600 border border-slate-200 hover:border-indigo-300 hover:text-indigo-950';
-    }
-    if (p.theme === 'blue') {
-      return 'bg-blue-900 text-white shadow-sm shadow-blue-950/20';
-    }
-    if (p.theme === 'purple') {
-      return 'bg-purple-900 text-white shadow-sm shadow-purple-950/20';
-    }
-    return 'bg-indigo-900 text-white shadow-sm shadow-indigo-950/20';
-  };
+  const current = scenarios.find(s => s.id === activeId) || scenarios[0];
 
   return (
-    <div className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-sm shadow-indigo-900/5">
-      {/* Top Controls: Persona Tabs */}
-      <div className="flex flex-wrap gap-2.5 pb-6 mb-6 border-b border-slate-100">
-        {personas.map((p) => {
-          const isActive = activePersona === p.id;
+    <div className="w-full border border-indigo-100/90 bg-white rounded-3xl p-6 md:p-10 shadow-xl shadow-indigo-950/5 card-hover-effect overflow-hidden">
+      {/* Console Top Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-6 mb-8">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+            <span className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+            <span className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+          </div>
+          <span className="h-4 w-px bg-slate-200 mx-1" />
+          <div className="flex items-center gap-2">
+            <Terminal size={14} className="text-indigo-600" />
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700">
+              SOCHYEAH COGNITIVE RUNTIME v4.2
+            </span>
+          </div>
+        </div>
+
+        {/* Real-time Telemetry Badges */}
+        <div className="flex items-center gap-4 text-[10px] font-mono text-slate-500">
+          <span className="flex items-center gap-1">
+            <Activity size={12} className="text-emerald-500" />
+            <span>LATENCY: <strong className="text-slate-900 font-bold">{current.latency}</strong></span>
+          </span>
+          <span className="flex items-center gap-1">
+            <Shield size={12} className="text-indigo-600" />
+            <span>PRECISION: <strong className="text-slate-900 font-bold">{current.precision}</strong></span>
+          </span>
+        </div>
+      </div>
+
+      {/* Scenario Selectors */}
+      <div className="flex flex-wrap gap-2.5 mb-8">
+        {scenarios.map((sc) => {
+          const isActive = activeId === sc.id;
           return (
             <button
-              key={p.id}
-              onClick={() => setActivePersona(p.id)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 flex items-center gap-2 ${getPersonaBtnClass(p)}`}
+              key={sc.id}
+              onClick={() => setActiveId(sc.id)}
+              className={`px-5 py-2.5 rounded-full text-xs font-semibold transition-all duration-200 flex items-center gap-2.5 ${
+                isActive
+                  ? 'bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 text-white shadow-md shadow-indigo-950/20 font-bold'
+                  : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/70'
+              }`}
             >
-              <Sparkles size={12} className={isActive ? (p.theme === 'blue' ? 'text-blue-300' : 'text-purple-300') : 'text-indigo-600'} />
-              <span>{p.name}</span>
-              <span className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded-full ${
-                isActive ? 'bg-black/20 text-white' : 'bg-slate-100 text-slate-400'
+              <Sparkles size={13} className={isActive ? 'text-indigo-300' : 'text-indigo-600'} />
+              <span>{sc.name}</span>
+              <span className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded-full ${
+                isActive ? 'bg-white/20 text-white' : 'bg-slate-200/60 text-slate-500'
               }`}>
-                {p.tag}
+                {sc.badge}
               </span>
             </button>
           );
         })}
       </div>
 
-      {/* Main Conversation Stream */}
+      {/* Stream Simulation Canvas */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={activePersona}
-          initial={{ opacity: 0, y: 8 }}
+          key={current.id}
+          initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.25 }}
-          className="flex flex-col gap-4 min-h-[280px]"
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.2 }}
+          className="flex flex-col gap-4 bg-slate-950 rounded-2xl p-6 md:p-8 text-slate-200 font-mono text-xs shadow-inner"
         >
-          {current.messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} gap-1.5`}
-            >
-              <div
-                className={`max-w-[85%] md:max-w-[75%] p-4 rounded-2xl text-xs leading-relaxed ${
-                  msg.role === 'user'
-                    ? 'bg-slate-100 text-slate-900 rounded-br-xs font-medium'
-                    : 'bg-gradient-to-r from-purple-50/40 via-indigo-50/30 to-blue-50/40 border border-indigo-100/70 text-slate-800 rounded-bl-xs shadow-xs'
-                }`}
-              >
-                <div className="flex items-center gap-1.5 mb-1 text-[10px] font-mono uppercase tracking-wider text-slate-400">
-                  {msg.role === 'user' ? (
-                    <>
-                      <User size={11} className="text-slate-500" />
-                      <span>User Query</span>
-                    </>
-                  ) : (
-                    <>
-                      <Bot size={11} className="text-indigo-700" />
-                      <span className="text-slate-900 font-bold">SOCHYEAH Cognitive Engine</span>
-                    </>
-                  )}
-                </div>
-                <p className="text-slate-800">{msg.text}</p>
-              </div>
+          {/* User Payload */}
+          <div className="flex items-start gap-3 border-b border-slate-800 pb-4">
+            <span className="text-indigo-400 font-bold select-none">&gt; INBOUND:</span>
+            <p className="text-slate-100 font-sans text-sm font-medium">{current.query}</p>
+          </div>
 
-              {/* Cognitive Step Meta Tag with Semantic Color */}
-              {msg.step && msg.stepDetail && (
-                <div className="flex items-center gap-2 text-[10px] font-mono text-slate-700 bg-slate-50 px-3 py-1 rounded-full border border-slate-200/60 mt-0.5 shadow-2xs">
-                  <span className={`font-bold uppercase tracking-wider px-1.5 py-0.5 rounded text-[8px] ${getStepBadge(msg.step)}`}>
-                    {msg.step}
-                  </span>
-                  <span className="truncate max-w-[320px] md:max-w-[500px]">{msg.stepDetail}</span>
-                </div>
-              )}
+          {/* Autonomous Tool Execution Trace */}
+          <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 flex items-center justify-between text-[11px] text-indigo-300">
+            <div className="flex items-center gap-2 truncate">
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse flex-shrink-0" />
+              <span className="truncate">{current.toolCall}</span>
             </div>
-          ))}
+            <span className="text-[10px] text-emerald-400 font-bold uppercase pl-2 flex-shrink-0">
+              EXEC_200_OK
+            </span>
+          </div>
+
+          {/* Cognitive Response */}
+          <div className="flex items-start gap-3 pt-2">
+            <span className="text-purple-400 font-bold select-none">&lt; OUTPUT:</span>
+            <p className="text-slate-200 font-sans text-sm leading-relaxed">{current.response}</p>
+          </div>
         </motion.div>
       </AnimatePresence>
 
-      {/* Bottom CTA Strip */}
-      <div className="mt-8 pt-5 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
-        <span className="text-slate-500 font-medium">
-          Ready to deploy customized reasoning models inside your stack?
-        </span>
+      {/* Bottom Conversion Strip */}
+      <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex items-center gap-2 text-xs text-slate-600">
+          <CheckCircle2 size={15} className="text-indigo-600" />
+          <span>Zero technical debt. Production-ready architectures deployed directly into your cloud.</span>
+        </div>
         <Link
           href="/contact"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-900 hover:text-indigo-700 transition-colors uppercase tracking-wider"
+          className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-indigo-900 hover:text-indigo-700 transition-colors"
         >
-          <span>Schedule an Architecture Sprint</span>
+          <span>Initiate Systems Audit</span>
           <ArrowRight size={13} />
         </Link>
       </div>
