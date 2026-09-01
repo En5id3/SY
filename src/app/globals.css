@@ -2,35 +2,15 @@
 
 :root {
   --background: #fafafc;
-  --foreground: #090d16;
+  --foreground: #0f172a;
   
   --color-bg-card: #ffffff;
-  --color-border-light: #f1f1f5;
+  --color-border-light: #f1f5f9;
   --color-text-secondary: #475569;
   --color-text-muted: #94a3b8;
 
-  /* Purple Theme Tokens (Intelligence, Strategy, AI) */
-  --purple-950: #2e0854;
-  --purple-900: #4c1d95;
-  --purple-800: #5b21b6;
-  --purple-700: #6d28d9;
-  --purple-600: #7c3aed;
-  --purple-500: #8b5cf6;
-  --purple-100: #ede9fe;
-  --purple-50: #f5f3ff;
-
-  /* Blue Theme Tokens (Engineering, Infrastructure, Velocity) */
-  --blue-950: #061838;
-  --blue-900: #1e3a8a;
-  --blue-800: #1d4ed8;
-  --blue-700: #2563eb;
-  --blue-600: #3b82f6;
-  --blue-500: #60a5fa;
-  --blue-100: #dbeafe;
-  --blue-50: #eff6ff;
-
-  /* Indigo Tokens (Bridges & Full-Stack Systems) */
-  --indigo-950: #131138;
+  /* Royal Indigo Tokens (Primary Brand) */
+  --indigo-950: #1e1b4b;
   --indigo-900: #312e81;
   --indigo-800: #3730a3;
   --indigo-700: #4338ca;
@@ -38,6 +18,24 @@
   --indigo-500: #6366f1;
   --indigo-100: #e0e7ff;
   --indigo-50: #eef2ff;
+
+  /* Soft Violet Tokens (Creative Intelligence) */
+  --violet-950: #2e1065;
+  --violet-900: #4c1d95;
+  --violet-800: #5b21b6;
+  --violet-700: #6d28d9;
+  --violet-600: #7c3aed;
+  --violet-500: #8b5cf6;
+  --violet-100: #ede9fe;
+  --violet-50: #f5f3ff;
+
+  /* Electric Azure Tokens (Growth & Speed) */
+  --azure-900: #0c4a6e;
+  --azure-700: #0369a1;
+  --azure-600: #0284c7;
+  --azure-500: #0ea5e9;
+  --azure-100: #e0f2fe;
+  --azure-50: #f0f9ff;
   
   --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
@@ -51,24 +49,6 @@
   --color-text-secondary: var(--color-text-secondary);
   --color-text-muted: var(--color-text-muted);
 
-  --color-purple-950: var(--purple-950);
-  --color-purple-900: var(--purple-900);
-  --color-purple-800: var(--purple-800);
-  --color-purple-700: var(--purple-700);
-  --color-purple-600: var(--purple-600);
-  --color-purple-500: var(--purple-500);
-  --color-purple-100: var(--purple-100);
-  --color-purple-50: var(--purple-50);
-
-  --color-blue-950: var(--blue-950);
-  --color-blue-900: var(--blue-900);
-  --color-blue-800: var(--blue-800);
-  --color-blue-700: var(--blue-700);
-  --color-blue-600: var(--blue-600);
-  --color-blue-500: var(--blue-500);
-  --color-blue-100: var(--blue-100);
-  --color-blue-50: var(--blue-50);
-
   --color-indigo-950: var(--indigo-950);
   --color-indigo-900: var(--indigo-900);
   --color-indigo-800: var(--indigo-800);
@@ -77,10 +57,26 @@
   --color-indigo-500: var(--indigo-500);
   --color-indigo-100: var(--indigo-100);
   --color-indigo-50: var(--indigo-50);
+
+  --color-violet-950: var(--violet-950);
+  --color-violet-900: var(--violet-900);
+  --color-violet-800: var(--violet-800);
+  --color-violet-700: var(--violet-700);
+  --color-violet-600: var(--violet-600);
+  --color-violet-500: var(--violet-500);
+  --color-violet-100: var(--violet-100);
+  --color-violet-50: var(--violet-50);
+
+  --color-azure-900: var(--azure-900);
+  --color-azure-700: var(--azure-700);
+  --color-azure-600: var(--azure-600);
+  --color-azure-500: var(--azure-500);
+  --color-azure-100: var(--azure-100);
+  --color-azure-50: var(--azure-50);
 }
 
 ::selection {
-  background-color: #ede9fe;
+  background-color: #e0e7ff;
   color: #1e1b4b;
 }
 
@@ -97,35 +93,33 @@ body {
   font-family: var(--font-sans);
   background-color: var(--background);
   background-image: 
-    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(109, 40, 217, 0.05), transparent 70%),
-    radial-gradient(ellipse 80% 50% at 80% 40%, rgba(37, 99, 235, 0.04), transparent 70%),
-    radial-gradient(circle at 50% 85%, rgba(79, 70, 229, 0.03), transparent 60%);
+    radial-gradient(ellipse 70% 45% at 20% -5%, rgba(99, 102, 241, 0.045), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 80% 40%, rgba(139, 92, 246, 0.035), transparent 70%),
+    radial-gradient(circle at 50% 85%, rgba(14, 165, 233, 0.025), transparent 60%);
   min-height: 100vh;
 }
 
-/* Billion-Dollar Typography & Statement Utilities */
+/* Typography Utilities */
 .hero-title {
-  font-size: clamp(3rem, 7vw + 1rem, 6.25rem);
+  font-size: clamp(2.75rem, 6vw + 1rem, 5.5rem);
   font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 0.94;
-  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
 }
 
 .section-title {
-  font-size: clamp(2rem, 4vw + 0.5rem, 3.75rem);
+  font-size: clamp(2rem, 3.5vw + 0.5rem, 3.25rem);
   font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.02;
-  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 .sub-editorial {
   font-size: 1.125rem;
-  line-height: 1.6;
+  line-height: 1.65;
   color: #475569;
   font-weight: 400;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
 }
 
 /* Infinite text ticker marquee */
@@ -135,7 +129,7 @@ body {
 }
 
 .ticker-animate {
-  animation: ticker 42s linear infinite;
+  animation: ticker 40s linear infinite;
 }
 
 .ticker-animate:hover {
@@ -144,27 +138,12 @@ body {
 
 /* Luxury Card & Glassmorphism Utilities */
 .card-hover-effect {
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-hover-effect:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -15px rgba(30, 27, 75, 0.08), 0 0 0 1px rgba(99, 102, 241, 0.15);
-}
-
-.bento-card {
-  position: relative;
-  border: 1px solid rgba(224, 231, 255, 0.7);
-  background: #ffffff;
-  border-radius: 1.5rem;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.bento-card:hover {
-  border-color: rgba(165, 180, 252, 0.9);
-  box-shadow: 0 24px 48px -12px rgba(49, 46, 129, 0.09);
-  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.08), 0 0 0 1px rgba(99, 102, 241, 0.15);
 }
 
 /* Glowing Flow Line */
@@ -175,16 +154,6 @@ body {
 
 @keyframes flowLine {
   to { stroke-dashoffset: -1000; }
-}
-
-/* Pulse Glow Keyframes */
-@keyframes softPulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.05); }
-}
-
-.glow-pulse {
-  animation: softPulse 4s ease-in-out infinite;
 }
 
 /* Scrollbar customization */
@@ -211,9 +180,6 @@ body {
     animation: none !important;
   }
   .flow-dash {
-    animation: none !important;
-  }
-  .glow-pulse {
     animation: none !important;
   }
 }
