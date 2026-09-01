@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ShieldCheck, Coins, HeartPulse, Cpu, Sun, Sprout, Search, ArrowRight, Info, CheckCircle2 } from 'lucide-react';
+import SevaHeader from '@/components/SevaHeader';
 
 interface Scheme {
   id: string;
@@ -144,31 +145,10 @@ export default function SevaPortal() {
 
   return (
     <div className="bg-[#fafafa] min-h-screen text-black antialiased">
-      {/* 1. Custom Seva Header */}
-      <header className="sticky top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-border-light/80 py-4 px-6">
-        <div className="max-w-[1200px] mx-auto flex justify-between items-center">
-          <a href="https://www.sochyeah.com" className="flex items-center gap-3 select-none outline-none">
-            <div className="flex flex-col leading-[0.8] font-bold">
-              <span className="font-sans font-light text-xl tracking-tighter text-black lowercase">soch</span>
-              <span className="font-sans font-extrabold text-xl tracking-tighter text-black lowercase pl-5">yeah</span>
-            </div>
-            <span className="text-xs font-mono bg-black text-white px-2 py-0.5 rounded font-bold uppercase tracking-wider">SEVA</span>
-          </a>
+      {/* 1. Custom Interactive Seva Header */}
+      <SevaHeader selectedCat={selectedCat} onSelectCat={setSelectedCat} />
 
-          <div className="text-[10px] font-mono text-color-text-muted hidden sm:block uppercase">
-            PUBLIC INFORMATION HUB // GOVERNMENT SCHEMES
-          </div>
-          
-          <a 
-            href="https://sochyeah.com/contact" 
-            className="text-[10px] font-bold uppercase tracking-wider bg-black text-white hover:bg-neutral-800 transition-colors px-4 py-2 rounded"
-          >
-            Request Assistance
-          </a>
-        </div>
-      </header>
-
-      <main className="max-w-[1200px] mx-auto px-6 py-12 md:py-20">
+      <main className="max-w-[1200px] mx-auto px-6 pt-28 md:pt-32 pb-16 md:pb-24">
         {/* 2. Editorial Header */}
         <div className="max-w-[800px] mb-16 flex flex-col gap-6">
           <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">PUBLIC WELFARE SERVICE</span>
@@ -203,7 +183,7 @@ export default function SevaPortal() {
 
 
         {/* 4. Schemes Index directory */}
-        <section className="border-t border-border-light pt-16">
+        <section id="schemes-directory" className="border-t border-border-light pt-16 scroll-mt-28">
           <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center mb-10 pb-6 border-b border-border-light">
             {/* Category tabs */}
             <div className="flex flex-wrap gap-2">
