@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Send, Mail, Sparkles } from 'lucide-react';
+import { Check, Send, Mail, Copy, ExternalLink } from 'lucide-react';
 
 export default function Contact() {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [submissionStatus, setSubmissionStatus] = useState<string>('');
+  const [copied, setCopied] = useState(false);
+  const [gmailComposeUrl, setGmailComposeUrl] = useState('');
+  const [mailtoUrl, setMailtoUrl] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -22,35 +24,56 @@ export default function Contact() {
     e.preventDefault();
     setLoading(true);
 
+    const emailRecipient = 'soch9yeah@gmail.com';
+    const emailSubject = `Project Inquiry: ${formData.name} - ${formData.service}`;
+    const emailBody = `Hello SOCHYEAH Team,
+
+I would like to discuss a project with your team:
+
+Name: ${formData.name}
+Company: ${formData.company || 'N/A'}
+Work Email: ${formData.email}
+Phone / WhatsApp: ${formData.phone || 'N/A'}
+Target Domain: ${formData.service}
+
+Project Requirements:
+${formData.desc}
+
+Best regards,
+${formData.name}`;
+
+    // Gmail Web Compose direct link
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(emailRecipient)}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    // Native Mailto link
+    const mailtoLink = `mailto:${emailRecipient}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+    setGmailComposeUrl(gmailUrl);
+    setMailtoUrl(mailtoLink);
+
     try {
-      const response = await fetch('/api/contact', {
+      await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-
-      const data = await response.json();
-      if (data?.details?.message?.includes('Activation')) {
-        setSubmissionStatus('activation_needed');
-      } else {
-        setSubmissionStatus('sent');
-      }
     } catch (err) {
-      console.error('Submission error:', err);
-      setSubmissionStatus('sent');
+      console.error('API submission:', err);
+    }
+
+    // Try automatic dispatch to email compose
+    if (typeof window !== 'undefined') {
+      window.open(gmailUrl, '_blank') || (window.location.href = mailtoLink);
     }
 
     setLoading(false);
     setShowModal(true);
-    setFormData({
-      name: '',
-      company: '',
-      email: '',
-      phone: '',
-      service: 'AI & Generative AI Systems',
-      timeline: '1-3 months',
-      desc: ''
-    });
+  };
+
+  const copyToClipboard = () => {
+    const text = `Name: ${formData.name}\nCompany: ${formData.company || 'N/A'}\nEmail: ${formData.email}\nPhone: ${formData.phone || 'N/A'}\nTarget Domain: ${formData.service}\n\nProject Requirements:\n${formData.desc}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
   };
 
   return (
@@ -219,14 +242,14 @@ export default function Contact() {
                 )}
               </button>
               <p className="text-[11px] text-slate-400 text-center">
-                Inquiries are delivered directly to <strong className="text-slate-600 font-semibold">soch9yeah@gmail.com</strong>.
+                Inquiries are sent directly to <strong className="text-slate-600 font-semibold">soch9yeah@gmail.com</strong>.
               </p>
             </div>
           </form>
         </div>
       </div>
 
-      {/* Confirmation Modal Overlay */}
+      {/* Direct Email Compose Modal Overlay */}
       <AnimatePresence>
         {showModal && (
           <motion.div 
@@ -240,29 +263,55 @@ export default function Contact() {
               initial={{ scale: 0.95, y: 12 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 12 }}
-              className="bg-white border border-indigo-100 rounded-3xl max-w-[460px] w-full p-8 text-center shadow-2xl flex flex-col items-center gap-4"
+              className="bg-white border border-indigo-100 rounded-3xl max-w-[480px] w-full p-8 text-center shadow-2xl flex flex-col items-center gap-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-200 flex items-center justify-center text-indigo-900 font-extrabold text-lg mb-1">
                 <Check size={22} className="text-indigo-700" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Inquiry Dispatched!</h3>
+              <h3 className="text-lg font-bold text-slate-900">Send Your Inquiry</h3>
               
               <p className="text-xs text-slate-600 leading-relaxed">
-                Thank you! Your project requirements have been forwarded to <strong className="text-slate-900">soch9yeah@gmail.com</strong>.
+                Your message has been pre-formatted for direct delivery to <strong className="text-slate-900">soch9yeah@gmail.com</strong>.
               </p>
 
-              {submissionStatus === 'activation_needed' && (
-                <div className="bg-amber-50 border border-amber-200/80 rounded-xl p-3 text-left text-[11px] text-amber-900 leading-relaxed">
-                  <strong>One-Time Setup Notice:</strong> FormSubmit has sent a 1-click activation link to <strong>soch9yeah@gmail.com</strong>. Please check your inbox and click <em>Activate Form</em> so all future inquiries land directly in your inbox!
-                </div>
-              )}
+              <div className="flex flex-col gap-2.5 w-full mt-2">
+                {/* 1-Click Gmail Web Compose */}
+                <a
+                  href={gmailComposeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 text-white hover:opacity-95 transition-all py-3 rounded-full shadow-md shadow-indigo-950/15"
+                >
+                  <ExternalLink size={14} />
+                  <span>Open in Gmail (1-Click)</span>
+                </a>
+
+                {/* 1-Click Default Mail App */}
+                <a
+                  href={mailtoUrl}
+                  className="w-full flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-800 hover:bg-slate-200 transition-all py-3 rounded-full"
+                >
+                  <Mail size={14} />
+                  <span>Open in Mail App</span>
+                </a>
+
+                {/* 1-Click Copy */}
+                <button
+                  type="button"
+                  onClick={copyToClipboard}
+                  className="w-full flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all py-2.5 rounded-full"
+                >
+                  <Copy size={13} />
+                  <span>{copied ? 'Copied to Clipboard!' : 'Copy Form Details'}</span>
+                </button>
+              </div>
 
               <button 
                 onClick={() => setShowModal(false)}
-                className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:opacity-95 transition-all px-8 py-3 rounded-full mt-2 shadow-sm shadow-indigo-950/15"
+                className="text-xs font-medium text-slate-400 hover:text-slate-700 transition-colors mt-2"
               >
-                Close Window
+                Done
               </button>
             </motion.div>
           </motion.div>

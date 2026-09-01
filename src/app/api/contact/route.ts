@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,43 +13,60 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const payload = {
-      _subject: `New SOCHYEAH Inquiry: ${name} - ${service}`,
-      _replyto: email,
-      Name: name,
-      Company: company || 'N/A',
-      Email: email,
-      'Phone / WhatsApp': phone || 'N/A',
-      'Target Domain': service,
-      'Project Requirements': desc,
-      _template: 'table',
-      _captcha: 'false'
-    };
+    const emailSubject = `Project Inquiry: ${name} - ${service}`;
+    const emailText = `Hello SOCHYEAH Team,
 
-    // Forward email via FormSubmit delivery service to soch9yeah@gmail.com
-    const emailRes = await fetch('https://formsubmit.co/ajax/soch9yeah@gmail.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
-        Origin: 'https://sochyeah.com',
-        Referer: 'https://sochyeah.com/contact'
-      },
-      body: JSON.stringify(payload)
-    });
+A new project inquiry has been submitted through the website:
 
-    const responseData = await emailRes.json().catch(() => ({}));
+Name: ${name}
+Company: ${company || 'N/A'}
+Work Email: ${email}
+Phone / WhatsApp: ${phone || 'N/A'}
+Target Domain: ${service}
 
+Project Requirements & Context:
+${desc}
+
+Sent from https://sochyeah.com/contact`;
+
+    // 1. If SMTP / Gmail credentials are configured in .env.local, send directly via SMTP
+    const smtpUser = process.env.SMTP_USER || process.env.GMAIL_USER;
+    const smtpPass = process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD;
+
+    if (smtpUser && smtpPass) {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: smtpUser,
+          pass: smtpPass
+        }
+      });
+
+      await transporter.sendMail({
+        from: `"SOCHYEAH Inquiries" <${smtpUser}>`,
+        to: 'soch9yeah@gmail.com',
+        replyTo: email,
+        subject: emailSubject,
+        text: emailText
+      });
+
+      return NextResponse.json({
+        success: true,
+        sentDirectly: true,
+        message: 'Inquiry dispatched directly to soch9yeah@gmail.com.'
+      });
+    }
+
+    // 2. Return pre-formatted mail parameters for seamless client compose
     return NextResponse.json({
       success: true,
-      message: 'Inquiry dispatched to soch9yeah@gmail.com.',
-      details: responseData
+      sentDirectly: false,
+      message: 'Inquiry formatted for soch9yeah@gmail.com.'
     });
   } catch (error) {
-    console.error('Error dispatching contact email:', error);
+    console.error('Error in /api/contact:', error);
     return NextResponse.json(
-      { error: 'Failed to dispatch email.' },
+      { error: 'Failed to process inquiry.' },
       { status: 500 }
     );
   }
