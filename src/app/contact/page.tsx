@@ -2,26 +2,61 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Send } from 'lucide-react';
+import { Check, Send, Mail } from 'lucide-react';
 
 export default function Contact() {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [lastSubmittedMailto, setLastSubmittedMailto] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     company: '',
     email: '',
     phone: '',
-    service: 'AI / Automation',
+    service: 'AI & Generative AI Systems',
     timeline: '1-3 months',
     desc: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate submission
+    const emailRecipient = 'soch9yeah@gmail.com';
+    const emailSubject = `Project Inquiry: ${formData.name} - ${formData.service}`;
+    const emailBody = `Hello SOCHYEAH Team,
+
+I would like to discuss a project with your engineering and strategy team:
+
+Name: ${formData.name}
+Company: ${formData.company || 'N/A'}
+Work Email: ${formData.email}
+Phone / WhatsApp: ${formData.phone || 'N/A'}
+Target Domain: ${formData.service}
+
+Project Requirements & Context:
+${formData.desc}
+
+Best regards,
+${formData.name}`;
+
+    const mailtoUrl = `mailto:${emailRecipient}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    setLastSubmittedMailto(mailtoUrl);
+
+    try {
+      // 1. Send to backend API
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+    } catch (err) {
+      console.error('API submission notice:', err);
+    }
+
+    // 2. Open email client pre-populated directly to soch9yeah@gmail.com
+    window.location.href = mailtoUrl;
+
     setTimeout(() => {
       setLoading(false);
       setShowModal(true);
@@ -30,11 +65,11 @@ export default function Contact() {
         company: '',
         email: '',
         phone: '',
-        service: 'AI / Automation',
+        service: 'AI & Generative AI Systems',
         timeline: '1-3 months',
         desc: ''
       });
-    }, 1400);
+    }, 600);
   };
 
   return (
@@ -195,7 +230,7 @@ export default function Contact() {
                 )}
               </button>
               <p className="text-[10px] font-mono text-slate-400 text-center italic">
-                "No sales scripts. Direct review with technical decision-makers."
+                "Direct inquiry transmitted to soch9yeah@gmail.com"
               </p>
             </div>
           </form>
@@ -216,19 +251,30 @@ export default function Contact() {
               initial={{ scale: 0.95, y: 15 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 15 }}
-              className="bg-white border border-indigo-100 rounded-3xl max-w-[420px] w-full p-8 text-center shadow-2xl flex flex-col items-center gap-4"
+              className="bg-white border border-indigo-100 rounded-3xl max-w-[440px] w-full p-8 text-center shadow-2xl flex flex-col items-center gap-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-50 to-blue-50 border border-indigo-200 flex items-center justify-center text-indigo-900 font-extrabold text-lg mb-1">
                 <Check size={22} className="text-indigo-800" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 uppercase tracking-tight">Parameters Transmitted</h3>
+              <h3 className="text-lg font-bold text-slate-900 uppercase tracking-tight">Inquiry Prepared</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Thank you. Your project brief has been received by our lead systems engineer. We will review your architecture requirements and respond within 1 business day.
+                Your project brief has been formatted for dispatch to <strong className="text-slate-900">soch9yeah@gmail.com</strong>.
               </p>
+
+              {lastSubmittedMailto && (
+                <a
+                  href={lastSubmittedMailto}
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-purple-900 to-blue-900 text-white hover:opacity-95 transition-all px-6 py-3 rounded-full mt-2 shadow-sm shadow-indigo-950/20"
+                >
+                  <Mail size={14} />
+                  <span>Send via Email Client</span>
+                </a>
+              )}
+
               <button 
                 onClick={() => setShowModal(false)}
-                className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-purple-900 to-blue-900 text-white hover:opacity-95 transition-all px-8 py-3.5 rounded-full mt-3 shadow-sm shadow-indigo-950/20"
+                className="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-900 transition-colors mt-2"
               >
                 Close Window
               </button>
