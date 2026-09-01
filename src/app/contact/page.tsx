@@ -1,79 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Send, Mail, Copy, ExternalLink } from 'lucide-react';
+import { Check, Send } from 'lucide-react';
 
 export default function Contact() {
+  const searchParams = useSearchParams();
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [gmailComposeUrl, setGmailComposeUrl] = useState('');
-  const [mailtoUrl, setMailtoUrl] = useState('');
-  const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    email: '',
-    phone: '',
-    service: 'AI & Generative AI Systems',
-    timeline: '1-3 months',
-    desc: ''
-  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (searchParams.get('submitted') === 'true') {
+      setShowModal(true);
+    }
+  }, [searchParams]);
+
+  const handleSubmit = () => {
     setLoading(true);
-
-    const emailRecipient = 'soch9yeah@gmail.com';
-    const emailSubject = `Project Inquiry: ${formData.name} - ${formData.service}`;
-    const emailBody = `Hello SOCHYEAH Team,
-
-I would like to discuss a project with your team:
-
-Name: ${formData.name}
-Company: ${formData.company || 'N/A'}
-Work Email: ${formData.email}
-Phone / WhatsApp: ${formData.phone || 'N/A'}
-Target Domain: ${formData.service}
-
-Project Requirements:
-${formData.desc}
-
-Best regards,
-${formData.name}`;
-
-    // Gmail Web Compose direct link
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(emailRecipient)}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-    // Native Mailto link
-    const mailtoLink = `mailto:${emailRecipient}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-
-    setGmailComposeUrl(gmailUrl);
-    setMailtoUrl(mailtoLink);
-
-    try {
-      await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-    } catch (err) {
-      console.error('API submission:', err);
-    }
-
-    // Try automatic dispatch to email compose
-    if (typeof window !== 'undefined') {
-      window.open(gmailUrl, '_blank') || (window.location.href = mailtoLink);
-    }
-
-    setLoading(false);
-    setShowModal(true);
-  };
-
-  const copyToClipboard = () => {
-    const text = `Name: ${formData.name}\nCompany: ${formData.company || 'N/A'}\nEmail: ${formData.email}\nPhone: ${formData.phone || 'N/A'}\nTarget Domain: ${formData.service}\n\nProject Requirements:\n${formData.desc}`;
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
   };
 
   return (
@@ -140,17 +84,27 @@ ${formData.name}`;
           </div>
         </div>
 
-        {/* Right Side: Form */}
+        {/* Right Side: Form with Direct Automated Email Delivery to soch9yeah@gmail.com */}
         <div className="w-full lg:w-2/3 border border-indigo-100/90 bg-white rounded-3xl p-6 md:p-8 shadow-sm shadow-indigo-900/5">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <form 
+            action="https://formsubmit.co/soch9yeah@gmail.com" 
+            method="POST" 
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-5"
+          >
+            {/* Hidden fields for automatic FormSubmit processing */}
+            <input type="hidden" name="_subject" value="New Project Inquiry - SOCHYEAH Website" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_next" value="https://sochyeah.com/contact?submitted=true" />
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-slate-700" htmlFor="name">Your Name *</label>
                 <input 
                   type="text" 
+                  name="Name"
                   id="name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
                   required
                   placeholder="Jane Doe"
                   className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 transition-all bg-white"
@@ -160,9 +114,8 @@ ${formData.name}`;
                 <label className="text-xs font-semibold text-slate-700" htmlFor="company">Company / Organization</label>
                 <input 
                   type="text" 
+                  name="Company"
                   id="company"
-                  value={formData.company}
-                  onChange={(e) => setFormData({...formData, company: e.target.value})}
                   placeholder="Acme Inc."
                   className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 transition-all bg-white"
                 />
@@ -174,9 +127,8 @@ ${formData.name}`;
                 <label className="text-xs font-semibold text-slate-700" htmlFor="email">Work Email *</label>
                 <input 
                   type="email" 
+                  name="Email"
                   id="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
                   required
                   placeholder="jane@company.com"
                   className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 transition-all bg-white"
@@ -186,9 +138,8 @@ ${formData.name}`;
                 <label className="text-xs font-semibold text-slate-700" htmlFor="phone">Phone / WhatsApp</label>
                 <input 
                   type="tel" 
+                  name="Phone"
                   id="phone"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   placeholder="+91 98000 00000"
                   className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 transition-all bg-white"
                 />
@@ -198,9 +149,8 @@ ${formData.name}`;
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-slate-700" htmlFor="service">Target Domain Focus</label>
               <select 
+                name="Domain Focus"
                 id="service"
-                value={formData.service}
-                onChange={(e) => setFormData({...formData, service: e.target.value})}
                 className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 bg-white transition-all text-slate-800"
               >
                 <option>AI &amp; Generative AI Systems</option>
@@ -216,9 +166,8 @@ ${formData.name}`;
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-slate-700" htmlFor="desc">Project Context &amp; Requirements *</label>
               <textarea 
+                name="Project Requirements"
                 id="desc"
-                value={formData.desc}
-                onChange={(e) => setFormData({...formData, desc: e.target.value})}
                 required
                 rows={3}
                 placeholder="Describe what you are trying to build, key goals, timeline constraints, or current tech stack..."
@@ -230,7 +179,7 @@ ${formData.name}`;
               <button 
                 type="submit"
                 disabled={loading}
-                className="w-full text-center text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 text-white hover:from-indigo-700 hover:via-indigo-800 hover:to-violet-800 disabled:bg-slate-300 transition-all py-3.5 rounded-full shadow-md shadow-indigo-950/15 flex items-center justify-center gap-2"
+                className="w-full text-center text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 text-white hover:from-indigo-700 hover:via-indigo-800 hover:to-violet-800 disabled:bg-slate-300 transition-all py-3.5 rounded-full shadow-md shadow-indigo-950/15 flex items-center justify-center gap-2 cursor-pointer"
               >
                 {loading ? (
                   <span>TRANSMITTING MESSAGE...</span>
@@ -242,14 +191,14 @@ ${formData.name}`;
                 )}
               </button>
               <p className="text-[11px] text-slate-400 text-center">
-                Inquiries are sent directly to <strong className="text-slate-600 font-semibold">soch9yeah@gmail.com</strong>.
+                Submissions are sent directly to <strong className="text-slate-600 font-semibold">soch9yeah@gmail.com</strong>.
               </p>
             </div>
           </form>
         </div>
       </div>
 
-      {/* Direct Email Compose Modal Overlay */}
+      {/* Success Modal Overlay */}
       <AnimatePresence>
         {showModal && (
           <motion.div 
@@ -263,55 +212,23 @@ ${formData.name}`;
               initial={{ scale: 0.95, y: 12 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 12 }}
-              className="bg-white border border-indigo-100 rounded-3xl max-w-[480px] w-full p-8 text-center shadow-2xl flex flex-col items-center gap-4"
+              className="bg-white border border-indigo-100 rounded-3xl max-w-[440px] w-full p-8 text-center shadow-2xl flex flex-col items-center gap-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-200 flex items-center justify-center text-indigo-900 font-extrabold text-lg mb-1">
                 <Check size={22} className="text-indigo-700" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Send Your Inquiry</h3>
+              <h3 className="text-lg font-bold text-slate-900">Inquiry Delivered!</h3>
               
               <p className="text-xs text-slate-600 leading-relaxed">
-                Your message has been pre-formatted for direct delivery to <strong className="text-slate-900">soch9yeah@gmail.com</strong>.
+                Thank you! Your project requirements have been transmitted to <strong className="text-slate-900">soch9yeah@gmail.com</strong>. Our systems team will review your parameters and follow up shortly.
               </p>
-
-              <div className="flex flex-col gap-2.5 w-full mt-2">
-                {/* 1-Click Gmail Web Compose */}
-                <a
-                  href={gmailComposeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 text-white hover:opacity-95 transition-all py-3 rounded-full shadow-md shadow-indigo-950/15"
-                >
-                  <ExternalLink size={14} />
-                  <span>Open in Gmail (1-Click)</span>
-                </a>
-
-                {/* 1-Click Default Mail App */}
-                <a
-                  href={mailtoUrl}
-                  className="w-full flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-800 hover:bg-slate-200 transition-all py-3 rounded-full"
-                >
-                  <Mail size={14} />
-                  <span>Open in Mail App</span>
-                </a>
-
-                {/* 1-Click Copy */}
-                <button
-                  type="button"
-                  onClick={copyToClipboard}
-                  className="w-full flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all py-2.5 rounded-full"
-                >
-                  <Copy size={13} />
-                  <span>{copied ? 'Copied to Clipboard!' : 'Copy Form Details'}</span>
-                </button>
-              </div>
 
               <button 
                 onClick={() => setShowModal(false)}
-                className="text-xs font-medium text-slate-400 hover:text-slate-700 transition-colors mt-2"
+                className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:opacity-95 transition-all px-8 py-3 rounded-full mt-2 shadow-sm shadow-indigo-950/15"
               >
-                Done
+                Close Window
               </button>
             </motion.div>
           </motion.div>
