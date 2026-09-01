@@ -1,23 +1,57 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Send } from 'lucide-react';
+import { Check, Send, AlertCircle } from 'lucide-react';
 
 export default function Contact() {
-  const searchParams = useSearchParams();
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    service: 'AI & Generative AI Systems',
+    timeline: '1-3 months',
+    desc: ''
+  });
 
-  useEffect(() => {
-    if (searchParams.get('submitted') === 'true') {
-      setShowModal(true);
-    }
-  }, [searchParams]);
-
-  const handleSubmit = () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
+    setErrorMsg('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message.');
+      }
+
+      setLoading(false);
+      setShowModal(true);
+      setFormData({
+        name: '',
+        company: '',
+        email: '',
+        phone: '',
+        service: 'AI & Generative AI Systems',
+        timeline: '1-3 months',
+        desc: ''
+      });
+    } catch (err: any) {
+      console.error('Contact submission error:', err);
+      setLoading(false);
+      setErrorMsg(err.message || 'An error occurred while transmitting your parameters.');
+    }
   };
 
   return (
@@ -84,27 +118,17 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Right Side: Form with Direct Automated Email Delivery to soch9yeah@gmail.com */}
+        {/* Right Side: Form */}
         <div className="w-full lg:w-2/3 border border-indigo-100/90 bg-white rounded-3xl p-6 md:p-8 shadow-sm shadow-indigo-900/5">
-          <form 
-            action="https://formsubmit.co/soch9yeah@gmail.com" 
-            method="POST" 
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-5"
-          >
-            {/* Hidden fields for automatic FormSubmit processing */}
-            <input type="hidden" name="_subject" value="New Project Inquiry - SOCHYEAH Website" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_next" value="https://sochyeah.com/contact?submitted=true" />
-
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-slate-700" htmlFor="name">Your Name *</label>
                 <input 
                   type="text" 
-                  name="Name"
                   id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
                   required
                   placeholder="Jane Doe"
                   className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 transition-all bg-white"
@@ -114,8 +138,9 @@ export default function Contact() {
                 <label className="text-xs font-semibold text-slate-700" htmlFor="company">Company / Organization</label>
                 <input 
                   type="text" 
-                  name="Company"
                   id="company"
+                  value={formData.company}
+                  onChange={(e) => setFormData({...formData, company: e.target.value})}
                   placeholder="Acme Inc."
                   className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 transition-all bg-white"
                 />
@@ -127,8 +152,9 @@ export default function Contact() {
                 <label className="text-xs font-semibold text-slate-700" htmlFor="email">Work Email *</label>
                 <input 
                   type="email" 
-                  name="Email"
                   id="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
                   required
                   placeholder="jane@company.com"
                   className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 transition-all bg-white"
@@ -138,8 +164,9 @@ export default function Contact() {
                 <label className="text-xs font-semibold text-slate-700" htmlFor="phone">Phone / WhatsApp</label>
                 <input 
                   type="tel" 
-                  name="Phone"
                   id="phone"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   placeholder="+91 98000 00000"
                   className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 transition-all bg-white"
                 />
@@ -149,8 +176,9 @@ export default function Contact() {
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-slate-700" htmlFor="service">Target Domain Focus</label>
               <select 
-                name="Domain Focus"
                 id="service"
+                value={formData.service}
+                onChange={(e) => setFormData({...formData, service: e.target.value})}
                 className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 bg-white transition-all text-slate-800"
               >
                 <option>AI &amp; Generative AI Systems</option>
@@ -166,14 +194,22 @@ export default function Contact() {
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-slate-700" htmlFor="desc">Project Context &amp; Requirements *</label>
               <textarea 
-                name="Project Requirements"
                 id="desc"
+                value={formData.desc}
+                onChange={(e) => setFormData({...formData, desc: e.target.value})}
                 required
                 rows={3}
                 placeholder="Describe what you are trying to build, key goals, timeline constraints, or current tech stack..."
                 className="border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 transition-all resize-y min-h-[90px] bg-white"
               />
             </div>
+
+            {errorMsg && (
+              <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs">
+                <AlertCircle size={14} className="flex-shrink-0" />
+                <span>{errorMsg}</span>
+              </div>
+            )}
 
             <div className="flex flex-col gap-3 mt-1">
               <button 
@@ -182,7 +218,7 @@ export default function Contact() {
                 className="w-full text-center text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 text-white hover:from-indigo-700 hover:via-indigo-800 hover:to-violet-800 disabled:bg-slate-300 transition-all py-3.5 rounded-full shadow-md shadow-indigo-950/15 flex items-center justify-center gap-2 cursor-pointer"
               >
                 {loading ? (
-                  <span>TRANSMITTING MESSAGE...</span>
+                  <span>SENDING INQUIRY...</span>
                 ) : (
                   <>
                     <span>START THE CONVERSATION</span>
@@ -191,7 +227,7 @@ export default function Contact() {
                 )}
               </button>
               <p className="text-[11px] text-slate-400 text-center">
-                Submissions are sent directly to <strong className="text-slate-600 font-semibold">soch9yeah@gmail.com</strong>.
+                Inquiries are delivered directly to <strong className="text-slate-600 font-semibold">soch9yeah@gmail.com</strong>.
               </p>
             </div>
           </form>
