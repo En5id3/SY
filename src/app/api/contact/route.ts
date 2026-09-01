@@ -29,13 +29,15 @@ ${desc}
 
 Sent from https://sochyeah.com/contact`;
 
-    // 1. If SMTP / Gmail credentials are configured in .env.local, send directly via SMTP
-    const smtpUser = process.env.SMTP_USER || process.env.GMAIL_USER;
+    const smtpUser = process.env.SMTP_USER || process.env.GMAIL_USER || 'soch9yeah@gmail.com';
     const smtpPass = process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD;
 
-    if (smtpUser && smtpPass) {
+    if (smtpPass) {
+      // Vercel Serverless optimized SMTP configuration using direct TLS on Port 465
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
           user: smtpUser,
           pass: smtpPass
@@ -57,16 +59,17 @@ Sent from https://sochyeah.com/contact`;
       });
     }
 
-    // 2. Return pre-formatted mail parameters for seamless client compose
-    return NextResponse.json({
-      success: true,
-      sentDirectly: false,
-      message: 'Inquiry formatted for soch9yeah@gmail.com.'
-    });
-  } catch (error) {
+    console.warn('GMAIL_APP_PASSWORD not set in environment variables on Vercel.');
+    return NextResponse.json(
+      { 
+        error: 'Email service configuration pending on server. Please add GMAIL_APP_PASSWORD to Vercel Environment Variables.' 
+      },
+      { status: 500 }
+    );
+  } catch (error: any) {
     console.error('Error in /api/contact:', error);
     return NextResponse.json(
-      { error: 'Failed to process inquiry.' },
+      { error: error.message || 'Failed to process inquiry.' },
       { status: 500 }
     );
   }
