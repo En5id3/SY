@@ -111,17 +111,17 @@ export default function SoftwareDevelopment() {
       </section>
 
       {/* CTA Box */}
-      <section className="bg-gradient-to-br from-purple-950 via-purple-900 to-purple-950 text-white rounded-3xl p-10 md:p-16 text-center shadow-xl shadow-purple-950/15 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-purple-950 via-indigo-950 to-blue-950 text-white rounded-3xl p-10 md:p-16 text-center shadow-xl shadow-indigo-950/15 relative overflow-hidden">
         <div className="max-w-[600px] mx-auto flex flex-col gap-6 items-center relative z-10">
           <h2 className="text-2xl md:text-4xl font-extrabold uppercase tracking-tight text-white">
             Start My Software Project
           </h2>
-          <p className="text-xs text-purple-200 leading-relaxed max-w-[450px]">
+          <p className="text-xs text-indigo-200 leading-relaxed max-w-[450px]">
             Ready to design a custom SaaS platform, operations portal, or database index connection? Send us your technical parameters.
           </p>
           <Link 
             href="/contact" 
-            className="text-xs font-bold uppercase tracking-wider bg-white text-purple-950 hover:bg-purple-50 transition-all px-8 py-4 rounded-full shadow-md hover:scale-[1.02] mt-2"
+            className="text-xs font-bold uppercase tracking-wider bg-white text-indigo-950 hover:bg-indigo-50 transition-all px-8 py-4 rounded-full shadow-md hover:scale-[1.02] mt-2"
           >
             START ROADMAP CONVERSATION
           </Link>

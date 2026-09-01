@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import SevaHeader from '@/components/SevaHeader';
-import { Search, CheckCircle2, Shield, Zap, Building, Heart, ExternalLink, ArrowRight, Wheat } from 'lucide-react';
+import { Search, CheckCircle2 } from 'lucide-react';
 
 interface Scheme {
   id: string;
@@ -131,6 +131,21 @@ export default function SevaDirectory() {
     return matchesCat && matchesQuery;
   });
 
+  const getCategoryBadgeClass = (category: string) => {
+    switch (category) {
+      case 'business':
+        return 'bg-blue-50 text-blue-800 border-blue-200/50';
+      case 'energy':
+        return 'bg-sky-50 text-sky-800 border-sky-200/50';
+      case 'health':
+        return 'bg-purple-50 text-purple-800 border-purple-200/50';
+      case 'agriculture':
+        return 'bg-indigo-50 text-indigo-800 border-indigo-200/50';
+      default:
+        return 'bg-slate-50 text-slate-700 border-slate-200/50';
+    }
+  };
+
   return (
     <div className="bg-[#fafafc] min-h-screen text-slate-900 antialiased">
       {/* 1. Custom Seva Header Matching Main Site */}
@@ -139,7 +154,7 @@ export default function SevaDirectory() {
       <main className="max-w-[1200px] mx-auto px-6 pt-28 md:pt-32 pb-16 md:pb-24">
         {/* 2. Editorial Header */}
         <div className="max-w-[800px] mb-14 flex flex-col gap-5">
-          <span className="text-[11px] font-mono font-bold tracking-widest uppercase text-purple-800 bg-purple-50 px-3 py-1 rounded-full border border-purple-200/60 self-start">
+          <span className="text-[11px] font-mono font-bold tracking-widest uppercase text-indigo-800 bg-gradient-to-r from-purple-50 to-blue-50 px-3 py-1 rounded-full border border-indigo-200/60 self-start">
             PUBLIC WELFARE DIRECTORY
           </span>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-900 uppercase leading-tight">
@@ -150,16 +165,16 @@ export default function SevaDirectory() {
           </p>
         </div>
 
-        {/* Unified Application Portal Callout Box */}
-        <div className="mb-14 bg-gradient-to-br from-purple-950 via-purple-900 to-purple-950 text-white rounded-3xl p-8 md:p-10 flex flex-col md:flex-row gap-6 justify-between items-center shadow-xl shadow-purple-950/15 relative overflow-hidden">
+        {/* Unified Application Portal Callout Box (Dual Gradient) */}
+        <div className="mb-14 bg-gradient-to-br from-purple-950 via-indigo-950 to-blue-950 text-white rounded-3xl p-8 md:p-10 flex flex-col md:flex-row gap-6 justify-between items-center shadow-xl shadow-indigo-950/15 relative overflow-hidden">
           <div className="max-w-[700px] flex flex-col gap-2 relative z-10">
-            <span className="text-[10px] font-mono font-bold tracking-wider text-purple-300 uppercase">
+            <span className="text-[10px] font-mono font-bold tracking-wider text-indigo-300 uppercase">
               OFFICIAL CENTRAL PORTAL
             </span>
             <h2 className="text-xl md:text-2xl font-extrabold text-white uppercase tracking-tight">
               Unified National Application Hub
             </h2>
-            <p className="text-xs text-purple-200 leading-relaxed">
+            <p className="text-xs text-indigo-200 leading-relaxed">
               All welfare, health, and business subsidy programs listed in this directory can be verified and directly applied for online via the official national platform.
             </p>
           </div>
@@ -167,15 +182,15 @@ export default function SevaDirectory() {
             href="https://www.myscheme.gov.in"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full md:w-auto text-center text-xs font-bold uppercase tracking-wider bg-white text-purple-950 hover:bg-purple-50 transition-all px-8 py-4 rounded-full shadow-md whitespace-nowrap relative z-10 hover:scale-[1.02]"
+            className="w-full md:w-auto text-center text-xs font-bold uppercase tracking-wider bg-white text-indigo-950 hover:bg-indigo-50 transition-all px-8 py-4 rounded-full shadow-md whitespace-nowrap relative z-10 hover:scale-[1.02]"
           >
             Apply on National Portal (myScheme.gov.in)
           </a>
         </div>
 
         {/* 4. Schemes Index directory */}
-        <section id="schemes-directory" className="border-t border-purple-100/70 pt-12 scroll-mt-28">
-          <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center mb-10 pb-6 border-b border-purple-100/70">
+        <section id="schemes-directory" className="border-t border-indigo-100/70 pt-12 scroll-mt-28">
+          <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center mb-10 pb-6 border-b border-indigo-100/70">
             {/* Category tabs */}
             <div className="flex flex-wrap gap-2">
               {['all', 'business', 'health', 'energy', 'agriculture'].map((cat) => (
@@ -184,8 +199,8 @@ export default function SevaDirectory() {
                   onClick={() => setSelectedCat(cat as any)}
                   className={`text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-full transition-all duration-150 ${
                     selectedCat === cat 
-                      ? 'bg-purple-900 text-white shadow-sm shadow-purple-950/20 font-bold' 
-                      : 'bg-purple-50/50 text-slate-600 hover:bg-purple-100/70 hover:text-purple-950 border border-purple-100'
+                      ? 'bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 text-white shadow-sm shadow-indigo-950/20 font-bold' 
+                      : 'bg-white text-slate-600 hover:border-indigo-300 hover:text-indigo-950 border border-indigo-100'
                   }`}
                 >
                   {cat}
@@ -200,9 +215,9 @@ export default function SevaDirectory() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search schemes..."
-                className="w-full border border-purple-200 bg-white rounded-full px-4 py-2.5 pl-10 text-xs outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 transition-all shadow-xs text-slate-900"
+                className="w-full border border-indigo-200 bg-white rounded-full px-4 py-2.5 pl-10 text-xs outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 transition-all shadow-xs text-slate-900"
               />
-              <Search size={14} className="absolute left-3.5 top-3.5 text-purple-600" />
+              <Search size={14} className="absolute left-3.5 top-3.5 text-indigo-600" />
             </div>
           </div>
 
@@ -211,13 +226,13 @@ export default function SevaDirectory() {
             {filteredSchemes.map((sc) => (
               <div 
                 key={sc.id} 
-                className="border border-purple-100/80 bg-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-6 justify-between hover:border-purple-300 transition-all duration-300 shadow-sm shadow-purple-900/5 card-hover-effect"
+                className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-6 justify-between hover:border-indigo-300 transition-all duration-300 shadow-sm shadow-indigo-900/5 card-hover-effect"
               >
                 {/* Left side detail texts */}
                 <div className="flex-[3] flex flex-col gap-4 justify-between">
                   <div>
                     <div className="flex flex-wrap items-center gap-2 mb-3">
-                      <span className="text-[9px] font-mono font-bold uppercase tracking-wider bg-purple-50 text-purple-800 border border-purple-200/50 px-2.5 py-0.5 rounded-full">
+                      <span className={`text-[9px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${getCategoryBadgeClass(sc.category)}`}>
                         {sc.category}
                       </span>
                       <span className="text-[10px] font-mono text-slate-400">{sc.agency}</span>
@@ -225,12 +240,12 @@ export default function SevaDirectory() {
                     <h3 className="text-lg font-bold text-slate-900 mb-2">{sc.name}</h3>
                     <p className="text-xs text-slate-600 leading-relaxed mb-4">{sc.details}</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-medium">
-                      <div className="bg-purple-50/20 border border-purple-100/60 rounded-xl p-3.5">
-                        <span className="text-[9px] font-mono text-purple-800 block uppercase font-bold mb-1">Financial Benefit</span>
+                      <div className="bg-slate-50/50 border border-slate-200/60 rounded-xl p-3.5">
+                        <span className="text-[9px] font-mono text-slate-500 block uppercase font-bold mb-1">Financial Benefit</span>
                         <span className="text-slate-900 font-semibold leading-relaxed">{sc.benefit}</span>
                       </div>
-                      <div className="bg-purple-50/20 border border-purple-100/60 rounded-xl p-3.5">
-                        <span className="text-[9px] font-mono text-purple-800 block uppercase font-bold mb-1">Eligibility Criteria</span>
+                      <div className="bg-slate-50/50 border border-slate-200/60 rounded-xl p-3.5">
+                        <span className="text-[9px] font-mono text-slate-500 block uppercase font-bold mb-1">Eligibility Criteria</span>
                         <span className="text-slate-900 font-semibold leading-relaxed">{sc.eligibility}</span>
                       </div>
                     </div>
@@ -238,15 +253,15 @@ export default function SevaDirectory() {
                 </div>
 
                 {/* Right side checklists */}
-                <div className="flex-[2] bg-purple-50/25 border border-purple-100/60 rounded-xl p-6 flex flex-col justify-center">
+                <div className="flex-[2] bg-gradient-to-br from-purple-50/20 via-indigo-50/20 to-blue-50/25 border border-indigo-100/60 rounded-xl p-6 flex flex-col justify-center">
                   <div>
-                    <span className="text-[9px] font-mono font-bold text-purple-800 uppercase tracking-wider block mb-3">
+                    <span className="text-[9px] font-mono font-bold text-indigo-800 uppercase tracking-wider block mb-3">
                       Required Documents Checklist
                     </span>
                     <ul className="flex flex-col gap-2">
                       {sc.docs.map((doc, idx) => (
                         <li key={idx} className="flex items-center gap-2 text-xs text-slate-600 font-medium">
-                          <CheckCircle2 size={13} className="text-purple-600 flex-shrink-0" />
+                          <CheckCircle2 size={13} className="text-indigo-600 flex-shrink-0" />
                           <span>{doc}</span>
                         </li>
                       ))}
@@ -259,15 +274,15 @@ export default function SevaDirectory() {
         </section>
 
         {/* 5. Support CTA Banner */}
-        <section className="bg-gradient-to-br from-purple-950 via-purple-900 to-purple-950 text-white rounded-3xl p-8 md:p-12 text-center mt-20 shadow-xl shadow-purple-950/15 relative overflow-hidden">
+        <section className="bg-gradient-to-br from-purple-950 via-indigo-950 to-blue-950 text-white rounded-3xl p-8 md:p-12 text-center mt-20 shadow-xl shadow-indigo-950/15 relative overflow-hidden">
           <div className="max-w-[500px] mx-auto flex flex-col gap-5 items-center relative z-10">
             <h3 className="text-2xl font-extrabold uppercase tracking-tight text-white">Need Help Navigating Subsidies?</h3>
-            <p className="text-xs text-purple-200 leading-relaxed">
+            <p className="text-xs text-indigo-200 leading-relaxed">
               We compile and structure project reports for banking audits, setup Udyam micro registrations, and optimize government applications for corporate client units.
             </p>
             <a 
               href="https://sochyeah.com/contact" 
-              className="text-xs font-bold uppercase tracking-wider bg-white text-purple-950 hover:bg-purple-50 transition-all px-8 py-3.5 rounded-full shadow-md hover:scale-[1.02] mt-2 inline-block"
+              className="text-xs font-bold uppercase tracking-wider bg-white text-indigo-950 hover:bg-indigo-50 transition-all px-8 py-3.5 rounded-full shadow-md hover:scale-[1.02] mt-2 inline-block"
             >
               Consult Our Systems Partners
             </a>
@@ -275,7 +290,7 @@ export default function SevaDirectory() {
         </section>
       </main>
 
-      <footer className="border-t border-purple-100/70 bg-white py-8 px-6 text-center text-xs text-slate-400">
+      <footer className="border-t border-indigo-100/70 bg-white py-8 px-6 text-center text-xs text-slate-400">
         <p>© 2026 SOCHYEAH Seva Portal. Under direct distribution license. This page serves public government records directory parameters.</p>
       </footer>
     </div>

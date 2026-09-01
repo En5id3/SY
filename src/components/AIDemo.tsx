@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, User, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Bot, User, Sparkles, ArrowRight } from 'lucide-react';
 
 interface DemoConversation {
   role: 'user' | 'ai';
@@ -16,6 +16,7 @@ interface DemoPersona {
   id: string;
   name: string;
   tag: string;
+  theme: 'blue' | 'purple' | 'indigo';
   messages: DemoConversation[];
 }
 
@@ -24,6 +25,7 @@ const personas: DemoPersona[] = [
     id: 'receptionist',
     name: 'Voice AI Assistant',
     tag: 'Telephony & Calendar',
+    theme: 'blue',
     messages: [
       { role: 'user', text: 'Hey, I want to book an architecture evaluation call tomorrow afternoon.' },
       { 
@@ -45,6 +47,7 @@ const personas: DemoPersona[] = [
     id: 'document',
     name: 'RAG Knowledge Agent',
     tag: 'Enterprise Retrieval',
+    theme: 'purple',
     messages: [
       { role: 'user', text: 'What is our encryption standard for multi-tenant database clusters?' },
       { 
@@ -66,6 +69,7 @@ const personas: DemoPersona[] = [
     id: 'sales',
     name: 'Autonomous Sales Qualifier',
     tag: 'CRM & Lead Scoring',
+    theme: 'indigo',
     messages: [
       { role: 'user', text: 'We are looking to launch an enterprise SaaS MVP in 6 weeks.' },
       { 
@@ -90,8 +94,32 @@ export default function AIDemo() {
 
   const current = personas.find((p) => p.id === activePersona) || personas[0];
 
+  const getStepBadge = (step?: 'UNDERSTAND' | 'REASON' | 'ACT') => {
+    if (step === 'UNDERSTAND') {
+      return 'bg-blue-700 text-white';
+    }
+    if (step === 'REASON') {
+      return 'bg-purple-700 text-white';
+    }
+    return 'bg-indigo-700 text-white';
+  };
+
+  const getPersonaBtnClass = (p: DemoPersona) => {
+    const isActive = activePersona === p.id;
+    if (!isActive) {
+      return 'bg-white text-slate-600 border border-slate-200 hover:border-indigo-300 hover:text-indigo-950';
+    }
+    if (p.theme === 'blue') {
+      return 'bg-blue-900 text-white shadow-sm shadow-blue-950/20';
+    }
+    if (p.theme === 'purple') {
+      return 'bg-purple-900 text-white shadow-sm shadow-purple-950/20';
+    }
+    return 'bg-indigo-900 text-white shadow-sm shadow-indigo-950/20';
+  };
+
   return (
-    <div className="border border-purple-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-sm shadow-purple-900/5">
+    <div className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-sm shadow-indigo-900/5">
       {/* Top Controls: Persona Tabs */}
       <div className="flex flex-wrap gap-2.5 pb-6 mb-6 border-b border-slate-100">
         {personas.map((p) => {
@@ -100,16 +128,12 @@ export default function AIDemo() {
             <button
               key={p.id}
               onClick={() => setActivePersona(p.id)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 flex items-center gap-2 ${
-                isActive
-                  ? 'bg-purple-900 text-white shadow-sm shadow-purple-950/20'
-                  : 'bg-purple-50/50 text-slate-600 border border-purple-100 hover:bg-purple-100/60 hover:text-purple-950'
-              }`}
+              className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 flex items-center gap-2 ${getPersonaBtnClass(p)}`}
             >
-              <Sparkles size={12} className={isActive ? 'text-purple-300' : 'text-purple-600'} />
+              <Sparkles size={12} className={isActive ? (p.theme === 'blue' ? 'text-blue-300' : 'text-purple-300') : 'text-indigo-600'} />
               <span>{p.name}</span>
               <span className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded-full ${
-                isActive ? 'bg-purple-800 text-purple-200' : 'bg-white text-slate-400'
+                isActive ? 'bg-black/20 text-white' : 'bg-slate-100 text-slate-400'
               }`}>
                 {p.tag}
               </span>
@@ -137,29 +161,29 @@ export default function AIDemo() {
                 className={`max-w-[85%] md:max-w-[75%] p-4 rounded-2xl text-xs leading-relaxed ${
                   msg.role === 'user'
                     ? 'bg-slate-100 text-slate-900 rounded-br-xs font-medium'
-                    : 'bg-purple-50/40 border border-purple-100 text-slate-800 rounded-bl-xs shadow-xs'
+                    : 'bg-gradient-to-r from-purple-50/40 via-indigo-50/30 to-blue-50/40 border border-indigo-100/70 text-slate-800 rounded-bl-xs shadow-xs'
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1 text-[10px] font-mono uppercase tracking-wider text-slate-400">
                   {msg.role === 'user' ? (
                     <>
                       <User size={11} className="text-slate-500" />
-                      <span>User Request</span>
+                      <span>User Query</span>
                     </>
                   ) : (
                     <>
-                      <Bot size={11} className="text-purple-700" />
-                      <span className="text-purple-900 font-bold">SOCHYEAH AI Engine</span>
+                      <Bot size={11} className="text-indigo-700" />
+                      <span className="text-slate-900 font-bold">SOCHYEAH Cognitive Engine</span>
                     </>
                   )}
                 </div>
                 <p className="text-slate-800">{msg.text}</p>
               </div>
 
-              {/* Cognitive Step Meta Tag */}
+              {/* Cognitive Step Meta Tag with Semantic Color */}
               {msg.step && msg.stepDetail && (
-                <div className="flex items-center gap-2 text-[10px] font-mono text-purple-800 bg-purple-100/60 px-3 py-1 rounded-full border border-purple-200/50 mt-0.5">
-                  <span className="font-bold uppercase tracking-wider px-1.5 py-0.5 bg-purple-900 text-white rounded text-[8px]">
+                <div className="flex items-center gap-2 text-[10px] font-mono text-slate-700 bg-slate-50 px-3 py-1 rounded-full border border-slate-200/60 mt-0.5 shadow-2xs">
+                  <span className={`font-bold uppercase tracking-wider px-1.5 py-0.5 rounded text-[8px] ${getStepBadge(msg.step)}`}>
                     {msg.step}
                   </span>
                   <span className="truncate max-w-[320px] md:max-w-[500px]">{msg.stepDetail}</span>
@@ -177,7 +201,7 @@ export default function AIDemo() {
         </span>
         <Link
           href="/contact"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-900 hover:text-purple-700 transition-colors uppercase tracking-wider"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-900 hover:text-indigo-700 transition-colors uppercase tracking-wider"
         >
           <span>Schedule an Architecture Sprint</span>
           <ArrowRight size={13} />

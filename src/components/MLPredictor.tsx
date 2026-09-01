@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Play, RotateCcw, Cpu, Sparkles } from 'lucide-react';
+import { Play, RotateCcw, Cpu } from 'lucide-react';
 
 interface FeatureInput {
   name: string;
@@ -47,10 +47,10 @@ export default function MLPredictor() {
   };
 
   return (
-    <div className="border border-purple-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-sm shadow-purple-900/5 flex flex-col gap-6">
+    <div className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-sm shadow-indigo-900/5 flex flex-col gap-6">
       <div className="flex justify-between items-center border-b border-slate-100 pb-4">
         <div>
-          <span className="text-[10px] font-mono font-bold text-purple-700 uppercase tracking-widest block">
+          <span className="text-[10px] font-mono font-bold text-indigo-700 uppercase tracking-widest block">
             PREDICTOR LABORATORY
           </span>
           <h4 className="text-sm font-bold text-slate-900 mt-0.5">
@@ -61,16 +61,16 @@ export default function MLPredictor() {
           {step === 3 ? (
             <button 
               onClick={handleReset}
-              className="p-2.5 border border-purple-200 rounded-full hover:bg-purple-50 transition-colors"
+              className="p-2.5 border border-indigo-200 rounded-full hover:bg-indigo-50 transition-colors"
               title="Reset Simulator"
             >
-              <RotateCcw size={14} className="text-purple-900" />
+              <RotateCcw size={14} className="text-indigo-900" />
             </button>
           ) : (
             <button 
               onClick={() => setIsPlaying(true)}
               disabled={isPlaying}
-              className="px-5 py-2.5 bg-purple-900 text-white text-xs font-bold uppercase tracking-wider rounded-full hover:bg-purple-950 disabled:bg-slate-300 transition-all shadow-sm shadow-purple-950/15 flex items-center gap-2"
+              className="px-5 py-2.5 bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 text-white text-xs font-bold uppercase tracking-wider rounded-full hover:opacity-95 disabled:bg-slate-300 transition-all shadow-sm shadow-indigo-950/15 flex items-center gap-2"
             >
               <Play size={11} fill="white" />
               <span>{isPlaying ? 'Computing...' : 'Run Simulation'}</span>
@@ -81,16 +81,16 @@ export default function MLPredictor() {
 
       {/* Main visual flowchart grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch min-h-[160px]">
-        {/* Left Column: Data features */}
-        <div className="flex flex-col gap-2.5 bg-purple-50/30 border border-purple-100/60 rounded-xl p-4 justify-center">
-          <span className="text-[9px] font-mono font-bold text-purple-800 uppercase tracking-wider mb-1">
+        {/* Left Column: Data features (Blue - Data Layer) */}
+        <div className="flex flex-col gap-2.5 bg-blue-50/30 border border-blue-100/60 rounded-xl p-4 justify-center">
+          <span className="text-[9px] font-mono font-bold text-blue-800 uppercase tracking-wider mb-1">
             01 // Input Feature Vectors
           </span>
           {initialFeatures.map((feat, idx) => (
-            <div key={idx} className="flex justify-between items-center text-xs font-mono border-b border-purple-100/40 pb-1.5 last:border-b-0">
+            <div key={idx} className="flex justify-between items-center text-xs font-mono border-b border-blue-100/40 pb-1.5 last:border-b-0">
               <span className="text-slate-600">{feat.name}</span>
               <motion.span 
-                animate={isPlaying && step === 0 ? { color: '#7e22ce', scale: 1.1, fontWeight: 'bold' } : {}}
+                animate={isPlaying && step === 0 ? { color: '#2563eb', scale: 1.1, fontWeight: 'bold' } : {}}
                 className="text-slate-900 font-semibold"
               >
                 {feat.val}
@@ -99,7 +99,7 @@ export default function MLPredictor() {
           ))}
         </div>
 
-        {/* Middle Column: Model logic processing node */}
+        {/* Middle Column: Model logic processing node (Purple - Intelligence Layer) */}
         <div className="flex flex-col items-center justify-center border border-purple-100/80 rounded-xl p-5 relative overflow-hidden bg-white shadow-xs">
           <span className="absolute top-2.5 text-[8px] font-mono text-slate-400 uppercase tracking-wider">
             02 // MODEL_NEURAL_LAYER
@@ -123,19 +123,19 @@ export default function MLPredictor() {
           </span>
         </div>
 
-        {/* Right Column: Output result score */}
-        <div className="flex flex-col justify-between border border-purple-100/80 rounded-xl p-5 bg-gradient-to-br from-white to-purple-50/40 shadow-xs">
+        {/* Right Column: Output result score (Indigo/Blue - Outcome Layer) */}
+        <div className="flex flex-col justify-between border border-indigo-100/80 rounded-xl p-5 bg-gradient-to-br from-white to-indigo-50/40 shadow-xs">
           <div>
-            <span className="text-[9px] font-mono font-bold text-purple-800 uppercase tracking-wider block">
+            <span className="text-[9px] font-mono font-bold text-indigo-800 uppercase tracking-wider block">
               03 // Predictive Outcome
             </span>
             <div className="text-lg md:text-xl font-extrabold text-slate-900 mt-3 font-sans">
               {outputVal}
             </div>
           </div>
-          <div className="border-t border-purple-100/60 pt-3 flex justify-between items-center text-[10px] font-mono text-slate-500">
+          <div className="border-t border-indigo-100/60 pt-3 flex justify-between items-center text-[10px] font-mono text-slate-500">
             <span>Confidence Index</span>
-            <span className="font-bold text-purple-900">{step === 3 ? '98.2%' : '---'}</span>
+            <span className="font-bold text-indigo-950">{step === 3 ? '98.2%' : '---'}</span>
           </div>
         </div>
       </div>
