@@ -145,8 +145,8 @@ export default function SevaPortal() {
 
   return (
     <div className="bg-[#fafafa] min-h-screen text-black antialiased">
-      {/* 1. Custom Interactive Seva Header */}
-      <SevaHeader selectedCat={selectedCat} onSelectCat={setSelectedCat} />
+      {/* 1. Custom Seva Header Matching Main Site */}
+      <SevaHeader />
 
       <main className="max-w-[1200px] mx-auto px-6 pt-28 md:pt-32 pb-16 md:pb-24">
         {/* 2. Editorial Header */}
