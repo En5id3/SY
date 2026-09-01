@@ -22,55 +22,55 @@ const steps: RoadmapStep[] = [
     stepNumber: '01',
     title: 'Idea & Strategy',
     subtitle: 'Shape the Vision',
-    description: 'We listen to your goals, identify the highest-impact opportunities, and craft a simple roadmap.',
+    description: 'We listen to your goals, identify high-impact opportunities, and craft a simple roadmap.',
     color: '#6366f1',
-    cx: 55,
-    cy: 150,
-    icon: <Lightbulb className="w-4 h-4" />
+    cx: 50,
+    cy: 110,
+    icon: <Lightbulb className="w-3.5 h-3.5" />
   },
   {
     id: 'design',
     stepNumber: '02',
     title: 'Product Design',
-    subtitle: 'Craft the Experience',
-    description: 'We design modern, intuitive interfaces that your customers and team will genuinely enjoy using.',
+    subtitle: 'Craft Experience',
+    description: 'We design modern, intuitive interfaces that your customers will genuinely enjoy using.',
     color: '#8b5cf6',
-    cx: 145,
-    cy: 75,
-    icon: <Palette className="w-4 h-4" />
+    cx: 135,
+    cy: 50,
+    icon: <Palette className="w-3.5 h-3.5" />
   },
   {
     id: 'ai-tech',
     stepNumber: '03',
     title: 'AI & Engineering',
     subtitle: 'Add Intelligence',
-    description: 'We integrate smart AI agents, automated workflows, and fast, rock-solid software under the hood.',
+    description: 'We integrate smart AI agents, automated workflows, and fast, rock-solid software.',
     color: '#7c3aed',
-    cx: 235,
-    cy: 150,
-    icon: <Sparkles className="w-4 h-4" />
+    cx: 220,
+    cy: 110,
+    icon: <Sparkles className="w-3.5 h-3.5" />
   },
   {
     id: 'launch',
     stepNumber: '04',
     title: 'Rapid Launch',
-    subtitle: 'Go Live in Weeks',
-    description: 'We test everything thoroughly and deploy your system to production smoothly in tight 6-week sprints.',
+    subtitle: 'Go Live Fast',
+    description: 'We test thoroughly and deploy your system to production in tight 6-week sprints.',
     color: '#2563eb',
-    cx: 325,
-    cy: 75,
-    icon: <Rocket className="w-4 h-4" />
+    cx: 305,
+    cy: 50,
+    icon: <Rocket className="w-3.5 h-3.5" />
   },
   {
     id: 'scale',
     stepNumber: '05',
     title: 'Compounding Scale',
-    subtitle: 'Grow with Ease',
-    description: 'We optimize performance, attract organic search traffic, and help your business expand effortlessly.',
+    subtitle: 'Grow Effortlessly',
+    description: 'We optimize performance, attract organic search traffic, and help you scale.',
     color: '#0284c7',
-    cx: 415,
-    cy: 150,
-    icon: <TrendingUp className="w-4 h-4" />
+    cx: 390,
+    cy: 110,
+    icon: <TrendingUp className="w-3.5 h-3.5" />
   }
 ];
 
@@ -80,37 +80,37 @@ export default function HeroFlow() {
   const active = steps.find(s => s.id === activeStepId) || steps[2];
 
   return (
-    <div className="w-full flex flex-col gap-4 select-none">
+    <div className="w-full flex flex-col gap-3 select-none">
       {/* Visual Roadmap Card */}
-      <div className="relative border border-indigo-100/90 bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-xl shadow-indigo-950/5 card-hover-effect overflow-hidden">
+      <div className="relative border border-indigo-100/90 bg-white/95 backdrop-blur-xl rounded-2xl p-5 shadow-lg shadow-indigo-950/5 card-hover-effect overflow-hidden">
         
         {/* Soft Ambient Radial Lights */}
-        <div className="absolute -top-20 -left-20 w-64 h-64 bg-indigo-500/8 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-violet-500/8 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-16 -left-16 w-48 h-48 bg-indigo-500/8 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -bottom-16 -right-16 w-48 h-48 bg-violet-500/8 rounded-full blur-2xl pointer-events-none" />
 
         {/* Top Header */}
-        <div className="flex items-center justify-between border-b border-indigo-50 pb-4 mb-2">
+        <div className="flex items-center justify-between border-b border-indigo-50 pb-3 mb-1">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
-            <span className="text-[11px] font-semibold tracking-wider text-slate-600 uppercase">
+            <span className="text-[10px] font-semibold tracking-wider text-slate-600 uppercase">
               HOW WE BRING IDEAS TO LIFE
             </span>
           </div>
-          <span className="text-[11px] text-indigo-700 font-medium">
-            Hover to explore
+          <span className="text-[10px] text-indigo-700 font-medium">
+            Explore steps
           </span>
         </div>
 
         {/* SVG Curve Flow */}
-        <div className="relative w-full h-[200px] flex items-center justify-center my-2">
+        <div className="relative w-full h-[145px] flex items-center justify-center my-1">
           <svg 
-            className="w-full h-full max-w-[460px] overflow-visible" 
-            viewBox="0 0 470 220" 
+            className="w-full h-full max-w-[440px] overflow-visible" 
+            viewBox="0 0 440 160" 
             fill="none" 
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              <linearGradient id="smooth-flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <linearGradient id="compact-flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#6366f1" />
                 <stop offset="40%" stopColor="#8b5cf6" />
                 <stop offset="70%" stopColor="#2563eb" />
@@ -119,16 +119,16 @@ export default function HeroFlow() {
             </defs>
 
             {/* Inactive Base Tracks */}
-            <path d="M 55 150 C 100 110, 100 110, 145 75" stroke="#e0e7ff" strokeWidth="2" strokeDasharray="3 3" />
-            <path d="M 145 75 C 190 110, 190 110, 235 150" stroke="#e0e7ff" strokeWidth="2" strokeDasharray="3 3" />
-            <path d="M 235 150 C 280 110, 280 110, 325 75" stroke="#e0e7ff" strokeWidth="2" strokeDasharray="3 3" />
-            <path d="M 325 75 C 370 110, 370 110, 415 150" stroke="#e0e7ff" strokeWidth="2" strokeDasharray="3 3" />
+            <path d="M 50 110 C 90 80, 90 80, 135 50" stroke="#e0e7ff" strokeWidth="1.5" strokeDasharray="3 3" />
+            <path d="M 135 50 C 180 80, 180 80, 220 110" stroke="#e0e7ff" strokeWidth="1.5" strokeDasharray="3 3" />
+            <path d="M 220 110 C 265 80, 265 80, 305 50" stroke="#e0e7ff" strokeWidth="1.5" strokeDasharray="3 3" />
+            <path d="M 305 50 C 350 80, 350 80, 390 110" stroke="#e0e7ff" strokeWidth="1.5" strokeDasharray="3 3" />
 
             {/* Glowing Active Stream */}
             <path 
-              d="M 55 150 C 100 110, 100 110, 145 75 C 190 110, 190 110, 235 150 C 280 110, 280 110, 325 75 C 370 110, 370 110, 415 150" 
-              stroke="url(#smooth-flow-grad)" 
-              strokeWidth="2.5" 
+              d="M 50 110 C 90 80, 90 80, 135 50 C 180 80, 180 80, 220 110 C 265 80, 265 80, 305 50 C 350 80, 350 80, 390 110" 
+              stroke="url(#compact-flow-grad)" 
+              strokeWidth="2" 
               className="flow-dash"
               opacity="0.9"
             />
@@ -148,7 +148,7 @@ export default function HeroFlow() {
                     <circle 
                       cx={st.cx} 
                       cy={st.cy} 
-                      r="26" 
+                      r="22" 
                       fill="none" 
                       stroke={st.color} 
                       strokeWidth="1.5"
@@ -162,10 +162,10 @@ export default function HeroFlow() {
                   <circle 
                     cx={st.cx} 
                     cy={st.cy} 
-                    r="20" 
+                    r="16" 
                     fill={isActive ? st.color : '#ffffff'} 
                     stroke={isActive ? st.color : '#cbd5e1'} 
-                    strokeWidth={isActive ? '2.5' : '1.5'}
+                    strokeWidth={isActive ? '2' : '1.5'}
                     className="transition-all duration-300 group-hover:scale-110"
                     style={{ transformOrigin: `${st.cx}px ${st.cy}px` }}
                   />
@@ -173,8 +173,8 @@ export default function HeroFlow() {
                   {/* Step Label */}
                   <text 
                     x={st.cx} 
-                    y={st.cy + 3.5} 
-                    className={`text-[10px] font-mono font-bold select-none pointer-events-none transition-colors ${
+                    y={st.cy + 3} 
+                    className={`text-[9px] font-mono font-bold select-none pointer-events-none transition-colors ${
                       isActive ? 'fill-white font-extrabold' : 'fill-slate-500 group-hover:fill-slate-900'
                     }`}
                     textAnchor="middle"
@@ -191,25 +191,25 @@ export default function HeroFlow() {
         <AnimatePresence mode="wait">
           <motion.div
             key={active.id}
-            initial={{ opacity: 0, y: 4 }}
+            initial={{ opacity: 0, y: 3 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.2 }}
-            className="border-t border-indigo-50 pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3"
+            exit={{ opacity: 0, y: -3 }}
+            transition={{ duration: 0.15 }}
+            className="border-t border-indigo-50 pt-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
           >
             <div className="flex flex-col">
-              <span className="text-[11px] font-semibold text-indigo-700">
+              <span className="text-[10px] font-semibold text-indigo-700">
                 Step {active.stepNumber} • {active.subtitle}
               </span>
-              <h4 className="text-sm font-bold text-slate-900">
+              <h4 className="text-xs font-bold text-slate-900">
                 {active.title}
               </h4>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed max-w-[380px]">
+              <p className="text-[11px] text-slate-600 mt-0.5 leading-normal max-w-[360px]">
                 {active.description}
               </p>
             </div>
 
-            <div className="p-3 bg-indigo-50/70 text-indigo-700 rounded-2xl border border-indigo-100 flex-shrink-0 self-start sm:self-center">
+            <div className="p-2 bg-indigo-50/70 text-indigo-700 rounded-xl border border-indigo-100 flex-shrink-0 self-start sm:self-center">
               {active.icon}
             </div>
           </motion.div>

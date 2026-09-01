@@ -99,24 +99,24 @@ body {
   min-height: 100vh;
 }
 
-/* Typography Utilities */
+/* Compact Typography Utilities */
 .hero-title {
-  font-size: clamp(2.75rem, 6vw + 1rem, 5.5rem);
+  font-size: clamp(2.15rem, 4vw + 0.5rem, 3.65rem);
   font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.02;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
 }
 
 .section-title {
-  font-size: clamp(2rem, 3.5vw + 0.5rem, 3.25rem);
+  font-size: clamp(1.6rem, 2.5vw + 0.3rem, 2.35rem);
   font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
 }
 
 .sub-editorial {
-  font-size: 1.125rem;
-  line-height: 1.65;
+  font-size: 0.95rem;
+  line-height: 1.55;
   color: #475569;
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -142,8 +142,8 @@ body {
 }
 
 .card-hover-effect:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.08), 0 0 0 1px rgba(99, 102, 241, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -12px rgba(79, 70, 229, 0.08), 0 0 0 1px rgba(99, 102, 241, 0.12);
 }
 
 /* Glowing Flow Line */
