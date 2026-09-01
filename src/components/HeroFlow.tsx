@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lightbulb, Palette, Sparkles, Rocket, TrendingUp } from 'lucide-react';
 
@@ -75,12 +75,32 @@ const steps: RoadmapStep[] = [
 ];
 
 export default function HeroFlow() {
-  const [activeStepId, setActiveStepId] = useState<string>('ai-tech');
+  const [activeStepId, setActiveStepId] = useState<string>('idea');
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
-  const active = steps.find(s => s.id === activeStepId) || steps[2];
+  // Auto-cycle through steps one by one
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      setActiveStepId((currentId) => {
+        const currentIndex = steps.findIndex((s) => s.id === currentId);
+        const nextIndex = (currentIndex + 1) % steps.length;
+        return steps[nextIndex].id;
+      });
+    }, 2800);
+
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const active = steps.find(s => s.id === activeStepId) || steps[0];
 
   return (
-    <div className="w-full flex flex-col gap-3 select-none">
+    <div 
+      className="w-full flex flex-col gap-3 select-none"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       {/* Visual Roadmap Card */}
       <div className="relative border border-indigo-100/90 bg-white/95 backdrop-blur-xl rounded-2xl p-5 shadow-lg shadow-indigo-950/5 card-hover-effect overflow-hidden">
         
@@ -88,7 +108,7 @@ export default function HeroFlow() {
         <div className="absolute -top-16 -left-16 w-48 h-48 bg-indigo-500/8 rounded-full blur-2xl pointer-events-none" />
         <div className="absolute -bottom-16 -right-16 w-48 h-48 bg-violet-500/8 rounded-full blur-2xl pointer-events-none" />
 
-        {/* Top Header */}
+        {/* Top Header with Live Indicator & Step Progress */}
         <div className="flex items-center justify-between border-b border-indigo-50 pb-3 mb-1">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
@@ -96,9 +116,23 @@ export default function HeroFlow() {
               HOW WE BRING IDEAS TO LIFE
             </span>
           </div>
-          <span className="text-[10px] text-indigo-700 font-medium">
-            Explore steps
-          </span>
+          <div className="flex items-center gap-1.5">
+            {steps.map((st) => (
+              <button
+                key={st.id}
+                onClick={() => {
+                  setActiveStepId(st.id);
+                  setIsPaused(true);
+                }}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  activeStepId === st.id 
+                    ? 'w-5 bg-indigo-600' 
+                    : 'w-1.5 bg-slate-200 hover:bg-indigo-300'
+                }`}
+                aria-label={`Step ${st.stepNumber}`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* SVG Curve Flow */}
@@ -140,8 +174,14 @@ export default function HeroFlow() {
                 <g 
                   key={st.id} 
                   className="cursor-pointer group"
-                  onMouseEnter={() => setActiveStepId(st.id)}
-                  onClick={() => setActiveStepId(st.id)}
+                  onMouseEnter={() => {
+                    setActiveStepId(st.id);
+                    setIsPaused(true);
+                  }}
+                  onClick={() => {
+                    setActiveStepId(st.id);
+                    setIsPaused(true);
+                  }}
                 >
                   {/* Outer Pulsing Halo */}
                   {isActive && (
