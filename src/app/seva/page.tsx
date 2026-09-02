@@ -4,22 +4,24 @@ import SevaDirectoryClient from '@/components/SevaDirectoryClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Government Schemes in India: Eligibility, Subsidies & Benefits | SEVA Directory",
-  description: "Search verified Indian government schemes for MSMEs, startups, farmers, healthcare, and rooftop solar with subsidy tables, eligibility checklists, and official portal links.",
+  title: {
+    absolute: "Government Schemes Directory India | SEVA",
+  },
+  description: "Find government schemes, subsidies and welfare programs for businesses, farmers, health, energy and communities. SEVA helps you discover relevant government benefits and official sources.",
   alternates: {
-    canonical: "https://seva.sochyeah.com",
+    canonical: "https://seva.sochyeah.com/",
   },
   openGraph: {
-    title: "Government Schemes in India | SEVA Directory",
-    description: "Search verified Indian government schemes for MSMEs, startups, farmers, healthcare, and rooftop solar with subsidy tables and eligibility checklists.",
-    url: "https://seva.sochyeah.com",
+    title: "Government Schemes Directory India | SEVA",
+    description: "Find government schemes, subsidies and welfare programs for businesses, farmers, health, energy and communities. SEVA helps you discover relevant government benefits and official sources.",
+    url: "https://seva.sochyeah.com/",
     siteName: "SEVA Directory",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Government Schemes in India | SEVA Directory",
-    description: "Search verified Indian government schemes for MSMEs, startups, farmers, healthcare, and rooftop solar.",
+    title: "Government Schemes Directory India | SEVA",
+    description: "Find government schemes, subsidies and welfare programs for businesses, farmers, health, energy and communities. SEVA helps you discover relevant government benefits and official sources.",
   }
 };
 
@@ -30,19 +32,21 @@ export default function SevaDirectoryPage() {
       {
         '@type': 'WebSite',
         '@id': 'https://seva.sochyeah.com/#website',
-        'url': 'https://seva.sochyeah.com',
-        'name': 'SEVA - Indian Government Schemes Directory',
-        'description': 'Independent, searchable directory of central and state Indian government schemes, subsidies, eligibility, and application guidelines.'
+        'url': 'https://seva.sochyeah.com/',
+        'name': 'SEVA - Government Schemes Directory India',
+        'description': 'Find government schemes, subsidies and welfare programs for businesses, farmers, health, energy and communities. SEVA helps you discover relevant government benefits and official sources.',
+        'publisher': {
+          '@type': 'Organization',
+          'name': 'SEVA Public Information Directory',
+          'url': 'https://seva.sochyeah.com/'
+        }
       },
       {
-        '@type': 'WebPage',
-        '@id': 'https://seva.sochyeah.com/#webpage',
-        'url': 'https://seva.sochyeah.com',
-        'name': 'Government Schemes in India: Eligibility, Subsidies & Benefits | SEVA Directory',
-        'description': 'Search verified Indian government schemes for MSMEs, startups, farmers, healthcare, and rooftop solar.',
-        'isPartOf': {
-          '@id': 'https://seva.sochyeah.com/#website'
-        }
+        '@type': 'Organization',
+        '@id': 'https://seva.sochyeah.com/#organization',
+        'name': 'SEVA',
+        'url': 'https://seva.sochyeah.com/',
+        'description': 'Independent public directory of central and state Government of India schemes, welfare initiatives, and subsidy guidelines.'
       }
     ]
   };

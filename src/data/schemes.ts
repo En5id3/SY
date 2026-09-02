@@ -1,4 +1,99 @@
-import { SchemeItem } from './types';
+import { SchemeItem, SchemeCategory } from './types';
+
+export const schemeCategories: Record<'business' | 'health' | 'energy' | 'agriculture', SchemeCategory> = {
+  business: {
+    slug: 'business',
+    name: 'MSME & Business Support',
+    title: 'Government Schemes for MSMEs & Business Support | SEVA',
+    metaTitle: 'Government Schemes for MSMEs & Business Support | SEVA Directory',
+    metaDescription: 'Discover verified government credit-linked capital subsidies, collateral-free credit guarantees, and early-stage startup grants including PMEGP, CGTMSE, SISFS, and ZED.',
+    h1: 'Government Schemes for MSMEs & Business Support',
+    shortDescription: 'Credit-linked capital subsidies, collateral-free credit guarantees up to ₹5 Crore, and startup seed grants for micro, small, and medium enterprises across India.',
+    detailedOverview: 'The Government of India, primarily through the Ministry of Micro, Small and Medium Enterprises (MoMSME) and the Department for Promotion of Industry and Internal Trade (DPIIT), operates multiple flagship schemes to empower entrepreneurs, foster domestic manufacturing, and provide debt-free credit backing.',
+    keyHighlights: [
+      '15% to 35% Capital Subsidies on manufacturing & service units (PMEGP)',
+      'Up to ₹5 Crore Collateral-Free Credit Guarantee cover (CGTMSE)',
+      'Up to ₹50 Lakhs early-stage seed funding & grants for DPIIT startups (SISFS)',
+      'Up to 80% subsidy on international quality and sustainable certification (ZED)'
+    ],
+    eligibleEntitiesSummary: [
+      'Proprietors and individual entrepreneurs (18+ years)',
+      'Registered Micro and Small Enterprises with valid Udyam Registration',
+      'DPIIT-recognized Startups incorporated under 2 years',
+      'Self Help Groups (SHGs) and Producer Co-operatives'
+    ],
+    schemeIds: ['pmegp', 'cgtmse', 'startup-india-seed-fund', 'zed']
+  },
+  energy: {
+    slug: 'energy',
+    name: 'Solar & Renewable Energy',
+    title: 'Government Solar & Renewable Energy Subsidy Schemes | SEVA',
+    metaTitle: 'Government Solar & Renewable Energy Subsidy Schemes | SEVA Directory',
+    metaDescription: 'Explore central and state rooftop solar and agricultural pump subsidies including PM Surya Ghar Muft Bijli Yojana and PM-KUSUM solar water pumps.',
+    h1: 'Government Solar & Renewable Energy Schemes',
+    shortDescription: 'Direct benefit transfer capital subsidies for residential rooftop solar installations and up to 60% subsidies on agricultural solar water pumps.',
+    detailedOverview: 'Under the Ministry of New and Renewable Energy (MNRE), the central government is democratizing clean solar power for Indian households and agricultural communities to slash electricity bills and eliminate agricultural diesel pump dependence.',
+    keyHighlights: [
+      'Direct DBT subsidy up to ₹78,000 for 3 kW residential rooftop solar (PM Surya Ghar)',
+      'Up to 300 units of free monthly electricity via net-metered grid ties',
+      'Up to 60% combined Central and State subsidy on standalone solar pumps (PM-KUSUM)',
+      'Surplus solar power purchase tariffs paid directly to farmer bank accounts'
+    ],
+    eligibleEntitiesSummary: [
+      'Residential homeowners with grid electricity meters & suitable roof space',
+      'Individual farmers with cultivable land and documented water sources',
+      'Group Housing Societies (GHS) and Resident Welfare Associations (RWAs)',
+      'Farmer Producer Organizations (FPOs) & Primary Agricultural Credit Societies'
+    ],
+    schemeIds: ['pm-surya-ghar', 'pm-kusum']
+  },
+  health: {
+    slug: 'health',
+    name: 'Healthcare & Health Assurance',
+    title: 'Government Healthcare & Health Assurance Schemes | SEVA',
+    metaTitle: 'Government Healthcare & Health Assurance Schemes | SEVA Directory',
+    metaDescription: 'Explore cashless hospitalization schemes in India including Ayushman Bharat PM-JAY and Universal Senior Citizen 70+ health assurance.',
+    h1: 'Government Healthcare & Health Assurance Schemes',
+    shortDescription: 'Cashless and paperless secondary and tertiary hospitalization cover up to ₹5 Lakhs per family across 29,000+ empanelled public and private hospitals.',
+    detailedOverview: 'Administered by the National Health Authority (NHA) under the Ministry of Health and Family Welfare (MoHFW), Ayushman Bharat PM-JAY is the world largest public health insurance initiative, recently expanded to provide universal coverage to all citizens aged 70 and above.',
+    keyHighlights: [
+      '₹5,00,000 annual cashless hospitalization cover per family (PM-JAY)',
+      'Exclusive ₹5,00,000 top-up pool for senior citizens aged 70+ regardless of income',
+      '1,949+ medical and surgical procedures covered with zero pre-existing disease waiting periods',
+      '100% national portability across all Indian states and empanelled hospital networks'
+    ],
+    eligibleEntitiesSummary: [
+      'Deprived rural and urban households identified via SECC 2011 criteria',
+      'Beneficiaries with active NFSA Food Security Ration Cards',
+      'All Indian senior citizens aged 70+ verified via Aadhaar (Ayushman Vay Vandana Card)',
+      'No caps on family size, gender, or age'
+    ],
+    schemeIds: ['pm-jay', 'pmjay-senior-70']
+  },
+  agriculture: {
+    slug: 'agriculture',
+    name: 'Agriculture & Food Processing',
+    title: 'Government Schemes for Agriculture & Farmers | SEVA',
+    metaTitle: 'Government Schemes for Agriculture & Farmers | SEVA Directory',
+    metaDescription: 'Explore central subsidies for cold storage infrastructure, food processing enterprises, and post-harvest management under MIDH and PMFME.',
+    h1: 'Government Schemes for Agriculture & Food Processing',
+    shortDescription: '35% to 50% capital subsidies for commercial cold storage infrastructure and 35% subsidies up to ₹10 Lakhs for unorganized micro food processing units.',
+    detailedOverview: 'The Ministry of Agriculture & Farmers Welfare and Ministry of Food Processing Industries (MoFPI) provide substantial credit-linked subsidies to reduce post-harvest agricultural wastage, build modern cold chains, and formalize rural micro food enterprises.',
+    keyHighlights: [
+      '35% to 50% credit-linked capital subsidy on cold storage projects up to ₹3.50 Crore (MIDH)',
+      '35% credit-linked subsidy up to ₹10 Lakhs for micro food processing enterprises (PMFME)',
+      '₹40,000 seed capital per member for Self Help Groups in food processing',
+      'Specialized One District One Product (ODOP) branding, packaging, and testing assistance'
+    ],
+    eligibleEntitiesSummary: [
+      'Individual farmers, Grower Associations, and Farmer Producer Organizations (FPOs)',
+      'Micro food processing units operating under One District One Product (ODOP)',
+      'Self Help Groups (SHGs) and Producer Co-operatives',
+      'Private and public agri-entrepreneurs with long-term land titles'
+    ],
+    schemeIds: ['midh-cold-chain', 'pmfme']
+  }
+};
 
 export const schemesData: SchemeItem[] = [
   {
@@ -51,6 +146,7 @@ export const schemesData: SchemeItem[] = [
       { name: 'Ministry of MSME Official Website', url: 'https://msme.gov.in', description: 'Parent ministry portal detailing policy guidelines and circulars.' }
     ],
     lastVerifiedDate: 'March 2026',
+    lastReviewedIso: '2026-03-01',
     faqs: [
       {
         question: 'Is collateral security required for a PMEGP loan?',
@@ -66,7 +162,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['cgtmse', 'zed', 'pmfme'],
-    disclaimer: 'SEVA is an independent informational directory and is not affiliated with the Government of India, KVIC, or the Ministry of MSME. All details are compiled from official government circulars and should be verified on kviconline.gov.in before applying.'
+    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
   },
   {
     id: 'cgtmse',
@@ -115,6 +211,7 @@ export const schemesData: SchemeItem[] = [
       { name: 'myScheme National Directory', url: 'https://www.myscheme.gov.in/schemes/cgtmse', description: 'Official Government of India scheme summary and verification guidelines.' }
     ],
     lastVerifiedDate: 'March 2026',
+    lastReviewedIso: '2026-03-01',
     faqs: [
       {
         question: 'Does the borrower have to apply to CGTMSE directly?',
@@ -130,7 +227,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pmegp', 'startup-india-seed-fund', 'zed'],
-    disclaimer: 'SEVA is an independent directory and does not sanction loans or issue credit guarantees. Applications must be made through RBI-regulated Member Lending Institutions.'
+    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
   },
   {
     id: 'startup-india-seed-fund',
@@ -179,6 +276,7 @@ export const schemesData: SchemeItem[] = [
       { name: 'myScheme SISFS Directory', url: 'https://www.myscheme.gov.in/schemes/sisfs', description: 'National government portal summarizing scheme parameters and guidelines.' }
     ],
     lastVerifiedDate: 'March 2026',
+    lastReviewedIso: '2026-03-01',
     faqs: [
       {
         question: 'Does DPIIT take equity in the startup under SISFS?',
@@ -194,7 +292,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['cgtmse', 'zed', 'pmegp'],
-    disclaimer: 'SEVA is an independent directory and is not an incubator or funding agency. Startups must apply directly on seedfund.startupindia.gov.in.'
+    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
   },
   {
     id: 'zed',
@@ -240,6 +338,7 @@ export const schemesData: SchemeItem[] = [
       { name: 'myScheme ZED Directory', url: 'https://www.myscheme.gov.in/schemes/zed', description: 'Official Government of India scheme summary.' }
     ],
     lastVerifiedDate: 'March 2026',
+    lastReviewedIso: '2026-03-01',
     faqs: [
       {
         question: 'What are the commercial benefits of holding a ZED certificate?',
@@ -251,7 +350,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pmegp', 'cgtmse', 'pmfme'],
-    disclaimer: 'SEVA is an independent directory. ZED pledge and certification must be completed on zed.msme.gov.in.'
+    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
   },
   {
     id: 'pm-surya-ghar',
@@ -299,6 +398,7 @@ export const schemesData: SchemeItem[] = [
       { name: 'MNRE Official Website', url: 'https://mnre.gov.in', description: 'Ministry of New & Renewable Energy notifications and circulars.' }
     ],
     lastVerifiedDate: 'March 2026',
+    lastReviewedIso: '2026-03-01',
     faqs: [
       {
         question: 'How much does a 3 kW solar rooftop system cost after government subsidy?',
@@ -314,7 +414,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pm-kusum'],
-    disclaimer: 'SEVA is an independent informational portal. Consumers must register and apply exclusively on pmsuryaghar.gov.in.'
+    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
   },
   {
     id: 'pm-kusum',
@@ -360,6 +460,7 @@ export const schemesData: SchemeItem[] = [
       { name: 'myScheme PM-KUSUM Directory', url: 'https://www.myscheme.gov.in/schemes/pm-kusum', description: 'Verified national directory overview and eligibility rules.' }
     ],
     lastVerifiedDate: 'March 2026',
+    lastReviewedIso: '2026-03-01',
     faqs: [
       {
         question: 'Can farmers earn extra income from PM-KUSUM Component C?',
@@ -371,7 +472,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pm-surya-ghar', 'midh-cold-chain'],
-    disclaimer: 'SEVA is an independent directory. Applications must be submitted through state-specific nodal agency portals listed on pmkusum.mnre.gov.in.'
+    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
   },
   {
     id: 'pm-jay',
@@ -414,6 +515,7 @@ export const schemesData: SchemeItem[] = [
       { name: 'myScheme PM-JAY Directory', url: 'https://www.myscheme.gov.in/schemes/pmjay', description: 'Official Government of India portal for verified scheme details.' }
     ],
     lastVerifiedDate: 'March 2026',
+    lastReviewedIso: '2026-03-01',
     faqs: [
       {
         question: 'Are pre-existing medical conditions covered under PM-JAY?',
@@ -429,7 +531,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pmjay-senior-70'],
-    disclaimer: 'SEVA is an independent directory. Eligibility verification and Ayushman Card generation must be carried out exclusively on beneficiary.nha.gov.in.'
+    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
   },
   {
     id: 'pmjay-senior-70',
@@ -470,6 +572,7 @@ export const schemesData: SchemeItem[] = [
       { name: 'National Health Authority', url: 'https://nha.gov.in', description: 'Central health policy guidelines and hospital lists.' }
     ],
     lastVerifiedDate: 'March 2026',
+    lastReviewedIso: '2026-03-01',
     faqs: [
       {
         question: 'Can senior citizens with existing private health insurance apply?',
@@ -481,7 +584,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pm-jay'],
-    disclaimer: 'SEVA is an independent informational platform. Registration is free and carried out exclusively on beneficiary.nha.gov.in.'
+    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
   },
   {
     id: 'midh-cold-chain',
@@ -529,6 +632,7 @@ export const schemesData: SchemeItem[] = [
       { name: 'myScheme MIDH Directory', url: 'https://www.myscheme.gov.in/schemes/midh', description: 'Official Government of India summary.' }
     ],
     lastVerifiedDate: 'March 2026',
+    lastReviewedIso: '2026-03-01',
     faqs: [
       {
         question: 'What is meant by a credit-linked back-ended subsidy in MIDH?',
@@ -540,7 +644,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pmfme', 'pm-kusum'],
-    disclaimer: 'SEVA is an independent directory. Applications must be filed on nhb.gov.in prior to beginning construction.'
+    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
   },
   {
     id: 'pmfme',
@@ -588,6 +692,7 @@ export const schemesData: SchemeItem[] = [
       { name: 'myScheme PMFME Directory', url: 'https://www.myscheme.gov.in/schemes/pmfme', description: 'Official Government of India portal summary.' }
     ],
     lastVerifiedDate: 'March 2026',
+    lastReviewedIso: '2026-03-01',
     faqs: [
       {
         question: 'What is the One District One Product (ODOP) approach in PMFME?',
@@ -599,12 +704,19 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pmegp', 'midh-cold-chain', 'zed'],
-    disclaimer: 'SEVA is an independent directory. Applications must be submitted through pmfme.mofpi.gov.in.'
+    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
   }
 ];
 
 export const getSchemeById = (id: string): SchemeItem | undefined => {
   return schemesData.find(s => s.id === id || s.slug === id);
+};
+
+export const getCategoryBySlug = (slug: string): SchemeCategory | undefined => {
+  if (slug === 'business' || slug === 'health' || slug === 'energy' || slug === 'agriculture') {
+    return schemeCategories[slug];
+  }
+  return undefined;
 };
 
 export const getSchemesByCategory = (category: SchemeItem['category']): SchemeItem[] => {

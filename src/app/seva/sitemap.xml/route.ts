@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { schemesData } from '@/data/schemes';
+import { schemesData, schemeCategories } from '@/data/schemes';
 
 export const dynamic = 'force-static';
 
@@ -8,16 +8,16 @@ export async function GET() {
 
   const urls = [
     {
-      loc: baseUrl,
+      loc: `${baseUrl}/`,
       lastmod: '2026-09-02',
-      changefreq: 'daily',
-      priority: '1.0',
     },
+    ...Object.keys(schemeCategories).map((cat) => ({
+      loc: `${baseUrl}/schemes/${cat}`,
+      lastmod: '2026-09-02',
+    })),
     ...schemesData.map((scheme) => ({
       loc: `${baseUrl}/schemes/${scheme.slug}`,
-      lastmod: scheme.lastVerifiedDate || '2026-09-02',
-      changefreq: 'weekly',
-      priority: '0.9',
+      lastmod: scheme.lastReviewedIso || '2026-03-01',
     })),
   ];
 
@@ -28,8 +28,6 @@ ${urls
     (u) => `  <url>
     <loc>${u.loc}</loc>
     <lastmod>${u.lastmod}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
   </url>`
   )
   .join('\n')}

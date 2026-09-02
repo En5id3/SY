@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { schemesData, getSchemeById } from '@/data/schemes';
+import { schemesData, schemeCategories, getSchemeById, getCategoryBySlug, getSchemesByCategory } from '@/data/schemes';
 import SevaHeader from '@/components/SevaHeader';
 import { 
   ArrowRight,
@@ -13,7 +13,8 @@ import {
   ChevronRight, 
   FileText, 
   Building2,
-  AlertCircle
+  AlertCircle,
+  Layers
 } from 'lucide-react';
 import type { Metadata } from 'next';
 
@@ -22,48 +23,296 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return schemesData.map((sc) => ({
+  const schemeParams = schemesData.map((sc) => ({
     id: sc.slug,
   }));
+  const categoryParams = Object.keys(schemeCategories).map((catKey) => ({
+    id: catKey,
+  }));
+
+  return [...schemeParams, ...categoryParams];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const sc = getSchemeById(id);
+  
+  // 1. Check if ID matches a Category
+  const category = getCategoryBySlug(id);
+  if (category) {
+    const canonicalUrl = `https://seva.sochyeah.com/schemes/${category.slug}`;
+    return {
+      title: {
+        absolute: category.metaTitle,
+      },
+      description: category.metaDescription,
+      alternates: {
+        canonical: canonicalUrl,
+      },
+      openGraph: {
+        title: category.title,
+        description: category.metaDescription,
+        url: canonicalUrl,
+        siteName: 'SEVA Directory',
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: category.title,
+        description: category.metaDescription,
+      }
+    };
+  }
 
+  // 2. Check if ID matches a Scheme
+  const sc = getSchemeById(id);
   if (!sc) {
     return {
-      title: 'Government Scheme Not Found | SEVA Directory',
+      title: {
+        absolute: 'Government Scheme Not Found | SEVA',
+      },
     };
   }
 
   const canonicalUrl = `https://seva.sochyeah.com/schemes/${sc.slug}`;
+  const seoTitle = `${sc.shortName || sc.name}: Eligibility, Benefits & Application | SEVA`;
+  const seoDescription = `Learn about the ${sc.name}, including eligibility, benefits, subsidy details and official application resources.`;
 
   return {
-    title: `${sc.name}: Eligibility, Benefits, Documents & How to Apply | SEVA Directory`,
-    description: `${sc.name} complete guide: subsidy percentages, eligibility checklist, documents required, and official government portal application links.`,
+    title: {
+      absolute: seoTitle,
+    },
+    description: seoDescription,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: `${sc.name}: Eligibility, Benefits & How to Apply`,
-      description: sc.overview,
+      title: `${sc.name}: Eligibility, Benefits & Application`,
+      description: seoDescription,
       url: canonicalUrl,
       siteName: 'SEVA Directory',
       type: 'article',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${sc.name}: Eligibility & How to Apply`,
-      description: sc.overview,
+      title: `${sc.name}: Eligibility & Application`,
+      description: seoDescription,
     }
   };
 }
 
-export default async function SchemeDetailPage({ params }: PageProps) {
+export default async function SchemeOrCategoryPage({ params }: PageProps) {
   const { id } = await params;
-  const sc = getSchemeById(id);
 
+  // Render Category Page if slug matches a category
+  const category = getCategoryBySlug(id);
+  if (category) {
+    const categorySchemes = getSchemesByCategory(category.slug);
+    
+    const categoryJsonLd = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'CollectionPage',
+          '@id': `https://seva.sochyeah.com/schemes/${category.slug}#webpage`,
+          'url': `https://seva.sochyeah.com/schemes/${category.slug}`,
+          'name': category.title,
+          'description': category.metaDescription,
+          'isPartOf': {
+            '@type': 'WebSite',
+            'url': 'https://seva.sochyeah.com/'
+          }
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `https://seva.sochyeah.com/schemes/${category.slug}#breadcrumb`,
+          'itemListElement': [
+            {
+              '@type': 'ListItem',
+              'position': 1,
+              'name': 'Home',
+              'item': 'https://seva.sochyeah.com/'
+            },
+            {
+              '@type': 'ListItem',
+              'position': 2,
+              'name': category.name,
+              'item': `https://seva.sochyeah.com/schemes/${category.slug}`
+            }
+          ]
+        }
+      ]
+    };
+
+    return (
+      <div className="bg-[#fafafc] min-h-screen text-slate-900 antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
+        />
+        <SevaHeader />
+
+        <main className="max-w-[1080px] mx-auto px-6 pt-28 md:pt-32 pb-16 md:pb-24">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="mb-8">
+            <ol className="flex items-center gap-2 text-xs text-slate-500 font-mono">
+              <li>
+                <Link href="/" className="hover:text-indigo-900 transition-colors">SEVA Directory</Link>
+              </li>
+              <ChevronRight size={12} className="text-slate-400" />
+              <li className="text-slate-900 font-semibold truncate" aria-current="page">
+                {category.name}
+              </li>
+            </ol>
+          </nav>
+
+          {/* Hero Header */}
+          <div className="flex flex-col gap-4 mb-10 border-b border-indigo-100/80 pb-8">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-indigo-900 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60 flex items-center gap-1.5">
+                <Layers size={12} /> WELFARE DOMAIN CATEGORY
+              </span>
+            </div>
+
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+              {category.h1}
+            </h1>
+
+            <p className="text-sm md:text-base text-slate-600 leading-relaxed font-normal max-w-[850px]">
+              {category.detailedOverview}
+            </p>
+          </div>
+
+          {/* Independent Notice */}
+          <div className="mb-12 border border-amber-200/80 bg-amber-50/40 rounded-2xl p-5 md:p-6 flex items-start gap-4 text-xs text-amber-950">
+            <AlertCircle size={20} className="text-amber-700 flex-shrink-0 mt-0.5" />
+            <div className="flex flex-col gap-1">
+              <span className="font-bold uppercase tracking-wider text-[10px] text-amber-800 font-mono">
+                Independent Directory Notice
+              </span>
+              <p className="leading-relaxed">
+                SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.
+              </p>
+            </div>
+          </div>
+
+          {/* Key Highlights & Eligible Entities */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+            <div className="bg-white border border-indigo-100/80 rounded-2xl p-6 md:p-8 shadow-xs">
+              <h2 className="text-base font-bold text-slate-900 mb-4">
+                Key Subsidy &amp; Assistance Highlights
+              </h2>
+              <ul className="flex flex-col gap-3">
+                {category.keyHighlights.map((hl, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed font-medium">
+                    <span className="text-indigo-600 font-bold mt-0.5">●</span>
+                    <span>{hl}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-white border border-indigo-100/80 rounded-2xl p-6 md:p-8 shadow-xs">
+              <h2 className="text-base font-bold text-slate-900 mb-4">
+                Eligible Entities Summary
+              </h2>
+              <ul className="flex flex-col gap-3">
+                {category.eligibleEntitiesSummary.map((ent, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed font-medium">
+                    <CheckCircle2 size={14} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span>{ent}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Schemes in this category */}
+          <section className="mb-14">
+            <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-6">
+              Verified Schemes in this Category ({categorySchemes.length})
+            </h2>
+
+            <div className="flex flex-col gap-6">
+              {categorySchemes.map((sc) => (
+                <article
+                  key={sc.id}
+                  className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-xs hover:border-indigo-300 transition-all card-hover-effect flex flex-col md:flex-row justify-between gap-6"
+                >
+                  <div className="flex-[3] flex flex-col justify-between">
+                    <div>
+                      <span className="text-[10px] font-mono text-slate-400 font-bold uppercase block mb-1">
+                        {sc.ministry}
+                      </span>
+                      <h3 className="text-xl font-bold text-slate-900 mb-2">
+                        <Link href={`/schemes/${sc.slug}`} className="hover:text-indigo-900 transition-colors">
+                          {sc.name}
+                        </Link>
+                      </h3>
+                      <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                        {sc.overview}
+                      </p>
+                      <div className="bg-slate-50 border border-slate-200/60 rounded-xl p-3.5 text-xs mb-4">
+                        <span className="font-mono text-[9px] uppercase font-bold text-indigo-900 block mb-1">Financial Benefit</span>
+                        <span className="text-slate-900 font-semibold">{sc.benefit}</span>
+                      </div>
+                    </div>
+
+                    <div className="pt-2">
+                      <Link
+                        href={`/schemes/${sc.slug}`}
+                        className="inline-flex items-center text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-purple-900 to-indigo-900 text-white px-5 py-2.5 rounded-full shadow-xs hover:opacity-95 transition-all"
+                      >
+                        <span>View full scheme guide and eligibility requirements</span>
+                        <ArrowRight size={13} className="ml-1.5" />
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="flex-[2] bg-gradient-to-br from-purple-50/20 via-indigo-50/20 to-blue-50/25 border border-indigo-100/60 rounded-xl p-6 flex flex-col justify-between">
+                    <div>
+                      <span className="text-[9px] font-mono font-bold text-indigo-800 uppercase tracking-wider block mb-3">
+                        Key Eligibility Highlights
+                      </span>
+                      <ul className="flex flex-col gap-2 mb-6">
+                        {sc.eligibility.slice(0, 3).map((el, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 font-medium leading-relaxed">
+                            <span className="text-emerald-600 font-bold mt-0.5">✓</span>
+                            <span>{el}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="text-[10px] font-mono text-slate-400 border-t border-indigo-100/60 pt-3 flex justify-between items-center">
+                      <span>Information last reviewed:</span>
+                      <span className="text-slate-700 font-semibold">{sc.lastVerifiedDate}</span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* Return link */}
+          <div className="pt-6 border-t border-indigo-100/70">
+            <Link 
+              href="/" 
+              className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-indigo-900 hover:text-indigo-700"
+            >
+              <span>← Back to all government schemes directory</span>
+            </Link>
+          </div>
+        </main>
+
+        <footer className="border-t border-indigo-100/70 bg-white py-8 px-6 text-center text-xs text-slate-400">
+          <p>© 2026 SEVA Public Information Portal. Independent public directory of Government of India schemes.</p>
+        </footer>
+      </div>
+    );
+  }
+
+  // Render Scheme Detail Page
+  const sc = getSchemeById(id);
   if (!sc) {
     notFound();
   }
@@ -98,7 +347,7 @@ export default async function SchemeDetailPage({ params }: PageProps) {
             '@type': 'ListItem',
             'position': 1,
             'name': 'Home',
-            'item': 'https://seva.sochyeah.com'
+            'item': 'https://seva.sochyeah.com/'
           },
           {
             '@type': 'ListItem',
@@ -143,7 +392,13 @@ export default async function SchemeDetailPage({ params }: PageProps) {
         <nav aria-label="Breadcrumb" className="mb-8">
           <ol className="flex items-center gap-2 text-xs text-slate-500 font-mono">
             <li>
-              <Link href="/seva" className="hover:text-indigo-900 transition-colors">SEVA Directory</Link>
+              <Link href="/" className="hover:text-indigo-900 transition-colors">SEVA Directory</Link>
+            </li>
+            <ChevronRight size={12} className="text-slate-400" />
+            <li>
+              <Link href={`/schemes/${sc.category}`} className="hover:text-indigo-900 transition-colors capitalize">
+                {sc.category} Schemes
+              </Link>
             </li>
             <ChevronRight size={12} className="text-slate-400" />
             <li className="text-slate-900 font-semibold truncate" aria-current="page">
@@ -152,19 +407,22 @@ export default async function SchemeDetailPage({ params }: PageProps) {
           </ol>
         </nav>
 
-        {/* 2. Scheme Hero Header */}
+        {/* 2. Scheme Hero Header with Primary H1 */}
         <div className="flex flex-col gap-4 mb-10 border-b border-indigo-100/80 pb-8">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-indigo-900 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60">
+            <Link 
+              href={`/schemes/${sc.category}`}
+              className="text-[10px] font-mono font-bold tracking-widest uppercase text-indigo-900 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60 hover:bg-indigo-100 transition-colors"
+            >
               {sc.category} {'//'} SCHEME GUIDE
-            </span>
+            </Link>
             <span className="text-[10px] font-mono text-slate-500 flex items-center gap-1.5">
-              <Calendar size={12} /> Last Verified: <strong className="text-slate-800 font-semibold">{sc.lastVerifiedDate}</strong>
+              <Calendar size={12} /> Information last reviewed: <strong className="text-slate-800 font-semibold">{sc.lastVerifiedDate}</strong>
             </span>
           </div>
 
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-            {sc.name}: Eligibility, Benefits, Documents &amp; How to Apply
+            {sc.name}
           </h1>
 
           <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 font-medium pt-1">
@@ -173,7 +431,7 @@ export default async function SchemeDetailPage({ params }: PageProps) {
               <span>Ministry: {sc.ministry}</span>
             </span>
             <span className="bg-slate-100/80 px-3 py-1 rounded-md">
-              Agency: {sc.agency}
+              Implementing Agency: {sc.agency}
             </span>
           </div>
         </div>
@@ -194,7 +452,7 @@ export default async function SchemeDetailPage({ params }: PageProps) {
         {/* 4. Overview Section */}
         <section className="mb-14">
           <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
-            <span className="text-indigo-800 font-mono text-xs">01 {'//'}</span> What is this scheme?
+            <span className="text-indigo-800 font-mono text-xs">01 {'//'}</span> Overview
           </h2>
           <div className="bg-white border border-indigo-100/80 rounded-2xl p-6 md:p-8 shadow-xs">
             <p className="text-xs md:text-sm text-slate-700 leading-relaxed font-normal">
@@ -203,14 +461,49 @@ export default async function SchemeDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* 5. Financial Assistance & Subsidy Table */}
+        {/* 5. Eligibility & Ineligibility (Side-by-Side) */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+          {/* Eligibility */}
+          <div className="bg-white border border-emerald-100/90 rounded-2xl p-6 md:p-8 shadow-xs">
+            <h2 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-emerald-600" />
+              <span>Who Can Apply &amp; Eligibility Requirements</span>
+            </h2>
+            <ul className="flex flex-col gap-3">
+              {sc.eligibility.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed font-medium">
+                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Ineligibility */}
+          <div className="bg-white border border-rose-100/90 rounded-2xl p-6 md:p-8 shadow-xs">
+            <h2 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <XCircle size={16} className="text-rose-600" />
+              <span>Who is NOT Eligible?</span>
+            </h2>
+            <ul className="flex flex-col gap-3">
+              {sc.ineligibility.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed">
+                  <span className="text-rose-500 font-bold mt-0.5">✕</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* 6. Financial Assistance & Subsidy Table */}
         <section className="mb-14">
           <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
-            <span className="text-indigo-800 font-mono text-xs">02 {'//'}</span> Financial Benefits &amp; Subsidy Structure
+            <span className="text-indigo-800 font-mono text-xs">02 {'//'}</span> Benefits &amp; Financial Assistance / Subsidy Structure
           </h2>
           <div className="bg-white border border-indigo-100/80 rounded-2xl p-6 md:p-8 shadow-xs">
             <div className="bg-gradient-to-r from-purple-50/40 via-indigo-50/40 to-blue-50/40 border border-indigo-100/60 rounded-xl p-4 mb-6">
-              <span className="text-[10px] font-mono font-bold text-indigo-800 uppercase block mb-1">Benefit Summary</span>
+              <span className="text-[10px] font-mono font-bold text-indigo-800 uppercase block mb-1">Financial Benefit Summary</span>
               <p className="text-sm font-bold text-indigo-950 leading-relaxed">{sc.benefit}</p>
             </div>
 
@@ -237,41 +530,6 @@ export default async function SchemeDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* 6. Eligibility & Ineligibility (Side-by-Side) */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
-          {/* Eligibility */}
-          <div className="bg-white border border-emerald-100/90 rounded-2xl p-6 md:p-8 shadow-xs">
-            <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <CheckCircle2 size={16} className="text-emerald-600" />
-              <span>Who is Eligible?</span>
-            </h3>
-            <ul className="flex flex-col gap-3">
-              {sc.eligibility.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed font-medium">
-                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Ineligibility */}
-          <div className="bg-white border border-rose-100/90 rounded-2xl p-6 md:p-8 shadow-xs">
-            <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <XCircle size={16} className="text-rose-600" />
-              <span>Who is NOT Eligible?</span>
-            </h3>
-            <ul className="flex flex-col gap-3">
-              {sc.ineligibility.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed">
-                  <span className="text-rose-500 font-bold mt-0.5">✕</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
         {/* 7. Required Documents Checklist */}
         <section className="mb-14">
           <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
@@ -292,7 +550,7 @@ export default async function SchemeDetailPage({ params }: PageProps) {
         {/* 8. Step-by-Step Application Process */}
         <section className="mb-14">
           <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
-            <span className="text-indigo-800 font-mono text-xs">04 {'//'}</span> How to Apply (Step-by-Step)
+            <span className="text-indigo-800 font-mono text-xs">04 {'//'}</span> How to Apply (Application Process)
           </h2>
           <div className="flex flex-col gap-4">
             {sc.applicationSteps.map((step) => (
@@ -309,7 +567,7 @@ export default async function SchemeDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* 9. Where to Apply (Official Government Portals) */}
+        {/* 9. Official Government Sources & Application Portals with Descriptive Anchors */}
         <section className="mb-14">
           <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
             <span className="text-indigo-800 font-mono text-xs">05 {'//'}</span> Official Government Sources &amp; Application Portals
@@ -334,9 +592,10 @@ export default async function SchemeDetailPage({ params }: PageProps) {
                     {portal.description}
                   </p>
                 </div>
-                <span className="text-[10px] font-mono text-indigo-700 font-bold uppercase truncate">
-                  {portal.url}
-                </span>
+                <div className="inline-flex items-center text-xs font-bold text-indigo-900 group-hover:text-indigo-700 pt-2 border-t border-slate-50">
+                  <span>Visit the official {portal.name} website</span>
+                  <ExternalLink size={12} className="ml-1" />
+                </div>
               </a>
             ))}
           </div>
@@ -385,7 +644,7 @@ export default async function SchemeDetailPage({ params }: PageProps) {
                     </p>
                   </div>
                   <div className="inline-flex items-center text-xs font-bold text-indigo-900 group-hover:text-indigo-700">
-                    <span>View Scheme Guide</span>
+                    <span>View full scheme guide and eligibility requirements</span>
                     <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
@@ -394,10 +653,10 @@ export default async function SchemeDetailPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* 12. Support Assistance */}
+        {/* 12. Support Advisory Banner */}
         <section className="bg-gradient-to-br from-purple-950 via-indigo-950 to-blue-950 text-white rounded-3xl p-8 md:p-12 text-center shadow-xl shadow-indigo-950/15 relative overflow-hidden">
           <div className="max-w-[500px] mx-auto flex flex-col gap-4 items-center relative z-10">
-            <h3 className="text-xl md:text-2xl font-extrabold uppercase tracking-tight text-white">Need Advisory on Technology Subsidies?</h3>
+            <h3 className="text-xl md:text-2xl font-extrabold uppercase tracking-tight text-white">Need Help With DPRs &amp; Technical Projects?</h3>
             <p className="text-xs text-indigo-200 leading-relaxed">
               We help industrial units and businesses compile Detailed Project Reports, audit automation feasibility, and structure technical infrastructure.
             </p>

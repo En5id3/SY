@@ -34,6 +34,20 @@ export interface ServiceItem {
   faqs: { question: string; answer: string }[];
 }
 
+export interface SchemeCategory {
+  slug: 'business' | 'health' | 'energy' | 'agriculture';
+  name: string;
+  title: string;
+  metaTitle: string;
+  metaDescription: string;
+  h1: string;
+  shortDescription: string;
+  detailedOverview: string;
+  keyHighlights: string[];
+  eligibleEntitiesSummary: string[];
+  schemeIds: string[];
+}
+
 export interface SchemeItem {
   id: string;
   slug: string;
@@ -51,6 +65,7 @@ export interface SchemeItem {
   applicationSteps: { step: number; title: string; instruction: string }[];
   officialPortals: { name: string; url: string; description: string }[];
   lastVerifiedDate: string;
+  lastReviewedIso: string;
   faqs: { question: string; answer: string }[];
   relatedSchemeIds: string[];
   disclaimer: string;

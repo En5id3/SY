@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { schemesData } from '@/data/schemes';
-import { Search, CheckCircle2, ArrowRight, ShieldCheck, ExternalLink, BookOpen, AlertCircle } from 'lucide-react';
+import { schemesData, schemeCategories } from '@/data/schemes';
+import { Search, CheckCircle2, ArrowRight, ShieldCheck, ExternalLink, BookOpen, AlertCircle, Building2, Sun, HeartPulse, Sprout } from 'lucide-react';
 
 export default function SevaDirectoryClient() {
   const [selectedCat, setSelectedCat] = useState<'all' | 'business' | 'health' | 'energy' | 'agriculture'>('all');
@@ -33,35 +33,92 @@ export default function SevaDirectoryClient() {
     }
   };
 
+  const getCategoryIcon = (catKey: string) => {
+    switch (catKey) {
+      case 'business':
+        return <Building2 size={16} className="text-blue-600" />;
+      case 'energy':
+        return <Sun size={16} className="text-sky-600" />;
+      case 'health':
+        return <HeartPulse size={16} className="text-purple-600" />;
+      case 'agriculture':
+        return <Sprout size={16} className="text-indigo-600" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <main className="max-w-[1200px] mx-auto px-6 pt-28 md:pt-32 pb-16 md:pb-24">
-      {/* Editorial Header */}
-      <div className="max-w-[800px] mb-12 flex flex-col gap-5">
+      {/* 1. Primary Editorial Header with Exact H1 */}
+      <div className="max-w-[840px] mb-12 flex flex-col gap-5">
         <span className="text-[11px] font-mono font-bold tracking-widest uppercase text-indigo-800 bg-gradient-to-r from-purple-50 to-blue-50 px-3.5 py-1 rounded-full border border-indigo-200/60 self-start">
-          PUBLIC WELFARE DIRECTORY
+          INDEPENDENT PUBLIC INFORMATION PORTAL
         </span>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-slate-900 uppercase leading-tight">
-          GOVERNMENT SCHEMES DIRECTORY.
+          Government Schemes Directory
         </h1>
         <p className="sub-editorial text-slate-600 leading-relaxed font-medium">
-          An independent, searchable directory helping small business owners, micro-entrepreneurs, farmers, and residential communities discover eligible central and state subsidies, capital assistance, and healthcare coverage.
+          Find central and state government schemes, subsidies, and welfare programs for businesses, MSMEs, farmers, healthcare, energy, and residential communities. SEVA provides structured eligibility criteria, subsidy calculation guidelines, and direct links to official application portals.
         </p>
       </div>
 
-      {/* Mandatory Independent Disclaimer */}
+      {/* 2. Mandatory Independent Trust Notice */}
       <div className="mb-12 border border-amber-200/80 bg-amber-50/40 rounded-2xl p-5 md:p-6 flex items-start gap-4 text-xs text-amber-950">
         <AlertCircle size={20} className="text-amber-700 flex-shrink-0 mt-0.5" />
         <div className="flex flex-col gap-1">
           <span className="font-bold uppercase tracking-wider text-[10px] text-amber-800 font-mono">
-            Important Official Notice
+            Independent Directory Notice
           </span>
           <p className="leading-relaxed">
-            SEVA is an independent public information directory and is <strong>not a government website</strong>. Information is compiled from official gazettes and circulars for educational guidance and must be verified through the relevant official government portal (<a href="https://www.myscheme.gov.in" target="_blank" rel="noopener noreferrer" className="underline font-bold hover:text-amber-900">myScheme.gov.in</a>) before submitting applications.
+            SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source (<a href="https://www.myscheme.gov.in" target="_blank" rel="noopener noreferrer" className="underline font-bold hover:text-amber-900">myScheme.gov.in</a>).
           </p>
         </div>
       </div>
 
-      {/* Unified Application Portal Callout Box */}
+      {/* 3. Browse Scheme Categories Hub */}
+      <section className="mb-14">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-900">
+            Browse Welfare Categories
+          </h2>
+          <span className="text-[11px] text-slate-400 font-mono">4 Core Domains</span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {Object.entries(schemeCategories).map(([key, cat]) => (
+            <Link
+              key={key}
+              href={`/schemes/${cat.slug}`}
+              className="border border-indigo-100/80 bg-white rounded-2xl p-5 hover:border-indigo-300 transition-all card-hover-effect flex flex-col justify-between group shadow-xs"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 group-hover:scale-105 transition-transform">
+                    {getCategoryIcon(key)}
+                  </div>
+                  <span className="text-[10px] font-mono text-slate-400 font-bold">
+                    {cat.schemeIds.length} Schemes
+                  </span>
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 group-hover:text-indigo-900 transition-colors mb-1.5">
+                  {cat.name}
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 mb-4">
+                  {cat.shortDescription}
+                </p>
+              </div>
+
+              <div className="inline-flex items-center text-xs font-bold text-indigo-900 group-hover:text-indigo-700 pt-2 border-t border-slate-50">
+                <span>Explore Category</span>
+                <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. Unified Central Portal Callout Banner */}
       <div className="mb-14 bg-gradient-to-br from-purple-950 via-indigo-950 to-blue-950 text-white rounded-3xl p-8 md:p-10 flex flex-col md:flex-row gap-6 justify-between items-center shadow-xl shadow-indigo-950/15 relative overflow-hidden">
         <div className="max-w-[700px] flex flex-col gap-2 relative z-10">
           <span className="text-[10px] font-mono font-bold tracking-wider text-indigo-300 uppercase">
@@ -80,14 +137,14 @@ export default function SevaDirectoryClient() {
           rel="noopener noreferrer"
           className="w-full md:w-auto text-center text-xs font-bold uppercase tracking-wider bg-white text-indigo-950 hover:bg-indigo-50 transition-all px-8 py-4 rounded-full shadow-md whitespace-nowrap relative z-10 hover:scale-[1.02]"
         >
-          Apply on National Portal (myScheme.gov.in)
+          Visit the official myScheme portal (myScheme.gov.in)
         </a>
       </div>
 
-      {/* Schemes Index Directory */}
+      {/* 5. Schemes Directory Filter & Search */}
       <section id="schemes-directory" className="border-t border-indigo-100/70 pt-12 scroll-mt-28">
         <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center mb-10 pb-6 border-b border-indigo-100/70">
-          {/* Category tabs */}
+          {/* Category Tabs */}
           <div className="flex flex-wrap gap-2">
             {[
               { id: 'all', label: 'All Schemes' },
@@ -99,7 +156,7 @@ export default function SevaDirectoryClient() {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCat(cat.id as 'all' | 'business' | 'health' | 'energy' | 'agriculture')}
-                className={`text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-full transition-all duration-150 ${
+                className={`text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-full transition-all duration-150 cursor-pointer ${
                   selectedCat === cat.id 
                     ? 'bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 text-white shadow-sm shadow-indigo-950/20 font-bold' 
                     : 'bg-white text-slate-600 hover:border-indigo-300 hover:text-indigo-950 border border-indigo-100'
@@ -110,7 +167,7 @@ export default function SevaDirectoryClient() {
             ))}
           </div>
 
-          {/* Search filter input */}
+          {/* Search Filter Input */}
           <div className="relative w-full md:w-[300px]">
             <input 
               type="text"
@@ -123,14 +180,14 @@ export default function SevaDirectoryClient() {
           </div>
         </div>
 
-        {/* Scheme cards grid */}
+        {/* Scheme Cards Grid */}
         <div className="flex flex-col gap-6">
           {filteredSchemes.map((sc) => (
-            <div 
+            <article 
               key={sc.id} 
               className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-6 justify-between hover:border-indigo-300 transition-all duration-300 shadow-sm shadow-indigo-900/5 card-hover-effect"
             >
-              {/* Left side detail texts */}
+              {/* Left Side Details */}
               <div className="flex-[3] flex flex-col gap-4 justify-between">
                 <div>
                   <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -141,7 +198,9 @@ export default function SevaDirectoryClient() {
                   </div>
                   
                   <h2 className="text-xl font-bold text-slate-900 mb-2">
-                    {sc.name}
+                    <Link href={`/schemes/${sc.slug}`} className="hover:text-indigo-900 transition-colors">
+                      {sc.name}
+                    </Link>
                   </h2>
                   
                   <p className="text-xs text-slate-600 leading-relaxed mb-4">
@@ -165,13 +224,13 @@ export default function SevaDirectoryClient() {
                     href={`/schemes/${sc.slug}`}
                     className="inline-flex items-center text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-purple-900 to-indigo-900 text-white px-5 py-2.5 rounded-full shadow-xs hover:opacity-95 transition-all"
                   >
-                    <span>View Full Scheme Guide &amp; Eligibility</span>
+                    <span>View full scheme guide and eligibility requirements</span>
                     <ArrowRight size={13} className="ml-1.5" />
                   </Link>
                 </div>
               </div>
 
-              {/* Right side checklists */}
+              {/* Right Side Documents & Verification */}
               <div className="flex-[2] bg-gradient-to-br from-purple-50/20 via-indigo-50/20 to-blue-50/25 border border-indigo-100/60 rounded-xl p-6 flex flex-col justify-between">
                 <div>
                   <span className="text-[9px] font-mono font-bold text-indigo-800 uppercase tracking-wider block mb-3">
@@ -187,26 +246,27 @@ export default function SevaDirectoryClient() {
                   </ul>
                 </div>
 
-                <div className="text-[10px] font-mono text-slate-400 border-t border-indigo-100/60 pt-3">
-                  Last Verified: <span className="text-slate-700 font-semibold">{sc.lastVerifiedDate}</span>
+                <div className="text-[10px] font-mono text-slate-400 border-t border-indigo-100/60 pt-3 flex justify-between items-center">
+                  <span>Information last reviewed:</span>
+                  <span className="text-slate-700 font-semibold">{sc.lastVerifiedDate}</span>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* E-E-A-T Editorial Methodology & Trust Section */}
+      {/* 6. E-E-A-T Editorial Methodology & Trust Section */}
       <section className="mt-20 border-t border-indigo-100/70 pt-16">
         <div className="max-w-[800px] mb-8">
           <span className="text-[10px] font-mono font-bold text-indigo-800 uppercase tracking-wider block mb-2">
-            EDITORIAL STANDARDS &amp; TRUST
+            EDITORIAL STANDARDS &amp; TRUST SIGNALS
           </span>
           <h2 className="text-2xl font-extrabold text-slate-900 uppercase tracking-tight mb-3">
             About SEVA &amp; Verification Methodology
           </h2>
           <p className="text-xs text-slate-600 leading-relaxed">
-            SEVA was created to demystify complex government circulars, subsidy calculations, and documentation requirements for citizens and business owners. Here is how our editorial team ensures accuracy:
+            SEVA is an independent informational directory created to simplify complex government circulars, subsidy calculations, and documentation requirements for citizens and business owners. Here is how our editorial process ensures data accuracy:
           </p>
         </div>
 
@@ -223,7 +283,7 @@ export default function SevaDirectoryClient() {
             <ShieldCheck size={18} className="text-indigo-600 mb-3" />
             <h3 className="text-sm font-bold text-slate-900 mb-2">Regular Verification Cycles</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Every scheme entry is audited on a quarterly basis. Each page displays an explicit &quot;Last Verified&quot; timestamp indicating when policy parameters were last audited.
+              Every scheme entry is audited periodically. Each page displays an explicit &quot;Information last reviewed&quot; date indicating when policy parameters were verified.
             </p>
           </div>
 
@@ -237,7 +297,7 @@ export default function SevaDirectoryClient() {
         </div>
       </section>
 
-      {/* Support CTA Banner */}
+      {/* 7. Advisory Support CTA Banner */}
       <section className="bg-gradient-to-br from-purple-950 via-indigo-950 to-blue-950 text-white rounded-3xl p-8 md:p-12 text-center mt-12 shadow-xl shadow-indigo-950/15 relative overflow-hidden">
         <div className="max-w-[500px] mx-auto flex flex-col gap-4 items-center relative z-10">
           <h3 className="text-2xl font-extrabold uppercase tracking-tight text-white">Need Help With DPRs &amp; Technical Projects?</h3>

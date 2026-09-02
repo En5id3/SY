@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { servicesData } from '@/data/services';
 import { caseStudies } from '@/data/case-studies';
 import { blogPosts } from '@/data/blog';
-import { schemesData } from '@/data/schemes';
+import { schemesData, schemeCategories } from '@/data/schemes';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.sochyeah.com';
@@ -45,15 +45,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  // SEVA Directory & Individual Schemes
+  // SEVA Directory Homepage, Categories & Individual Schemes
+  const sevaCategoryPages: MetadataRoute.Sitemap = Object.keys(schemeCategories).map(catKey => ({
+    url: `${sevaUrl}/schemes/${catKey}`,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.85,
+  }));
+
+  const sevaSchemePages: MetadataRoute.Sitemap = schemesData.map(sc => ({
+    url: `${sevaUrl}/schemes/${sc.slug}`,
+    lastModified: new Date(sc.lastReviewedIso || '2026-03-01'),
+    changeFrequency: 'weekly' as const,
+    priority: 0.85,
+  }));
+
   const sevaPages: MetadataRoute.Sitemap = [
-    { url: `${sevaUrl}`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.9 },
-    ...schemesData.map(sc => ({
-      url: `${sevaUrl}/schemes/${sc.slug}`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.85,
-    }))
+    { url: `${sevaUrl}`, lastModified: now, changeFrequency: 'daily' as const, priority: 1.0 },
+    ...sevaCategoryPages,
+    ...sevaSchemePages,
   ];
 
   return [

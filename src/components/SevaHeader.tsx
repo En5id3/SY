@@ -21,11 +21,11 @@ export default function SevaHeader() {
   }, []);
 
   const navLinks = [
-    { label: 'Services', href: 'https://www.sochyeah.com/services' },
-    { label: 'Case Studies', href: 'https://www.sochyeah.com/case-studies' },
-    { label: 'Journal', href: 'https://www.sochyeah.com/blog' },
-    { label: 'Process', href: 'https://www.sochyeah.com/process' },
-    { label: 'About', href: 'https://www.sochyeah.com/about' },
+    { label: 'All Schemes', href: '/' },
+    { label: 'MSME & Business', href: '/schemes/business' },
+    { label: 'Solar & Energy', href: '/schemes/energy' },
+    { label: 'Healthcare', href: '/schemes/health' },
+    { label: 'Agriculture', href: '/schemes/agriculture' },
   ];
 
   return (
@@ -41,6 +41,7 @@ export default function SevaHeader() {
             href="https://www.sochyeah.com" 
             className="flex flex-col leading-[0.8] select-none outline-none group" 
             onClick={() => setIsOpen(false)}
+            title="SOCHYEAH Parent Digital Studio"
           >
             <span className="font-sans font-light text-2xl tracking-tighter text-slate-900 lowercase group-hover:text-purple-700 transition-colors">
               soch
@@ -54,39 +55,39 @@ export default function SevaHeader() {
 
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gradient-to-r from-purple-900 to-blue-900 text-white tracking-widest uppercase shadow-xs"
+            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gradient-to-r from-purple-900 to-blue-900 text-white tracking-widest uppercase shadow-xs hover:opacity-95 transition-opacity"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             SEVA DIRECTORY
           </Link>
         </div>
 
-        {/* Desktop Links */}
-        <nav className="hidden md:flex items-center gap-7">
+        {/* Desktop Category Navigation */}
+        <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium transition-colors duration-200 text-slate-600 hover:text-indigo-900"
+              className="text-xs font-semibold uppercase tracking-wider transition-colors duration-200 text-slate-600 hover:text-indigo-900"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        {/* Start Project Dual-Tone CTA Button */}
+        {/* Advisory / Engineering Link */}
         <div className="hidden md:flex items-center">
           <a 
             href="https://www.sochyeah.com/contact" 
-            className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 text-white hover:from-purple-950 hover:via-indigo-950 hover:to-blue-950 transition-all px-6 py-2.5 rounded-full shadow-sm shadow-indigo-950/20 hover:shadow-md hover:scale-[1.02]"
+            className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 text-white hover:from-purple-950 hover:via-indigo-950 hover:to-blue-950 transition-all px-5 py-2.5 rounded-full shadow-sm shadow-indigo-950/20 hover:shadow-md hover:scale-[1.02]"
           >
-            START A PROJECT
+            TECHNICAL ADVISORY
           </a>
         </div>
 
         {/* Mobile Menu Icon */}
         <button 
-          className="md:hidden text-slate-900 outline-none p-1.5 rounded-lg hover:bg-indigo-50 transition-colors" 
+          className="lg:hidden text-slate-900 outline-none p-1.5 rounded-lg hover:bg-indigo-50 transition-colors cursor-pointer" 
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle Navigation Menu"
         >
@@ -96,17 +97,17 @@ export default function SevaHeader() {
 
       {/* Mobile Drawer Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 top-[70px] bg-white/95 backdrop-blur-lg z-40 md:hidden flex flex-col px-6 py-8 border-t border-indigo-100/70">
-          <nav className="flex flex-col gap-4 text-lg font-medium mb-8">
+        <div className="fixed inset-0 top-[70px] bg-white/95 backdrop-blur-lg z-40 lg:hidden flex flex-col px-6 py-8 border-t border-indigo-100/70">
+          <nav className="flex flex-col gap-4 text-base font-medium mb-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
-                className="transition-colors py-2 border-b border-indigo-50/80 text-slate-600 hover:text-indigo-900"
+                className="transition-colors py-2 border-b border-indigo-50/80 text-slate-700 hover:text-indigo-900 font-semibold text-xs uppercase tracking-wider"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
           <a 
@@ -114,7 +115,7 @@ export default function SevaHeader() {
             className="w-full text-center text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 text-white py-3.5 rounded-full shadow-sm shadow-indigo-950/20"
             onClick={() => setIsOpen(false)}
           >
-            START A PROJECT
+            TECHNICAL ADVISORY
           </a>
         </div>
       )}
