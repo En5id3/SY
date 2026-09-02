@@ -88,6 +88,13 @@ export interface CaseStudy {
   relatedCaseStudyIds?: string[];
 }
 
+export interface ExternalReference {
+  title: string;
+  url: string;
+  domain: string;
+  description: string;
+}
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -108,5 +115,7 @@ export interface BlogPost {
   codeLanguage?: string;
   faqs?: { q: string; a: string }[];
   relatedServiceSlugs?: string[];
+  relatedCaseStudyIds?: string[];
   relatedArticleIds?: string[];
+  externalReferences?: ExternalReference[];
 }

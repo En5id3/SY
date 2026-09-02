@@ -3,7 +3,21 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { blogPosts, getPostById } from '@/data/blog';
 import { servicesData } from '@/data/services';
-import { Clock, Calendar, ChevronRight, HelpCircle, ArrowRight } from 'lucide-react';
+import { caseStudies } from '@/data/case-studies';
+import { 
+  Clock, 
+  Calendar, 
+  ChevronRight, 
+  HelpCircle, 
+  ArrowRight, 
+  ExternalLink, 
+  BookOpen, 
+  Layers, 
+  Sparkles, 
+  Briefcase,
+  FileCode,
+  ShieldCheck
+} from 'lucide-react';
 import type { Metadata } from 'next';
 
 interface PageProps {
@@ -63,8 +77,10 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const isAi = post.category.toLowerCase().includes('ai');
   const relatedServices = servicesData.filter(s => post.relatedServiceSlugs?.includes(s.slug));
+  const relatedCaseStudies = caseStudies.filter(cs => post.relatedCaseStudyIds?.includes(cs.id));
+  const relatedArticles = blogPosts.filter(p => post.relatedArticleIds?.includes(p.id) && p.id !== post.id);
 
-  // Schema Org Article metadata
+  // Schema Org Article metadata with citations and related links
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -84,7 +100,14 @@ export default async function BlogPostPage({ params }: PageProps) {
           'name': 'SOCHYEAH',
           'url': 'https://www.sochyeah.com',
           'logo': 'https://www.sochyeah.com/logo.png'
-        }
+        },
+        'citation': post.externalReferences?.map(ref => ref.url) || [],
+        'about': [
+          post.category,
+          'Software Engineering',
+          'Cloud Architecture',
+          'Artificial Intelligence'
+        ]
       },
       {
         '@type': 'BreadcrumbList',
@@ -126,7 +149,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   };
 
   return (
-    <div className="max-w-[840px] mx-auto px-6 py-12 md:py-20">
+    <div className="max-w-[860px] mx-auto px-6 py-12 md:py-20">
       {/* Inject Schema.org markup */}
       <script
         type="application/ld+json"
@@ -150,29 +173,34 @@ export default async function BlogPostPage({ params }: PageProps) {
         </ol>
       </nav>
 
-      {/* Article Header */}
+      {/* 2. Article Header */}
       <div className="flex flex-col gap-4 mb-8 border-b border-indigo-100/80 pb-6">
-        <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border self-start ${
-          isAi ? 'text-purple-800 bg-purple-50 border-purple-200/50' : 'text-blue-800 bg-blue-50 border-blue-200/50'
-        }`}>
-          {post.category} {'//'} ENGINEER JOURNAL
-        </span>
+        <div className="flex items-center gap-3">
+          <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border self-start ${
+            isAi ? 'text-purple-800 bg-purple-50 border-purple-200/50' : 'text-blue-800 bg-blue-50 border-blue-200/50'
+          }`}>
+            {post.category} {'//'} ENGINEERING JOURNAL
+          </span>
+          <span className="text-[10px] font-mono text-slate-400">By SOCHYEAH Systems Unit</span>
+        </div>
+        
         <h1 className="text-3xl md:text-5xl font-extrabold tracking-tighter text-slate-900 leading-tight">
           {post.title}
         </h1>
+        
         <div className="flex gap-6 text-xs text-slate-400 font-mono mt-2">
           <span className="flex items-center gap-1.5"><Calendar size={13} /> {post.date}</span>
           <span className="flex items-center gap-1.5"><Clock size={13} /> {post.readTime}</span>
         </div>
       </div>
 
-      {/* Executive Summary */}
+      {/* 3. Executive Technical Abstract */}
       <div className="bg-gradient-to-r from-purple-50/40 via-indigo-50/40 to-blue-50/40 border border-indigo-100/80 rounded-2xl p-6 md:p-8 mb-10 text-xs md:text-sm text-slate-700 leading-relaxed font-medium">
         <span className="text-[10px] font-mono font-bold text-indigo-900 uppercase block mb-2">Technical Abstract</span>
         {post.summary}
       </div>
 
-      {/* Main Technical Content Blocks */}
+      {/* 4. Main Technical Content Blocks */}
       <div className="flex flex-col gap-10 text-xs md:text-sm text-slate-600 leading-relaxed mb-16">
         {/* The Problem */}
         <div>
@@ -193,7 +221,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* The Solution */}
         <div>
           <h2 className="text-base md:text-lg font-mono font-bold text-blue-900 uppercase tracking-wider mb-3">
-            03 // Architecture Solution
+            03 // Architecture Solution &amp; Implementation
           </h2>
           <p className="mb-4">{post.solution}</p>
           <p>{post.implementation}</p>
@@ -202,8 +230,8 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Architecture Pipeline */}
         {post.architecture && (
           <div className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-xs">
-            <h3 className="text-xs font-mono font-bold text-indigo-900 uppercase tracking-wider mb-4">
-              Data Flow Pipeline
+            <h3 className="text-xs font-mono font-bold text-indigo-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+              <Layers size={14} /> Data Flow Pipeline
             </h3>
             <ol className="flex flex-col gap-3 font-mono text-xs text-slate-700">
               {post.architecture.map((step, idx) => (
@@ -221,8 +249,8 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Code Snippet */}
         {post.codeSnippet && (
           <div>
-            <h3 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-2">
-              Implementation Snippet ({post.codeLanguage})
+            <h3 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+              <FileCode size={14} /> Implementation Snippet ({post.codeLanguage})
             </h3>
             <pre className="bg-slate-950 text-slate-100 p-6 rounded-2xl overflow-x-auto text-xs font-mono border border-slate-800 shadow-sm leading-relaxed">
               <code>{post.codeSnippet}</code>
@@ -233,8 +261,8 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Lessons Learned */}
         {post.lessons && (
           <div className="border border-indigo-100/80 bg-slate-50/50 rounded-2xl p-6 md:p-8">
-            <h3 className="text-xs font-mono font-bold text-indigo-900 uppercase tracking-wider mb-4">
-              Engineering Takeaways &amp; Pitfalls
+            <h3 className="text-xs font-mono font-bold text-indigo-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+              <ShieldCheck size={14} /> Engineering Takeaways &amp; Pitfalls
             </h3>
             <ul className="flex flex-col gap-3 text-xs text-slate-600">
               {post.lessons.map((lesson, idx) => (
@@ -270,7 +298,143 @@ export default async function BlogPostPage({ params }: PageProps) {
         )}
       </div>
 
-      {/* Contextual Commercial Services Cross-Linking (Phase 6 Content Cluster) */}
+      {/* 5. External Authoritative References Section (SEO Citation Authority) */}
+      {post.externalReferences && post.externalReferences.length > 0 && (
+        <section className="mb-14 border-t border-indigo-100/80 pt-10">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <span className="text-[10px] font-mono font-bold text-indigo-800 uppercase tracking-wider block mb-1">
+                EXTERNAL DOCUMENTATION &amp; STANDARDS
+              </span>
+              <h2 className="text-lg font-bold text-slate-900">
+                Authoritative Engineering References
+              </h2>
+            </div>
+            <BookOpen size={18} className="text-indigo-600" />
+          </div>
+
+          <div className="grid grid-cols-1 gap-3.5">
+            {post.externalReferences.map((ref, idx) => (
+              <a
+                key={idx}
+                href={ref.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 rounded-xl border border-indigo-100/80 bg-white hover:border-indigo-300 transition-all shadow-xs group flex flex-col sm:flex-row justify-between sm:items-center gap-3"
+              >
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[9px] font-mono uppercase bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-bold">
+                      {ref.domain}
+                    </span>
+                    <h3 className="text-xs font-bold text-slate-900 group-hover:text-indigo-900 transition-colors">
+                      {ref.title}
+                    </h3>
+                  </div>
+                  <p className="text-[11px] text-slate-500 leading-relaxed">
+                    {ref.description}
+                  </p>
+                </div>
+                <div className="inline-flex items-center text-xs font-semibold text-indigo-900 group-hover:text-indigo-700 whitespace-nowrap self-start sm:self-center">
+                  <span>View Documentation</span>
+                  <ExternalLink size={12} className="ml-1" />
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 6. Contextual Production Case Studies (Internal Linking) */}
+      {relatedCaseStudies.length > 0 && (
+        <section className="mb-14 border-t border-indigo-100/80 pt-10">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <span className="text-[10px] font-mono font-bold text-indigo-800 uppercase tracking-wider block mb-1">
+                REAL-WORLD PRODUCTION DEPLOYMENTS
+              </span>
+              <h2 className="text-lg font-bold text-slate-900">
+                Related Engineering Case Studies
+              </h2>
+            </div>
+            <Briefcase size={18} className="text-indigo-600" />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {relatedCaseStudies.map((cs) => (
+              <Link
+                key={cs.id}
+                href={`/case-studies/${cs.id}`}
+                className="p-5 rounded-2xl border border-indigo-100/80 bg-white hover:border-indigo-300 transition-all shadow-xs group flex flex-col justify-between"
+              >
+                <div>
+                  <span className="text-[9px] font-mono uppercase text-indigo-800 font-bold block mb-1">
+                    {cs.category}
+                  </span>
+                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-indigo-900 transition-colors mb-2">
+                    {cs.title}
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 mb-4">
+                    {cs.solution}
+                  </p>
+                </div>
+
+                <div className="inline-flex items-center text-xs font-bold text-indigo-900 group-hover:text-indigo-700 pt-3 border-t border-slate-50">
+                  <span>Read case study architecture</span>
+                  <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 7. Related Journal Articles (Internal Topic Cluster Linking) */}
+      {relatedArticles.length > 0 && (
+        <section className="mb-14 border-t border-indigo-100/80 pt-10">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <span className="text-[10px] font-mono font-bold text-indigo-800 uppercase tracking-wider block mb-1">
+                TOPIC CLUSTER DEEP-DIVES
+              </span>
+              <h2 className="text-lg font-bold text-slate-900">
+                Further Reading in this Engineering Domain
+              </h2>
+            </div>
+            <Sparkles size={18} className="text-indigo-600" />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {relatedArticles.map((art) => (
+              <Link
+                key={art.id}
+                href={`/blog/${art.id}`}
+                className="p-5 rounded-2xl border border-indigo-100/80 bg-white hover:border-indigo-300 transition-all shadow-xs group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
+                    <span>{art.category}</span>
+                    <span>{art.readTime}</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-indigo-900 transition-colors mb-2">
+                    {art.title}
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 mb-4">
+                    {art.summary}
+                  </p>
+                </div>
+
+                <div className="inline-flex items-center text-xs font-bold text-indigo-900 group-hover:text-indigo-700 pt-3 border-t border-slate-50">
+                  <span>Explore article</span>
+                  <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 8. Contextual Commercial Services Cross-Linking */}
       {relatedServices.length > 0 && (
         <section className="mb-14 border-t border-indigo-100/80 pt-10">
           <span className="text-[10px] font-mono font-bold text-indigo-800 uppercase tracking-wider block mb-2">
@@ -297,7 +461,31 @@ export default async function BlogPostPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* CTA Conversion Box */}
+      {/* 9. Contextual Link to SEVA Public Portal */}
+      <section className="mb-14 border border-indigo-100/80 bg-gradient-to-r from-purple-50/30 via-indigo-50/30 to-blue-50/30 rounded-2xl p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <span className="text-[10px] font-mono font-bold text-indigo-900 uppercase block mb-1">
+            EXPLORE GOVERNMENT TECHNOLOGY &amp; SUBSIDY SCHEMES
+          </span>
+          <h3 className="text-sm font-bold text-slate-900">
+            SEVA Public Information Directory
+          </h3>
+          <p className="text-xs text-slate-600 leading-relaxed max-w-[500px]">
+            Discover verified Indian central and state government schemes for MSME tech upgradation, cold-storage, solar energy, and healthcare coverage.
+          </p>
+        </div>
+        <a
+          href="https://seva.sochyeah.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center text-xs font-bold uppercase tracking-wider bg-white text-indigo-950 border border-indigo-200 px-5 py-2.5 rounded-full shadow-xs hover:bg-indigo-50 transition-all whitespace-nowrap"
+        >
+          <span>Visit SEVA Directory</span>
+          <ExternalLink size={12} className="ml-1.5" />
+        </a>
+      </section>
+
+      {/* 10. CTA Conversion Box */}
       <section className="bg-gradient-to-br from-indigo-950 via-slate-950 to-violet-950 text-white rounded-2xl p-8 text-center shadow-lg">
         <h3 className="text-lg md:text-xl font-extrabold uppercase mb-2">Need Help Designing Production Systems?</h3>
         <p className="text-xs text-indigo-200 mb-6 max-w-[450px] mx-auto leading-relaxed">

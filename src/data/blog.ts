@@ -62,7 +62,29 @@ async def handle_twilio_stream(websocket, path):
         a: 'Using customized vocabulary lists matching product names and local slang, our streaming STT models achieve a word error rate (WER) of less than 4.5%.'
       }
     ],
-    relatedServiceSlugs: ['ai-agent-development', 'ai-automation', 'ai-chatbot-development']
+    relatedServiceSlugs: ['ai-agent-development', 'ai-automation', 'ai-chatbot-development'],
+    relatedCaseStudyIds: ['ai-receptionist', 'ai-sales-automation'],
+    relatedArticleIds: ['how-to-build-an-ai-receptionist', 'ai-automation-what-to-automate'],
+    externalReferences: [
+      {
+        title: 'Twilio Media Streams WebSocket Architecture',
+        url: 'https://www.twilio.com/docs/voice/media-streams',
+        domain: 'twilio.com',
+        description: 'Official Twilio documentation detailing bi-directional audio streaming and SIP telephony pipelines.'
+      },
+      {
+        title: 'Deepgram Real-Time Streaming STT Documentation',
+        url: 'https://developers.deepgram.com/docs/streaming-audio',
+        domain: 'deepgram.com',
+        description: 'Low-latency real-time Speech-to-Text WebSocket API protocols for automated transcription.'
+      },
+      {
+        title: 'ElevenLabs WebSockets Streaming API Reference',
+        url: 'https://elevenlabs.io/docs/api-reference/text-to-speech-stream',
+        domain: 'elevenlabs.io',
+        description: 'Sub-300ms ultra-low latency Text-to-Speech audio streaming synthesis specifications.'
+      }
+    ]
   },
   {
     id: 'rag-vs-fine-tuning-business-use',
@@ -111,7 +133,29 @@ LIMIT 3;`,
         a: 'We recommend starting with 512-character chunks with a 10% overlap, which preserves sufficient context without exceeding model context window budgets.'
       }
     ],
-    relatedServiceSlugs: ['rag-development', 'ai-development', 'generative-ai']
+    relatedServiceSlugs: ['rag-development', 'ai-development', 'generative-ai'],
+    relatedCaseStudyIds: ['ai-document-assistant', 'business-analytics-platform'],
+    relatedArticleIds: ['building-production-ready-rag', 'ai-voice-agents-customer-support'],
+    externalReferences: [
+      {
+        title: 'pgvector Open-Source Vector Similarity Search for PostgreSQL',
+        url: 'https://github.com/pgvector/pgvector',
+        domain: 'github.com',
+        description: 'PostgreSQL extension for exact and approximate nearest neighbor search over dense embeddings.'
+      },
+      {
+        title: 'OpenAI Optimizing LLM Accuracy: RAG vs Fine-Tuning',
+        url: 'https://platform.openai.com/docs/guides/optimizing-llm-accuracy',
+        domain: 'openai.com',
+        description: 'Official engineering guide analyzing factual retrieval mechanisms vs weight adaptation.'
+      },
+      {
+        title: 'Pinecone Vector Database Architecture Guide',
+        url: 'https://www.pinecone.io/learn/vector-database/',
+        domain: 'pinecone.io',
+        description: 'Architectural breakdown of vector indexing, HNSW algorithms, and distributed retrieval pipelines.'
+      }
+    ]
   },
   {
     id: 'how-to-build-an-ai-receptionist',
@@ -169,7 +213,29 @@ function processBookingInput(state: BookingState): boolean {
         a: 'Our speech transcriber uses acoustic models trained on international accents, achieving high transcription accuracy even in noisy environments.'
       }
     ],
-    relatedServiceSlugs: ['ai-agent-development', 'ai-automation', 'ai-development']
+    relatedServiceSlugs: ['ai-agent-development', 'ai-automation', 'ai-development'],
+    relatedCaseStudyIds: ['ai-receptionist', 'ai-sales-automation'],
+    relatedArticleIds: ['ai-voice-agents-customer-support', 'ai-automation-what-to-automate'],
+    externalReferences: [
+      {
+        title: 'Twilio Programmable Voice & SIP Interconnect',
+        url: 'https://www.twilio.com/docs/voice',
+        domain: 'twilio.com',
+        description: 'Telephony infrastructure, SIP trunk routing, and WebRTC integration guidelines.'
+      },
+      {
+        title: 'Cal.com Open Source Scheduling API Reference',
+        url: 'https://cal.com/docs/api-reference/v2',
+        domain: 'cal.com',
+        description: 'Real-time calendar slot reservation and multi-tier booking APIs.'
+      },
+      {
+        title: 'FastAPI High Performance Async Framework',
+        url: 'https://fastapi.tiangolo.com/',
+        domain: 'fastapi.tiangolo.com',
+        description: 'Asynchronous Python framework optimized for high-concurrency WebSockets audio streaming.'
+      }
+    ]
   },
   {
     id: 'machine-learning-small-businesses',
@@ -221,7 +287,29 @@ joblib.dump(model, 'demand_model.pkl')`,
         a: 'Historical sales, seasonal multipliers, regional weather trends, and marketing budget variables yield the highest predictive significance.'
       }
     ],
-    relatedServiceSlugs: ['machine-learning', 'predictive-analytics', 'software-development']
+    relatedServiceSlugs: ['machine-learning', 'predictive-analytics', 'software-development'],
+    relatedCaseStudyIds: ['business-analytics-platform', 'ecommerce-recommendation-engine'],
+    relatedArticleIds: ['how-recommendation-engines-work', 'spreadsheet-to-ai-dashboard'],
+    externalReferences: [
+      {
+        title: 'Scikit-learn Random Forest & Ensemble Methods Documentation',
+        url: 'https://scikit-learn.org/stable/modules/ensemble.html#forest',
+        domain: 'scikit-learn.org',
+        description: 'Official API reference and mathematical formulations for tree ensemble regressors and classifiers.'
+      },
+      {
+        title: 'Pandas Open-Source Data Analysis & ETL Library',
+        url: 'https://pandas.pydata.org/docs/',
+        domain: 'pydata.org',
+        description: 'Data structure manipulation and feature engineering documentation in Python.'
+      },
+      {
+        title: 'Joblib Model Serialization Standard',
+        url: 'https://joblib.readthedocs.io/en/latest/',
+        domain: 'readthedocs.io',
+        description: 'Lightweight model persistence and numpy array caching specifications.'
+      }
+    ]
   },
   {
     id: 'technical-seo-saas-companies',
@@ -267,7 +355,29 @@ joblib.dump(model, 'demand_model.pkl')`,
         a: 'No. Search bots must be allowed to read JS assets to confirm mobile responsiveness, but primary text must be available on raw HTML.'
       }
     ],
-    relatedServiceSlugs: ['seo', 'saas-development', 'web-development']
+    relatedServiceSlugs: ['seo', 'saas-development', 'web-development'],
+    relatedCaseStudyIds: ['seo-growth-engine', 'business-analytics-platform'],
+    relatedArticleIds: ['how-ai-search-is-changing-seo', 'how-to-build-a-saas-mvp'],
+    externalReferences: [
+      {
+        title: 'Google Search Central Core Web Vitals Standards',
+        url: 'https://web.dev/explore/vitals',
+        domain: 'web.dev',
+        description: 'Official Google performance guidelines on Largest Contentful Paint (LCP), Interaction to Next Paint (INP), and Cumulative Layout Shift (CLS).'
+      },
+      {
+        title: 'Next.js App Router Static Site Generation (SSG)',
+        url: 'https://nextjs.org/docs/app/building-your-application/rendering/server-components',
+        domain: 'nextjs.org',
+        description: 'React Server Components documentation detailing zero-bundle HTML rendering.'
+      },
+      {
+        title: 'Schema.org Structured Data Vocabulary Standards',
+        url: 'https://schema.org/',
+        domain: 'schema.org',
+        description: 'Global semantic web vocabulary standard for search engine indexing.'
+      }
+    ]
   },
   {
     id: 'how-to-build-a-saas-mvp',
@@ -320,7 +430,29 @@ export async function createBillingPortal(customerId: string) {
         a: 'By serving static pages on CDNs and using serverless database connection poolers (like PgBouncer), your MVP can handle 10,000+ concurrent requests out of the box.'
       }
     ],
-    relatedServiceSlugs: ['saas-development', 'mvp-development', 'product-development']
+    relatedServiceSlugs: ['saas-development', 'mvp-development', 'product-development'],
+    relatedCaseStudyIds: ['seo-growth-engine', 'business-analytics-platform'],
+    relatedArticleIds: ['technical-seo-saas-companies', 'ai-automation-what-to-automate'],
+    externalReferences: [
+      {
+        title: 'Stripe Billing & Customer Portal Deep-Link API',
+        url: 'https://docs.stripe.com/customer-management/portal-deep-links',
+        domain: 'stripe.com',
+        description: 'Automated recurring billing, invoicing, and hosted customer subscription management.'
+      },
+      {
+        title: 'Supabase PostgreSQL Architecture & Row Level Security',
+        url: 'https://supabase.com/docs/guides/database',
+        domain: 'supabase.com',
+        description: 'Scalable cloud-hosted PostgreSQL with built-in connection pooling.'
+      },
+      {
+        title: 'Vercel Serverless & Edge Hosting Documentation',
+        url: 'https://vercel.com/docs/frameworks/nextjs',
+        domain: 'vercel.com',
+        description: 'Edge CDN routing and serverless function deployment for Next.js.'
+      }
+    ]
   },
   {
     id: 'ai-automation-what-to-automate',
@@ -369,7 +501,29 @@ class InvoiceSchema(BaseModel):
         a: 'By using large language models rather than regex rules, our parsers can extract details from invoices even if layout formats change.'
       }
     ],
-    relatedServiceSlugs: ['ai-automation', 'ai-agent-development', 'software-development']
+    relatedServiceSlugs: ['ai-automation', 'ai-agent-development', 'software-development'],
+    relatedCaseStudyIds: ['ai-sales-automation', 'ai-document-assistant'],
+    relatedArticleIds: ['how-to-build-an-ai-receptionist', 'ai-voice-agents-customer-support'],
+    externalReferences: [
+      {
+        title: 'Pydantic Data Validation & Structured Output Schema',
+        url: 'https://docs.pydantic.dev/latest/',
+        domain: 'pydantic.dev',
+        description: 'Type hinting and schema enforcement for reliable LLM structured JSON output.'
+      },
+      {
+        title: 'HubSpot API Client Libraries & Webhooks Documentation',
+        url: 'https://developers.hubspot.com/docs/api/overview',
+        domain: 'hubspot.com',
+        description: 'Developer guide for CRM object mutations and custom workflow actions.'
+      },
+      {
+        title: 'SEVA Public Government Directory for Business Subsidies',
+        url: 'https://seva.sochyeah.com/schemes/business',
+        domain: 'seva.sochyeah.com',
+        description: 'Verified directory of MSME technology upgradation and automation subsidies.'
+      }
+    ]
   },
   {
     id: 'how-ai-search-is-changing-seo',
@@ -419,7 +573,29 @@ class InvoiceSchema(BaseModel):
         a: 'Monitor your server access logs for specific AI crawler user-agents, such as GPTBot, ClaudeBot, or PerplexityBot.'
       }
     ],
-    relatedServiceSlugs: ['seo', 'web-development', 'ai-development']
+    relatedServiceSlugs: ['seo', 'web-development', 'ai-development'],
+    relatedCaseStudyIds: ['seo-growth-engine', 'ai-document-assistant'],
+    relatedArticleIds: ['technical-seo-saas-companies', 'building-production-ready-rag'],
+    externalReferences: [
+      {
+        title: 'Google Search Central Semantic Entity & Structured Data Guidelines',
+        url: 'https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data',
+        domain: 'google.com',
+        description: 'How search crawlers parse JSON-LD graphs to build knowledge entities.'
+      },
+      {
+        title: 'OpenAI GPTBot Crawler User-Agent Specifications',
+        url: 'https://platform.openai.com/docs/gptbot',
+        domain: 'openai.com',
+        description: 'Official user-agent headers and crawl permission rules for OpenAI AI search.'
+      },
+      {
+        title: 'W3C Linked Data & Semantic Web Standards',
+        url: 'https://www.w3.org/standards/semanticweb/data',
+        domain: 'w3.org',
+        description: 'Global web standards for structured graph relationships and entity linking.'
+      }
+    ]
   },
   {
     id: 'building-production-ready-rag',
@@ -470,7 +646,29 @@ class InvoiceSchema(BaseModel):
         a: 'We use a hashing function on files. When a document is modified, we recalculate its hash, clear the old chunks from the database, and inject the new vectors.'
       }
     ],
-    relatedServiceSlugs: ['rag-development', 'generative-ai', 'ai-development']
+    relatedServiceSlugs: ['rag-development', 'generative-ai', 'ai-development'],
+    relatedCaseStudyIds: ['ai-document-assistant', 'business-analytics-platform'],
+    relatedArticleIds: ['rag-vs-fine-tuning-business-use', 'how-ai-search-is-changing-seo'],
+    externalReferences: [
+      {
+        title: 'Cohere Rerank Cross-Encoder Architecture',
+        url: 'https://docs.cohere.com/docs/reranking',
+        domain: 'cohere.com',
+        description: 'Cross-encoder models to rank semantic search retrieval chunks with high precision.'
+      },
+      {
+        title: 'LlamaIndex Advanced Retrieval & Hybrid Search Strategies',
+        url: 'https://docs.llamaindex.ai/en/stable/module_guides/querying/retrieval/',
+        domain: 'llamaindex.ai',
+        description: 'Production architecture for hybrid vector + BM25 keyword retrieval.'
+      },
+      {
+        title: 'PostgreSQL pgvector HNSW Benchmark Studies',
+        url: 'https://github.com/pgvector/pgvector#hnsw',
+        domain: 'github.com',
+        description: 'Hierarchical Navigable Small World (HNSW) indexing for millisecond vector lookups.'
+      }
+    ]
   },
   {
     id: 'how-recommendation-engines-work',
@@ -521,7 +719,29 @@ def cosine_similarity(u, v):
         a: 'Collaborative filtering matches users with similar purchase histories, while content filtering recommends items that share attributes (like tags or text similarity).'
       }
     ],
-    relatedServiceSlugs: ['machine-learning', 'predictive-analytics', 'software-development']
+    relatedServiceSlugs: ['machine-learning', 'predictive-analytics', 'software-development'],
+    relatedCaseStudyIds: ['ecommerce-recommendation-engine', 'business-analytics-platform'],
+    relatedArticleIds: ['machine-learning-small-businesses', 'spreadsheet-to-ai-dashboard'],
+    externalReferences: [
+      {
+        title: 'Implicit Collaborative Filtering with ALS in Python',
+        url: 'https://benfred.github.io/implicit/',
+        domain: 'github.io',
+        description: 'High-performance matrix factorization library for implicit feedback datasets.'
+      },
+      {
+        title: 'Google Machine Learning Crash Course: Recommendation Systems',
+        url: 'https://developers.google.com/machine-learning/recommendation',
+        domain: 'google.com',
+        description: 'Official curriculum on candidate generation, scoring, and re-ranking algorithms.'
+      },
+      {
+        title: 'Redis Vector Similarity Search (VSS) Index Guide',
+        url: 'https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/',
+        domain: 'redis.io',
+        description: 'Sub-10ms in-memory approximate nearest neighbor vector indexing.'
+      }
+    ]
   },
   {
     id: 'spreadsheet-to-ai-dashboard',
@@ -570,7 +790,29 @@ ON CONFLICT (date) DO UPDATE SET total_revenue = EXCLUDED.total_revenue;`,
         a: 'We implement role-based access control (RBAC) via JSON Web Tokens (JWT), ensuring users can only view data matching their permission tier.'
       }
     ],
-    relatedServiceSlugs: ['predictive-analytics', 'machine-learning', 'software-development']
+    relatedServiceSlugs: ['predictive-analytics', 'machine-learning', 'software-development'],
+    relatedCaseStudyIds: ['business-analytics-platform', 'ecommerce-recommendation-engine'],
+    relatedArticleIds: ['machine-learning-small-businesses', 'how-to-build-a-saas-mvp'],
+    externalReferences: [
+      {
+        title: 'PostgreSQL Staging Schemas & Partitioning Architecture',
+        url: 'https://www.postgresql.org/docs/current/ddl-partitioning.html',
+        domain: 'postgresql.org',
+        description: 'High-throughput data staging and table partition strategies for time-series logs.'
+      },
+      {
+        title: 'Recharts Responsive React Visualization Library',
+        url: 'https://recharts.org/en-US/guide/getting-started',
+        domain: 'recharts.org',
+        description: 'Declarative, responsive SVG charting primitives optimized for React and Next.js.'
+      },
+      {
+        title: 'Auth0 / JWT Role-Based Access Control Architecture',
+        url: 'https://auth0.com/docs/manage-users/access-control/rbac',
+        domain: 'auth0.com',
+        description: 'Securing multi-tenant enterprise data warehouses and executive dashboards.'
+      }
+    ]
   }
 ];
 
