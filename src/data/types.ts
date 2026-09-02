@@ -48,14 +48,24 @@ export interface SchemeCategory {
   schemeIds: string[];
 }
 
+export interface QuickFact {
+  label: string;
+  value: string;
+}
+
 export interface SchemeItem {
   id: string;
   slug: string;
   name: string;
   shortName: string;
   category: 'business' | 'health' | 'energy' | 'agriculture';
+  state?: string;
   agency: string;
   ministry: string;
+  applicationMode: string;
+  beneficiaryTypes: string[];
+  quickFacts: QuickFact[];
+  searchKeywords: string[];
   overview: string;
   benefit: string;
   subsidyTable: { tier: string; subsidy: string; details: string }[];

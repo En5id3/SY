@@ -4,10 +4,10 @@ export const schemeCategories: Record<'business' | 'health' | 'energy' | 'agricu
   business: {
     slug: 'business',
     name: 'MSME & Business Support',
-    title: 'Government Schemes for MSMEs & Business Support | SEVA',
-    metaTitle: 'Government Schemes for MSMEs & Business Support | SEVA Directory',
-    metaDescription: 'Discover verified government credit-linked capital subsidies, collateral-free credit guarantees, and early-stage startup grants including PMEGP, CGTMSE, SISFS, and ZED.',
-    h1: 'Government Schemes for MSMEs & Business Support',
+    title: 'Government Schemes for Businesses in India | SEVA',
+    metaTitle: 'Government Schemes for Businesses in India | SEVA Directory',
+    metaDescription: 'Discover verified central government credit-linked capital subsidies, collateral-free credit guarantees, and early-stage startup grants including PMEGP, CGTMSE, SISFS, and ZED.',
+    h1: 'Government Schemes for Businesses',
     shortDescription: 'Credit-linked capital subsidies, collateral-free credit guarantees up to ₹5 Crore, and startup seed grants for micro, small, and medium enterprises across India.',
     detailedOverview: 'The Government of India, primarily through the Ministry of Micro, Small and Medium Enterprises (MoMSME) and the Department for Promotion of Industry and Internal Trade (DPIIT), operates multiple flagship schemes to empower entrepreneurs, foster domestic manufacturing, and provide debt-free credit backing.',
     keyHighlights: [
@@ -102,8 +102,19 @@ export const schemesData: SchemeItem[] = [
     name: 'Prime Minister Employment Generation Programme (PMEGP)',
     shortName: 'PMEGP Subsidy Scheme',
     category: 'business',
+    state: 'Central (All India)',
     ministry: 'Ministry of Micro, Small and Medium Enterprises (MoMSME)',
     agency: 'Khadi and Village Industries Commission (KVIC)',
+    applicationMode: 'Online e-Portal (kviconline.gov.in)',
+    beneficiaryTypes: ['Individual Entrepreneurs (18+)', 'Unemployed Youth', 'Women Entrepreneurs', 'SC / ST / OBC / Minorities', 'Self Help Groups (SHGs)'],
+    quickFacts: [
+      { label: 'Max Project Cost (Mfg)', value: '₹50 Lakhs' },
+      { label: 'Max Project Cost (Service)', value: '₹20 Lakhs' },
+      { label: 'Subsidy Range', value: '15% to 35%' },
+      { label: 'Own Contribution', value: '5% to 10%' },
+      { label: 'Collateral Security', value: 'Zero for loans up to ₹10L' }
+    ],
+    searchKeywords: ['pmegp', 'kvic', 'prime minister employment generation', 'msme subsidy', 'business loan', 'self employment', 'manufacturing grant', 'women entrepreneur loan'],
     overview: 'The Prime Minister Employment Generation Programme (PMEGP) is a premier credit-linked subsidy initiative launched by the Government of India to generate sustainable self-employment opportunities across manufacturing and service sectors in rural and urban areas.',
     benefit: '15% to 35% Capital Subsidy on project costs up to ₹50 Lakhs for Manufacturing and ₹20 Lakhs for Service units.',
     subsidyTable: [
@@ -159,10 +170,14 @@ export const schemesData: SchemeItem[] = [
       {
         question: 'What is the repayment tenure for a PMEGP bank loan?',
         answer: 'The repayment period ranges between 3 to 7 years, including an initial moratorium period (usually 6 to 12 months) determined by the financing bank based on project cash flows.'
+      },
+      {
+        question: 'Where should I verify the latest PMEGP circulars and application forms?',
+        answer: 'Always verify official guidelines directly on the Khadi and Village Industries Commission portal at kviconline.gov.in or the central myScheme portal at myscheme.gov.in.'
       }
     ],
     relatedSchemeIds: ['cgtmse', 'zed', 'pmfme'],
-    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
+    disclaimer: 'SEVA is an independent information directory and is not affiliated with or operated by the Government of India or any government department. Scheme eligibility, benefits, deadlines and application requirements may change. Always verify information through the relevant official government source before applying.'
   },
   {
     id: 'cgtmse',
@@ -170,8 +185,19 @@ export const schemesData: SchemeItem[] = [
     name: 'Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE)',
     shortName: 'CGTMSE Collateral-Free Loan Guarantee',
     category: 'business',
+    state: 'Central (All India)',
     ministry: 'Ministry of Micro, Small and Medium Enterprises (MoMSME)',
     agency: 'Small Industries Development Bank of India (SIDBI) & MoMSME',
+    applicationMode: 'Through Member Lending Banks & NBFCs',
+    beneficiaryTypes: ['Micro & Small Enterprises', 'Startup Founders', 'Women Entrepreneurs', 'Manufacturing & Service Units'],
+    quickFacts: [
+      { label: 'Max Guarantee Limit', value: '₹5 Crore (₹500 Lakhs)' },
+      { label: 'Guarantee Coverage', value: '75% to 85%' },
+      { label: 'Collateral Required', value: 'Zero (No Third-Party Guarantee)' },
+      { label: 'Eligible Lenders', value: 'PSU Banks, Private Banks, RRBs, NBFCs' },
+      { label: 'Mandatory Doc', value: 'Udyam Registration' }
+    ],
+    searchKeywords: ['cgtmse', 'collateral free loan', 'credit guarantee', 'sidbi', 'msme loan without collateral', 'business credit', 'working capital guarantee', 'msme loan'],
     overview: 'The Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE) facilitates third-party collateral-free credit from scheduled commercial banks, NBFCs, and financial institutions to new and existing micro and small enterprises by providing credit guarantee cover up to 85%.',
     benefit: 'Collateral-free credit facility up to ₹500 Lakhs (₹5 Crore) with government-backed guarantee cover up to 85% and reduced annual guarantee fees.',
     subsidyTable: [
@@ -227,7 +253,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pmegp', 'startup-india-seed-fund', 'zed'],
-    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
+    disclaimer: 'SEVA is an independent information directory and is not affiliated with or operated by the Government of India or any government department. Scheme eligibility, benefits, deadlines and application requirements may change. Always verify information through the relevant official government source before applying.'
   },
   {
     id: 'startup-india-seed-fund',
@@ -235,8 +261,19 @@ export const schemesData: SchemeItem[] = [
     name: 'Startup India Seed Fund Scheme (SISFS)',
     shortName: 'Startup India Seed Fund (SISFS)',
     category: 'business',
+    state: 'Central (All India)',
     ministry: 'Ministry of Commerce and Industry',
     agency: 'Department for Promotion of Industry and Internal Trade (DPIIT)',
+    applicationMode: 'Online Portal (seedfund.startupindia.gov.in)',
+    beneficiaryTypes: ['Early-Stage Startups (<2 Years Old)', 'Tech Innovators', 'DPIIT-Recognized Startups', 'Student & First-Time Founders'],
+    quickFacts: [
+      { label: 'Prototype Grant (PoC)', value: 'Up to ₹20 Lakhs (Non-dilutive)' },
+      { label: 'Commercialization Support', value: 'Up to ₹50 Lakhs (Debt/Convertibles)' },
+      { label: 'Max Startup Age', value: '2 Years at Application' },
+      { label: 'Promoter Shareholding', value: 'Min 51% Indian Promoters' },
+      { label: 'Evaluation Period', value: '30-45 Business Days' }
+    ],
+    searchKeywords: ['sisfs', 'startup india', 'seed fund', 'dpiit grant', 'prototype grant', 'early stage startup funding', 'incubator grant', 'startup capital'],
     overview: 'The Startup India Seed Fund Scheme (SISFS) provides financial assistance to early-stage DPIIT-recognized startups for proof of concept, prototype development, product trials, market-entry commercialization, and initial operational scaling.',
     benefit: 'Up to ₹20 Lakhs as a non-dilutive grant for Proof of Concept / Prototyping; Up to ₹50 Lakhs via convertible debentures or debt-linked instruments for commercialization.',
     subsidyTable: [
@@ -292,7 +329,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['cgtmse', 'zed', 'pmegp'],
-    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
+    disclaimer: 'SEVA is an independent information directory and is not affiliated with or operated by the Government of India or any government department. Scheme eligibility, benefits, deadlines and application requirements may change. Always verify information through the relevant official government source before applying.'
   },
   {
     id: 'zed',
@@ -300,8 +337,19 @@ export const schemesData: SchemeItem[] = [
     name: 'MSME Sustainable (ZED) Certification Scheme',
     shortName: 'MSME ZED Certification Scheme',
     category: 'business',
+    state: 'Central (All India)',
     ministry: 'Ministry of Micro, Small and Medium Enterprises (MoMSME)',
     agency: 'Quality Council of India (QCI) & National Productivity Council',
+    applicationMode: 'Online Portal (zed.msme.gov.in)',
+    beneficiaryTypes: ['Manufacturing Micro Enterprises', 'Manufacturing Small Enterprises', 'Manufacturing Medium Enterprises', 'Women/SC/ST Owned MSMEs'],
+    quickFacts: [
+      { label: 'Micro Enterprise Subsidy', value: '80% (Up to 90% for Women/SC/ST)' },
+      { label: 'Small Enterprise Subsidy', value: '60% of Certification Cost' },
+      { label: 'Medium Enterprise Subsidy', value: '50% of Certification Cost' },
+      { label: 'Handholding Grant', value: 'Up to ₹5 Lakhs per MSME' },
+      { label: 'Certification Validity', value: '3 Years' }
+    ],
+    searchKeywords: ['zed', 'zero defect zero effect', 'msme certification', 'zed bronze silver gold', 'manufacturing quality subsidy', 'qci', 'udyam subsidy', 'green msme'],
     overview: 'The MSME Sustainable (Zero Defect Zero Effect - ZED) Scheme incentivizes manufacturing micro, small, and medium enterprises to adopt world-class quality manufacturing processes while minimizing environmental impact.',
     benefit: 'Up to 80% subsidy on certification cost across Bronze, Silver, and Gold levels, plus financial support up to ₹5 Lakhs for handholding and ₹3 Lakhs for technology upgradation.',
     subsidyTable: [
@@ -350,7 +398,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pmegp', 'cgtmse', 'pmfme'],
-    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
+    disclaimer: 'SEVA is an independent information directory and is not affiliated with or operated by the Government of India or any government department. Scheme eligibility, benefits, deadlines and application requirements may change. Always verify information through the relevant official government source before applying.'
   },
   {
     id: 'pm-surya-ghar',
@@ -358,8 +406,19 @@ export const schemesData: SchemeItem[] = [
     name: 'PM Surya Ghar: Muft Bijli Yojana',
     shortName: 'PM Surya Ghar Solar Rooftop Scheme',
     category: 'energy',
+    state: 'Central (All India)',
     ministry: 'Ministry of New and Renewable Energy (MNRE)',
     agency: 'National Solar Rooftop Portal & State DISCOMs',
+    applicationMode: 'National Portal (pmsuryaghar.gov.in) & DISCOM',
+    beneficiaryTypes: ['Individual Residential Homeowners', 'Group Housing Societies (GHS)', 'Resident Welfare Associations (RWAs)'],
+    quickFacts: [
+      { label: 'Subsidy for 1 kW', value: '₹30,000 Direct DBT' },
+      { label: 'Subsidy for 2 kW', value: '₹60,000 Direct DBT' },
+      { label: 'Subsidy for 3 kW+', value: '₹78,000 Flat DBT Cap' },
+      { label: 'Free Electricity Goal', value: 'Up to 300 Units / Month' },
+      { label: 'Payback Period', value: '2.5 to 3.5 Years' }
+    ],
+    searchKeywords: ['pm surya ghar', 'muft bijli yojana', 'rooftop solar subsidy', 'solar panel subsidy', 'residential solar', 'mnre solar', 'free electricity solar', 'solar dbt'],
     overview: 'PM Surya Ghar: Muft Bijli Yojana is a flagship national initiative launched by the Government of India with an outlay of ₹75,021 Crore to power 1 Crore residential households across India with rooftop solar installations and provide up to 300 units of free monthly electricity.',
     benefit: 'Direct capital subsidy of ₹30,000 for 1 kW, ₹60,000 for 2 kW, and ₹78,000 for 3 kW and higher residential rooftop solar systems deposited directly into the beneficiary bank account.',
     subsidyTable: [
@@ -414,7 +473,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pm-kusum'],
-    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
+    disclaimer: 'SEVA is an independent information directory and is not affiliated with or operated by the Government of India or any government department. Scheme eligibility, benefits, deadlines and application requirements may change. Always verify information through the relevant official government source before applying.'
   },
   {
     id: 'pm-kusum',
@@ -422,8 +481,19 @@ export const schemesData: SchemeItem[] = [
     name: 'PM-KUSUM (Pradhan Mantri Kisan Urja Suraksha evam Utthaan Mahabhiyan)',
     shortName: 'PM-KUSUM Solar Agricultural Pumps',
     category: 'energy',
+    state: 'Central (All India)',
     ministry: 'Ministry of New and Renewable Energy (MNRE)',
     agency: 'State Renewable Energy Development Agencies & DISCOMs',
+    applicationMode: 'State Nodal Agency Portals (HAREDA, UPNEDA, RREC, MSEDCL)',
+    beneficiaryTypes: ['Individual Farmers', 'Farmer Producer Organizations (FPOs)', 'Water User Associations (WUAs)', 'Primary Agricultural Credit Societies (PACS)'],
+    quickFacts: [
+      { label: 'Total Subsidy', value: 'Up to 60% (30% Central + 30% State)' },
+      { label: 'Farmer Contribution', value: '10% (30% via Bank Loan)' },
+      { label: 'Hilly / NE States Subsidy', value: 'Up to 80% (50% Central + 30% State)' },
+      { label: 'Supported Pump Sizes', value: '3 HP, 5 HP, 7.5 HP Solar Pumps' },
+      { label: 'Surplus Solar Sale', value: 'Feed-in Tariff paid by DISCOM' }
+    ],
+    searchKeywords: ['pm kusum', 'kusum solar pump', 'agricultural solar pump', 'solar tube well', 'farmer subsidy', 'solar irrigation', 'diesel pump replacement', 'solar water pump'],
     overview: 'PM-KUSUM de-dieselizes India agricultural sector and provides water and energy security to farmers by subsidizing standalone off-grid solar agricultural pumps and solarizing existing grid-connected agricultural tube wells.',
     benefit: 'Up to 60% total subsidy (30% Central Government + 30% State Government) on solar agricultural pumps, with farmers contributing only 10% and the remaining 30% available via bank loan.',
     subsidyTable: [
@@ -472,7 +542,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pm-surya-ghar', 'midh-cold-chain'],
-    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
+    disclaimer: 'SEVA is an independent information directory and is not affiliated with or operated by the Government of India or any government department. Scheme eligibility, benefits, deadlines and application requirements may change. Always verify information through the relevant official government source before applying.'
   },
   {
     id: 'pm-jay',
@@ -480,8 +550,19 @@ export const schemesData: SchemeItem[] = [
     name: 'Ayushman Bharat – Pradhan Mantri Jan Arogya Yojana (PM-JAY)',
     shortName: 'Ayushman Bharat PM-JAY Health Cover',
     category: 'health',
+    state: 'Central (All India)',
     ministry: 'Ministry of Health and Family Welfare (MoHFW)',
     agency: 'National Health Authority (NHA)',
+    applicationMode: 'Beneficiary Portal (beneficiary.nha.gov.in) & CSC',
+    beneficiaryTypes: ['Low-Income Families (SECC 2011)', 'NFSA Ration Card Holders', 'Vulnerable Urban & Rural Households'],
+    quickFacts: [
+      { label: 'Annual Health Cover', value: '₹5,00,000 per Family / Year' },
+      { label: 'Treatment Type', value: '100% Cashless & Paperless' },
+      { label: 'Empanelled Hospitals', value: '29,000+ Public & Private' },
+      { label: 'Procedures Covered', value: '1,949+ Surgeries & Treatments' },
+      { label: 'Pre-Existing Diseases', value: 'Covered from Day 1 (No Waiting Period)' }
+    ],
+    searchKeywords: ['pm jay', 'pmjay', 'ayushman bharat', 'ayushman card', 'free hospital treatment', 'government health insurance', '5 lakh health cover', 'nha beneficiary', 'cashless hospital'],
     overview: 'Ayushman Bharat PM-JAY is the world largest government-funded health assurance scheme, providing a health cover of ₹5,00,000 per family per year for secondary and tertiary care hospitalization across more than 29,000 empanelled public and private hospitals in India.',
     benefit: '₹5,00,000 annual cashless and paperless hospitalization health cover per family covering over 1,949 medical and surgical procedures with zero pre-existing disease exclusion.',
     subsidyTable: [
@@ -531,7 +612,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pmjay-senior-70'],
-    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
+    disclaimer: 'SEVA is an independent information directory and is not affiliated with or operated by the Government of India or any government department. Scheme eligibility, benefits, deadlines and application requirements may change. Always verify information through the relevant official government source before applying.'
   },
   {
     id: 'pmjay-senior-70',
@@ -539,8 +620,19 @@ export const schemesData: SchemeItem[] = [
     name: 'AB-PMJAY Senior Citizen Universal Healthcare (70+ Years)',
     shortName: 'Ayushman Vay Vandana (70+ Health Cover)',
     category: 'health',
+    state: 'Central (All India)',
     ministry: 'Ministry of Health and Family Welfare (MoHFW)',
     agency: 'National Health Authority (NHA)',
+    applicationMode: 'Beneficiary Portal (beneficiary.nha.gov.in) & Ayushman App',
+    beneficiaryTypes: ['All Indian Citizens Aged 70+ (Universal)', 'Senior Citizens with Private Insurance', 'Senior Citizens in Existing PMJAY Families'],
+    quickFacts: [
+      { label: 'Annual Health Cover', value: '₹5,00,000 Dedicated Pool' },
+      { label: 'Income Limit', value: 'None (Universal Coverage)' },
+      { label: 'Eligibility Verification', value: 'Aadhaar Date of Birth (Age 70+)' },
+      { label: 'Card Name', value: 'Ayushman Vay Vandana Card' },
+      { label: 'Private Insurance Holders', value: 'Eligible to Hold Concurrently' }
+    ],
+    searchKeywords: ['ayushman vay vandana', 'pmjay senior citizen', 'ayushman 70 plus', '70 year old health cover', 'free senior citizen health insurance', 'nha 70 plus card', 'senior citizen hospital cover'],
     overview: 'The expanded AB-PMJAY Senior Citizen Universal Healthcare scheme provides distinct ₹5,00,000 annual cashless hospitalization coverage to every Indian senior citizen aged 70 years and above, irrespective of their household income, caste, or economic tier.',
     benefit: 'Distinct annual health cover of ₹5,00,000 exclusively for senior citizens aged 70+, which is over and above the existing family PM-JAY cover.',
     subsidyTable: [
@@ -584,7 +676,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pm-jay'],
-    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
+    disclaimer: 'SEVA is an independent information directory and is not affiliated with or operated by the Government of India or any government department. Scheme eligibility, benefits, deadlines and application requirements may change. Always verify information through the relevant official government source before applying.'
   },
   {
     id: 'midh-cold-chain',
@@ -592,8 +684,19 @@ export const schemesData: SchemeItem[] = [
     name: 'Mission for Integrated Development of Horticulture (MIDH) – Cold Chain & Storage',
     shortName: 'MIDH Cold Storage & Packhouse Subsidy',
     category: 'agriculture',
+    state: 'Central (All India)',
     ministry: 'Ministry of Agriculture and Farmers Welfare',
     agency: 'National Horticulture Board (NHB) & State Horticulture Missions',
+    applicationMode: 'Online In-Principle Approval (nhb.gov.in) & Bank Term Loan',
+    beneficiaryTypes: ['Individual Farmers & Grower Groups', 'Farmer Producer Organizations (FPOs)', 'Agri-Enterprises & Promoters', 'Agricultural Cooperatives & SHGs'],
+    quickFacts: [
+      { label: 'General Areas Subsidy', value: '35% of Eligible Project Cost' },
+      { label: 'Hilly & NE Areas Subsidy', value: '50% of Eligible Project Cost' },
+      { label: 'Max Financial Assistance', value: 'Up to ₹3.50 Crore per Unit' },
+      { label: 'Subsidy Mechanism', value: 'Credit-Linked Back-Ended (SRF Account)' },
+      { label: 'Mandatory Condition', value: 'IPA before starting construction' }
+    ],
+    searchKeywords: ['midh', 'cold storage subsidy', 'nhb subsidy', 'packhouse subsidy', 'horticulture infrastructure', 'cold chain grant', 'national horticulture board', 'post harvest subsidy'],
     overview: 'The Mission for Integrated Development of Horticulture (MIDH) provides substantial capital subsidies to farmers, FPOs, and private entrepreneurs to establish cold storages, integrated packhouses, ripening chambers, and cold chain transport infrastructure to minimize post-harvest agricultural losses.',
     benefit: '35% to 50% capital investment subsidy on integrated cold chain infrastructure up to ₹3.50 Crore per project via the National Horticulture Board (NHB).',
     subsidyTable: [
@@ -644,7 +747,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pmfme', 'pm-kusum'],
-    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
+    disclaimer: 'SEVA is an independent information directory and is not affiliated with or operated by the Government of India or any government department. Scheme eligibility, benefits, deadlines and application requirements may change. Always verify information through the relevant official government source before applying.'
   },
   {
     id: 'pmfme',
@@ -652,8 +755,19 @@ export const schemesData: SchemeItem[] = [
     name: 'PM Formalisation of Micro Food Processing Enterprises (PMFME)',
     shortName: 'PMFME Micro Food Processing Scheme',
     category: 'agriculture',
+    state: 'Central (All India)',
     ministry: 'Ministry of Food Processing Industries (MoFPI)',
     agency: 'State Nodal Agencies (SNA) & National Institute of Food Technology (NIFTEM)',
+    applicationMode: 'National MIS Portal (pmfme.mofpi.gov.in) & DRP Support',
+    beneficiaryTypes: ['Existing Micro Food Processors', 'SHG Members in Food Processing', 'Farmer Producer Organizations (FPOs)', 'Producer Cooperatives', 'ODOP Commodity Units'],
+    quickFacts: [
+      { label: 'Capital Subsidy Rate', value: '35% of Eligible Project Cost' },
+      { label: 'Max Subsidy Ceiling', value: '₹10,00,000 (₹10 Lakhs)' },
+      { label: 'SHG Seed Capital', value: '₹40,000 per Member' },
+      { label: 'Handholding Support', value: 'Free assistance by District Resource Persons' },
+      { label: 'Focus Framework', value: 'One District One Product (ODOP)' }
+    ],
+    searchKeywords: ['pmfme', 'micro food processing subsidy', 'odop scheme', 'food processing grant', 'mofpi subsidy', 'shg seed capital', 'one district one product', 'flour mill subsidy', 'oil mill subsidy'],
     overview: 'The PM Formalisation of Micro Food Processing Enterprises (PMFME) scheme provides financial, technical, and business support for the upgradation of existing unorganized micro food processing units and the creation of common infrastructure under the One District One Product (ODOP) framework.',
     benefit: 'Credit-linked capital subsidy of 35% of eligible project costs with a maximum ceiling of ₹10 Lakhs per micro enterprise, plus seed capital of ₹40,000 per SHG member.',
     subsidyTable: [
@@ -704,7 +818,7 @@ export const schemesData: SchemeItem[] = [
       }
     ],
     relatedSchemeIds: ['pmegp', 'midh-cold-chain', 'zed'],
-    disclaimer: 'SEVA is an independent information directory. We are not affiliated with or operated by any government department. Always verify eligibility, benefits and application requirements through the official government source.'
+    disclaimer: 'SEVA is an independent information directory and is not affiliated with or operated by the Government of India or any government department. Scheme eligibility, benefits, deadlines and application requirements may change. Always verify information through the relevant official government source before applying.'
   }
 ];
 
