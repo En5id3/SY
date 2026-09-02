@@ -3,7 +3,18 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { caseStudies } from '@/data/case-studies';
 import { servicesData } from '@/data/services';
-import { ChevronRight, CheckCircle2, ArrowRight } from 'lucide-react';
+import { blogPosts } from '@/data/blog';
+import { 
+  ChevronRight, 
+  CheckCircle2, 
+  ArrowRight, 
+  Sparkles, 
+  BookOpen, 
+  Layers,
+  Building2,
+  TrendingUp,
+  Cpu
+} from 'lucide-react';
 import type { Metadata } from 'next';
 
 interface PageProps {
@@ -60,8 +71,9 @@ export default async function CaseStudyPage({ params }: PageProps) {
   }
 
   const isAi = cs.category.toLowerCase().includes('ai') || cs.category.toLowerCase().includes('learning');
-
   const relatedServices = servicesData.filter(s => cs.relatedServiceSlugs?.includes(s.slug));
+  const peerCaseStudies = caseStudies.filter(c => cs.relatedCaseStudyIds?.includes(c.id) && c.id !== cs.id);
+  const relatedArticles = blogPosts.filter(bp => cs.relatedServiceSlugs?.some(slug => bp.relatedServiceSlugs?.includes(slug)));
 
   // CaseStudy schema injection
   const jsonLd = {
@@ -119,7 +131,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 1. Breadcrumbs */}
+      {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="mb-8">
         <ol className="flex items-center gap-2 text-xs text-slate-500 font-mono">
           <li>
@@ -136,47 +148,44 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </ol>
       </nav>
 
-      {/* 2. Header */}
-      <div className="flex flex-col gap-4 mb-10 border-b border-indigo-100/80 pb-8">
+      {/* Hero Header */}
+      <div className="flex flex-col gap-4 mb-12 border-b border-indigo-100/80 pb-8">
         <div className="flex items-center gap-3">
-          <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${
+          <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border self-start ${
             isAi ? 'text-purple-800 bg-purple-50 border-purple-200/50' : 'text-blue-800 bg-blue-50 border-blue-200/50'
           }`}>
-            {cs.category}
+            {cs.category} {'//'} PRODUCTION CASE STUDY
           </span>
-          <span className="text-[9px] font-mono font-bold tracking-wider text-amber-700 bg-amber-50 border border-amber-200/60 px-2.5 py-1 rounded-full">
-            PRODUCTION SYSTEM
-          </span>
+          <span className="text-[10px] font-mono text-slate-400">Engineered by SOCHYEAH</span>
         </div>
-        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tighter text-slate-900 leading-tight">
+
+        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tighter text-slate-900 uppercase leading-tight">
           {cs.title}
         </h1>
+
+        <p className="text-sm md:text-base text-slate-600 font-medium max-w-[850px] leading-relaxed">
+          {cs.challenge}
+        </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-12 items-start">
-        {/* Left Column: Challenge / Solution */}
-        <div className="w-full lg:w-2/3 flex flex-col gap-8 text-xs text-slate-600 leading-relaxed">
-          {/* Challenge */}
+      {/* Main Grid */}
+      <div className="flex flex-col lg:flex-row gap-12 items-start mb-16">
+        {/* Left Column: Solution, Architecture & Impact */}
+        <div className="w-full lg:w-2/3 flex flex-col gap-10">
+          {/* Executive Solution Summary */}
           <div className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-xs">
-            <h2 className="text-xs font-mono font-bold text-purple-900 uppercase tracking-wider mb-3">
-              01 // The Business Challenge
+            <h2 className="text-xs font-mono font-bold text-indigo-900 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <Cpu size={14} /> 01 // Engineering Solution &amp; Architecture
             </h2>
-            <p className="text-sm text-slate-700 leading-relaxed">
-              {cs.challenge}
+            <p className="text-sm text-slate-700 leading-relaxed font-normal">
+              {cs.solution}
             </p>
           </div>
 
-          {/* Solution */}
+          {/* Deliverables */}
           <div className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-xs">
-            <h2 className="text-xs font-mono font-bold text-blue-900 uppercase tracking-wider mb-3">
-              02 // The Engineering Solution
-            </h2>
-            <p className="text-sm text-slate-700 leading-relaxed mb-6">
-              {cs.solution}
-            </p>
-
-            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">
-              What We Engineered:
+            <h3 className="text-xs font-mono font-bold text-indigo-900 uppercase tracking-wider mb-4 flex items-center gap-1.5">
+              <Layers size={14} /> 02 // Core Systems Deployed
             </h3>
             <ul className="flex flex-col gap-2.5">
               {cs.whatWeBuilt.map((item, idx) => (
@@ -190,8 +199,8 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
           {/* Business Impact & Lessons */}
           <div className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-xs">
-            <h2 className="text-xs font-mono font-bold text-indigo-900 uppercase tracking-wider mb-3">
-              03 // Business Impact &amp; Engineering Takeaways
+            <h2 className="text-xs font-mono font-bold text-indigo-900 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <TrendingUp size={14} /> 03 // Business Impact &amp; Engineering Takeaways
             </h2>
             <p className="text-sm text-slate-700 leading-relaxed mb-6">
               {cs.businessImpact}
@@ -215,8 +224,8 @@ export default async function CaseStudyPage({ params }: PageProps) {
           {/* Related Commercial Services */}
           {relatedServices.length > 0 && (
             <div className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-xs">
-              <h2 className="text-xs font-mono font-bold text-indigo-900 uppercase tracking-wider mb-4">
-                04 // Related Commercial Services
+              <h2 className="text-xs font-mono font-bold text-indigo-900 uppercase tracking-wider mb-4 flex items-center gap-1.5">
+                <Building2 size={14} /> 04 // Related Commercial Services
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {relatedServices.map((svc) => (
@@ -235,11 +244,87 @@ export default async function CaseStudyPage({ params }: PageProps) {
               </div>
             </div>
           )}
+
+          {/* Topic Cluster: Related Engineering Journal Blueprints */}
+          {relatedArticles.length > 0 && (
+            <div className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <span className="text-[10px] font-mono font-bold text-indigo-800 uppercase tracking-wider block mb-1">
+                    TOPIC CLUSTER DEEP-DIVES
+                  </span>
+                  <h2 className="text-sm font-bold text-slate-900">
+                    Related Engineering Journal Blueprints
+                  </h2>
+                </div>
+                <BookOpen size={16} className="text-indigo-600" />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {relatedArticles.slice(0, 2).map((art) => (
+                  <Link
+                    key={art.id}
+                    href={`/blog/${art.id}`}
+                    className="p-4 rounded-xl border border-indigo-100 hover:border-indigo-300 transition-all flex flex-col justify-between group"
+                  >
+                    <div>
+                      <span className="text-[9px] font-mono text-slate-400 uppercase block mb-1">{art.category}</span>
+                      <h3 className="text-xs font-bold text-slate-900 group-hover:text-indigo-900 transition-colors mb-2">
+                        {art.title}
+                      </h3>
+                    </div>
+                    <div className="inline-flex items-center text-xs font-bold text-indigo-900 group-hover:text-indigo-700">
+                      <span>Read technical blueprint</span>
+                      <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Related Peer Case Studies */}
+          {peerCaseStudies.length > 0 && (
+            <div className="border border-indigo-100/80 bg-white rounded-2xl p-6 md:p-8 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <span className="text-[10px] font-mono font-bold text-indigo-800 uppercase tracking-wider block mb-1">
+                    MORE CLIENT DEPLOYMENTS
+                  </span>
+                  <h2 className="text-sm font-bold text-slate-900">
+                    Related Production Case Studies
+                  </h2>
+                </div>
+                <Sparkles size={16} className="text-indigo-600" />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {peerCaseStudies.map((peer) => (
+                  <Link
+                    key={peer.id}
+                    href={`/case-studies/${peer.id}`}
+                    className="p-4 rounded-xl border border-indigo-100 hover:border-indigo-300 transition-all flex flex-col justify-between group"
+                  >
+                    <div>
+                      <span className="text-[9px] font-mono text-slate-400 uppercase block mb-1">{peer.category}</span>
+                      <h3 className="text-xs font-bold text-slate-900 group-hover:text-indigo-900 transition-colors mb-2">
+                        {peer.title}
+                      </h3>
+                    </div>
+                    <div className="inline-flex items-center text-xs font-bold text-indigo-900 group-hover:text-indigo-700">
+                      <span>Explore case study</span>
+                      <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Right Column: Key Metrics & Technology Stack */}
-        <div className="w-full lg:w-1/3 flex flex-col gap-8 sticky top-28">
-          {/* Metrics */}
+        {/* Right Column: Key Metrics, Technologies, and CTAs */}
+        <div className="w-full lg:w-1/3 flex flex-col gap-6 sticky top-28">
+          {/* Verified Metrics */}
           <div className="border border-indigo-100/80 bg-gradient-to-br from-purple-50/30 via-indigo-50/30 to-blue-50/30 rounded-2xl p-6 md:p-8 shadow-xs">
             <span className="text-[10px] font-mono font-bold text-indigo-900 uppercase tracking-wider block mb-4">
               Verified Production Results
