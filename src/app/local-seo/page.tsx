@@ -1,12 +1,10 @@
-import React from 'react';
-import SEOGrowth from '../seo-growth/page';
+import ServiceDetailPage, { generateMetadata as generateServiceMetadata } from '../services/[slug]/page';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "Local SEO & Programmatic Indexing Systems | SOCHYEAH",
-  description: "We deploy database-driven local city pages to capture regional intent searches, optimized with rich snippets schema markup."
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return generateServiceMetadata({ params: Promise.resolve({ slug: 'seo' }) });
+}
 
-export default function LocalSEOPage() {
-  return <SEOGrowth />;
+export default async function LocalSEOPage() {
+  return <ServiceDetailPage params={Promise.resolve({ slug: 'seo' })} />;
 }

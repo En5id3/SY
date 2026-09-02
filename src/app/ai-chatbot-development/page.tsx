@@ -1,12 +1,10 @@
-import React from 'react';
-import AIAutomation from '../ai-automation/page';
+import ServiceDetailPage, { generateMetadata as generateServiceMetadata } from '../services/[slug]/page';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "AI Chatbot Development & Custom RAG Integrations | SOCHYEAH",
-  description: "Custom conversational AI bots and chatbots mapped directly to your internal documents database using RAG, running under 400ms."
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return generateServiceMetadata({ params: Promise.resolve({ slug: 'ai-chatbot-development' }) });
+}
 
-export default function AIChatbotPage() {
-  return <AIAutomation />;
+export default async function AIChatbotPage() {
+  return <ServiceDetailPage params={Promise.resolve({ slug: 'ai-chatbot-development' })} />;
 }

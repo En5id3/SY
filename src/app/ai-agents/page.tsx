@@ -1,12 +1,10 @@
-import React from 'react';
-import AIAutomation from '../ai-automation/page';
+import ServiceDetailPage, { generateMetadata as generateServiceMetadata } from '../services/[slug]/page';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "AI Agent Developers & Autonomous Bot Architectures | SOCHYEAH",
-  description: "We deploy autonomous AI agents configured with custom tools and API triggers to run workflows and automate manual database operations."
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return generateServiceMetadata({ params: Promise.resolve({ slug: 'ai-agent-development' }) });
+}
 
-export default function AIAgentsPage() {
-  return <AIAutomation />;
+export default async function AIAgentsPage() {
+  return <ServiceDetailPage params={Promise.resolve({ slug: 'ai-agent-development' })} />;
 }

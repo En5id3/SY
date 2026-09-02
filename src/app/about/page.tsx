@@ -1,8 +1,22 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "About SOCHYEAH | AI & Digital Product Studio",
+  description: "Learn about SOCHYEAH's engineering philosophy: combining deep strategic thinking (soch) and rapid engineering shipping (yeah) to build high-leverage software systems.",
+  alternates: {
+    canonical: "https://www.sochyeah.com/about",
+  },
+  openGraph: {
+    title: "About SOCHYEAH | AI & Digital Product Studio",
+    description: "Learn about SOCHYEAH's engineering philosophy: combining deep strategic thinking (soch) and rapid engineering shipping (yeah) to build high-leverage software systems.",
+    url: "https://www.sochyeah.com/about",
+    siteName: "SOCHYEAH",
+    type: "website",
+  }
+};
 
 export default function About() {
   const principles = [
@@ -34,13 +48,13 @@ export default function About() {
       {/* Editorial Header */}
       <div className="max-w-[800px] mb-20 flex flex-col gap-5">
         <span className="text-[11px] font-mono font-bold tracking-widest uppercase text-indigo-800 bg-gradient-to-r from-purple-50 to-blue-50 px-3 py-1 rounded-full border border-indigo-200/60 self-start">
-          OUR CREED & PHILOSOPHY
+          OUR CREED &amp; PHILOSOPHY
         </span>
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tighter text-slate-900 uppercase leading-tight">
           WE BUILD TECHNOLOGY WITH PURPOSE.
         </h1>
         <p className="sub-editorial text-slate-900 font-medium">
-          "We are a software and AI technology company helping ambitious businesses turn ideas, operational data, and complex challenges into intelligent digital systems."
+          &quot;We are a software and AI technology company helping ambitious businesses turn ideas, operational data, and complex challenges into intelligent digital systems.&quot;
         </p>
       </div>
 
@@ -63,7 +77,7 @@ export default function About() {
               className="border border-indigo-100/80 bg-white rounded-2xl p-7 flex flex-col gap-3 shadow-xs card-hover-effect"
             >
               <span className={`text-xs font-mono font-bold ${pr.color}`}>
-                {pr.num} // {pr.title}
+                {pr.num} {'//'} {pr.title}
               </span>
               <p className="text-xs text-slate-600 leading-relaxed">
                 {pr.desc}
@@ -86,13 +100,13 @@ export default function About() {
           
           {/* Purple Block for SOCH */}
           <div className="border-l-3 border-purple-600 pl-4 py-1 flex flex-col gap-1 bg-purple-50/20 rounded-r-xl p-3">
-            <strong className="text-xs font-bold text-purple-950">SOCH (Thinking, Strategy & Cognition):</strong>
+            <strong className="text-xs font-bold text-purple-950">SOCH (Thinking, Strategy &amp; Cognition):</strong>
             <p className="text-xs text-slate-600 leading-relaxed">Strategic analysis, schema modeling, opportunity mapping, and user UX pathways. We audit value chains first.</p>
           </div>
 
           {/* Blue Block for YEAH */}
           <div className="border-l-3 border-blue-600 pl-4 py-1 flex flex-col gap-1 bg-blue-50/20 rounded-r-xl p-3">
-            <strong className="text-xs font-bold text-blue-950">YEAH (Execution, Engineering & Velocity):</strong>
+            <strong className="text-xs font-bold text-blue-950">YEAH (Execution, Engineering &amp; Velocity):</strong>
             <p className="text-xs text-slate-600 leading-relaxed">Modular frontend development, API microservices, model tuning, and edge deployment. We build with velocity and verify metrics.</p>
           </div>
         </div>

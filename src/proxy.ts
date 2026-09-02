@@ -14,20 +14,38 @@ export function proxy(request: NextRequest) {
 
   // Match seva.sochyeah.com or seva.localhost
   if (host.startsWith('seva.') || host.includes('seva.localhost')) {
+    if (url.pathname === '/robots.txt') {
+      url.pathname = '/seva/robots.txt';
+      return NextResponse.rewrite(url, {
+        request: {
+          headers: requestHeaders,
+        },
+      });
+    }
+
+    if (url.pathname === '/sitemap.xml') {
+      url.pathname = '/seva/sitemap.xml';
+      return NextResponse.rewrite(url, {
+        request: {
+          headers: requestHeaders,
+        },
+      });
+    }
+
     // Prevent infinite loop if already rewritten
     if (url.pathname === '/') {
       url.pathname = '/seva';
       return NextResponse.rewrite(url, {
         request: {
           headers: requestHeaders,
-        }
+        },
       });
-    } else if (!url.pathname.startsWith('/seva') && !url.pathname.includes('.')) {
+    } else if (!url.pathname.startsWith('/seva')) {
       url.pathname = `/seva${url.pathname}`;
       return NextResponse.rewrite(url, {
         request: {
           headers: requestHeaders,
-        }
+        },
       });
     }
   }
@@ -36,7 +54,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.next({
       request: {
         headers: requestHeaders,
-      }
+      },
     });
   }
 
@@ -46,8 +64,8 @@ export function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Match all request paths except static files, assets, and APIs
+     * Match all request paths except _next static chunks and static image assets
      */
-    '/((?!api|_next/static|_next/image|images|favicon.ico|.*\\..*).*)',
+    '/((?!api|_next/static|_next/image|images|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|webp|svg|woff|woff2|ttf|eot|ico)).*)',
   ],
 };

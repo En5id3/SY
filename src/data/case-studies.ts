@@ -26,7 +26,9 @@ export const caseStudies: CaseStudy[] = [
       'Always structure clear fallback options (e.g. standard forwarding) to handle complex, fringe customer queries.'
     ],
     message: "Your business shouldn't stop answering because your team is busy.",
-    ctaText: 'BUILD MY AI RECEPTIONIST'
+    ctaText: 'BUILD MY AI RECEPTIONIST',
+    relatedServiceSlugs: ['ai-agent-development', 'ai-automation', 'ai-chatbot-development', 'ai-development'],
+    relatedCaseStudyIds: ['ai-sales-automation', 'ai-document-assistant']
   },
   {
     id: 'ai-document-assistant',
@@ -53,7 +55,9 @@ export const caseStudies: CaseStudy[] = [
       'Providing clickable citations is essential for building employee trust in system outputs.'
     ],
     message: 'Your knowledge is valuable. Finding it shouldn\'t be difficult.',
-    ctaText: 'BUILD MY AI DOCUMENT ASSISTANT'
+    ctaText: 'BUILD MY AI DOCUMENT ASSISTANT',
+    relatedServiceSlugs: ['rag-development', 'generative-ai', 'ai-development', 'saas-development'],
+    relatedCaseStudyIds: ['ai-receptionist', 'business-analytics-platform']
   },
   {
     id: 'ecommerce-recommendation-engine',
@@ -80,7 +84,9 @@ export const caseStudies: CaseStudy[] = [
       'Caching item similarity vectors in Redis ensures high performance during shopping traffic surges.'
     ],
     message: 'Every customer should see a store that understands them.',
-    ctaText: 'BUILD MY ML RECOMMENDATION ENGINE'
+    ctaText: 'BUILD MY ML RECOMMENDATION ENGINE',
+    relatedServiceSlugs: ['machine-learning', 'predictive-analytics', 'software-development'],
+    relatedCaseStudyIds: ['business-analytics-platform', 'seo-growth-engine']
   },
   {
     id: 'seo-growth-engine',
@@ -107,7 +113,9 @@ export const caseStudies: CaseStudy[] = [
       'Commercial intent pages convert 6x better than generic advice blog posts.'
     ],
     message: 'Traffic is useful. Qualified intent is better.',
-    ctaText: 'BUILD MY SEO GROWTH ENGINE'
+    ctaText: 'BUILD MY SEO GROWTH ENGINE',
+    relatedServiceSlugs: ['seo', 'web-development', 'product-development'],
+    relatedCaseStudyIds: ['ecommerce-recommendation-engine', 'saas-mvp-launch']
   },
   {
     id: 'ai-sales-automation',
@@ -134,7 +142,9 @@ export const caseStudies: CaseStudy[] = [
       'Always allow sales reps to easily override or pause automated outreach templates.'
     ],
     message: 'Every lead deserves a fast answer.',
-    ctaText: 'BUILD MY SALES AUTOMATION ENGINE'
+    ctaText: 'BUILD MY SALES AUTOMATION ENGINE',
+    relatedServiceSlugs: ['ai-automation', 'ai-agent-development', 'ai-chatbot-development'],
+    relatedCaseStudyIds: ['ai-receptionist', 'business-analytics-platform']
   },
   {
     id: 'business-analytics-platform',
@@ -161,6 +171,8 @@ export const caseStudies: CaseStudy[] = [
       'A dashboard is only as good as its readability; keep layouts clean and action-oriented.'
     ],
     message: "Don't just report what happened. Understand what happens next.",
-    ctaText: 'BUILD MY BUSINESS DASHBOARD'
+    ctaText: 'BUILD MY BUSINESS DASHBOARD',
+    relatedServiceSlugs: ['predictive-analytics', 'machine-learning', 'software-development'],
+    relatedCaseStudyIds: ['ecommerce-recommendation-engine', 'ai-document-assistant']
   }
 ];

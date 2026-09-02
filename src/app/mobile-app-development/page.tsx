@@ -1,12 +1,10 @@
-import React from 'react';
-import SoftwareDevelopment from '../software-development/page';
+import ServiceDetailPage, { generateMetadata as generateServiceMetadata } from '../services/[slug]/page';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "iOS & Android Mobile Application Development | SOCHYEAH",
-  description: "Custom mobile app development, cross-platform React Native codebases, and low-latency API connections to your core business systems."
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return generateServiceMetadata({ params: Promise.resolve({ slug: 'mobile-app-development' }) });
+}
 
-export default function MobileAppDevelopmentPage() {
-  return <SoftwareDevelopment />;
+export default async function MobileAppDevelopmentPage() {
+  return <ServiceDetailPage params={Promise.resolve({ slug: 'mobile-app-development' })} />;
 }

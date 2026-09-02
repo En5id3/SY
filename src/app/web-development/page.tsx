@@ -1,12 +1,10 @@
-import React from 'react';
-import SoftwareDevelopment from '../software-development/page';
+import ServiceDetailPage, { generateMetadata as generateServiceMetadata } from '../services/[slug]/page';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "Custom Web Application Development Services | SOCHYEAH",
-  description: "We design and develop high-speed, responsive React/Next.js web applications backed by stable database structures and secure cloud routing."
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return generateServiceMetadata({ params: Promise.resolve({ slug: 'web-development' }) });
+}
 
-export default function WebDevelopmentPage() {
-  return <SoftwareDevelopment />;
+export default async function WebDevelopmentPage() {
+  return <ServiceDetailPage params={Promise.resolve({ slug: 'web-development' })} />;
 }

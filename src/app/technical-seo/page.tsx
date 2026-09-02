@@ -1,12 +1,10 @@
-import React from 'react';
-import SEOGrowth from '../seo-growth/page';
+import ServiceDetailPage, { generateMetadata as generateServiceMetadata } from '../services/[slug]/page';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "Technical SEO & Speed Optimization Audit Services | SOCHYEAH",
-  description: "We optimize Largest Contentful Paint (LCP), clean rendering blocks, sitemaps index configurations, and search crawl parameters."
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return generateServiceMetadata({ params: Promise.resolve({ slug: 'seo' }) });
+}
 
-export default function TechnicalSEOPage() {
-  return <SEOGrowth />;
+export default async function TechnicalSEOPage() {
+  return <ServiceDetailPage params={Promise.resolve({ slug: 'seo' })} />;
 }

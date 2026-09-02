@@ -1,7 +1,21 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Our Engineering Process & Roadmap | SOCHYEAH",
+  description: "Explore SOCHYEAH's 5-stage development roadmap: from discovery (soch) to rapid engineering and edge deployment (yeah) in 6-week production sprints.",
+  alternates: {
+    canonical: "https://www.sochyeah.com/process",
+  },
+  openGraph: {
+    title: "Our Engineering Process & Roadmap | SOCHYEAH",
+    description: "Explore SOCHYEAH's 5-stage development roadmap: from discovery (soch) to rapid engineering and edge deployment (yeah) in 6-week production sprints.",
+    url: "https://www.sochyeah.com/process",
+    siteName: "SOCHYEAH",
+    type: "website",
+  }
+};
 
 export default function Process() {
   const steps = [
@@ -63,7 +77,7 @@ export default function Process() {
           FROM FIRST CALL TO PRODUCTION.
         </h1>
         <p className="sub-editorial">
-          We maintain a tight, structured execution roadmap transitioning from strategic analysis ("soch") to rapid engineering shipping ("yeah").
+          We maintain a tight, structured execution roadmap transitioning from strategic analysis (&quot;soch&quot;) to rapid engineering shipping (&quot;yeah&quot;).
         </p>
       </div>
 
@@ -93,7 +107,7 @@ export default function Process() {
       <section className="bg-gradient-to-br from-purple-950 via-indigo-950 to-blue-950 text-white rounded-3xl p-10 md:p-16 text-center mt-24 shadow-xl shadow-indigo-950/15 relative overflow-hidden">
         <div className="max-w-[600px] mx-auto flex flex-col gap-6 items-center relative z-10">
           <h2 className="text-2xl md:text-4xl font-extrabold uppercase tracking-tight text-white">
-            Let's Start Building
+            Let&apos;s Start Building
           </h2>
           <p className="text-xs text-indigo-200 leading-relaxed max-w-[450px]">
             Have a clear operational problem or a new SaaS product concept? Get direct alignment with our engineering partners.

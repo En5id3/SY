@@ -66,10 +66,11 @@ Sent from https://sochyeah.com/contact`;
       },
       { status: 500 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error in /api/contact:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to process inquiry.';
     return NextResponse.json(
-      { error: error.message || 'Failed to process inquiry.' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

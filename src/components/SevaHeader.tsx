@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 
 export default function SevaHeader() {
@@ -22,8 +23,8 @@ export default function SevaHeader() {
   const navLinks = [
     { label: 'Services', href: 'https://www.sochyeah.com/services' },
     { label: 'Case Studies', href: 'https://www.sochyeah.com/case-studies' },
+    { label: 'Journal', href: 'https://www.sochyeah.com/blog' },
     { label: 'Process', href: 'https://www.sochyeah.com/process' },
-    { label: 'Industries', href: 'https://www.sochyeah.com/industries' },
     { label: 'About', href: 'https://www.sochyeah.com/about' },
   ];
 
@@ -51,14 +52,17 @@ export default function SevaHeader() {
 
           <div className="h-5 w-px bg-indigo-200/80 hidden sm:block mx-0.5" />
 
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gradient-to-r from-purple-900 to-blue-900 text-white tracking-widest uppercase shadow-xs">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gradient-to-r from-purple-900 to-blue-900 text-white tracking-widest uppercase shadow-xs"
+          >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            SEVA
-          </span>
+            SEVA DIRECTORY
+          </Link>
         </div>
 
         {/* Desktop Links */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -93,12 +97,12 @@ export default function SevaHeader() {
       {/* Mobile Drawer Overlay */}
       {isOpen && (
         <div className="fixed inset-0 top-[70px] bg-white/95 backdrop-blur-lg z-40 md:hidden flex flex-col px-6 py-8 border-t border-indigo-100/70">
-          <nav className="flex flex-col gap-5 text-lg font-medium mb-10">
+          <nav className="flex flex-col gap-4 text-lg font-medium mb-8">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="transition-colors py-2.5 border-b border-indigo-50/80 text-slate-600 hover:text-indigo-900"
+                className="transition-colors py-2 border-b border-indigo-50/80 text-slate-600 hover:text-indigo-900"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}

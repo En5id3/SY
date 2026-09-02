@@ -1,0 +1,419 @@
+import React from 'react';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { schemesData, getSchemeById } from '@/data/schemes';
+import SevaHeader from '@/components/SevaHeader';
+import { 
+  ArrowRight,
+  CheckCircle2, 
+  XCircle, 
+  ExternalLink, 
+  Calendar, 
+  HelpCircle, 
+  ChevronRight, 
+  FileText, 
+  Building2,
+  AlertCircle
+} from 'lucide-react';
+import type { Metadata } from 'next';
+
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export async function generateStaticParams() {
+  return schemesData.map((sc) => ({
+    id: sc.slug,
+  }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const sc = getSchemeById(id);
+
+  if (!sc) {
+    return {
+      title: 'Government Scheme Not Found | SEVA Directory',
+    };
+  }
+
+  const canonicalUrl = `https://seva.sochyeah.com/schemes/${sc.slug}`;
+
+  return {
+    title: `${sc.name}: Eligibility, Benefits, Documents & How to Apply | SEVA Directory`,
+    description: `${sc.name} complete guide: subsidy percentages, eligibility checklist, documents required, and official government portal application links.`,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${sc.name}: Eligibility, Benefits & How to Apply`,
+      description: sc.overview,
+      url: canonicalUrl,
+      siteName: 'SEVA Directory',
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${sc.name}: Eligibility & How to Apply`,
+      description: sc.overview,
+    }
+  };
+}
+
+export default async function SchemeDetailPage({ params }: PageProps) {
+  const { id } = await params;
+  const sc = getSchemeById(id);
+
+  if (!sc) {
+    notFound();
+  }
+
+  const relatedSchemes = schemesData.filter(s => sc.relatedSchemeIds.includes(s.id) && s.id !== sc.id);
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'GovernmentService',
+        '@id': `https://seva.sochyeah.com/schemes/${sc.slug}#service`,
+        'name': sc.name,
+        'alternateName': sc.shortName,
+        'description': sc.overview,
+        'serviceType': sc.category,
+        'serviceOperator': {
+          '@type': 'GovernmentOrganization',
+          'name': sc.ministry
+        },
+        'areaServed': 'India',
+        'provider': {
+          '@type': 'GovernmentOrganization',
+          'name': sc.agency
+        }
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `https://seva.sochyeah.com/schemes/${sc.slug}#breadcrumb`,
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': 'https://seva.sochyeah.com'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Schemes Directory',
+            'item': 'https://seva.sochyeah.com/#schemes-directory'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': sc.shortName,
+            'item': `https://seva.sochyeah.com/schemes/${sc.slug}`
+          }
+        ]
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `https://seva.sochyeah.com/schemes/${sc.slug}#faq`,
+        'mainEntity': sc.faqs.map(faq => ({
+          '@type': 'Question',
+          'name': faq.question,
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': faq.answer
+          }
+        }))
+      }
+    ]
+  };
+
+  return (
+    <div className="bg-[#fafafc] min-h-screen text-slate-900 antialiased">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <SevaHeader />
+
+      <main className="max-w-[1080px] mx-auto px-6 pt-28 md:pt-32 pb-16 md:pb-24">
+        {/* 1. Breadcrumbs */}
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-2 text-xs text-slate-500 font-mono">
+            <li>
+              <Link href="/seva" className="hover:text-indigo-900 transition-colors">SEVA Directory</Link>
+            </li>
+            <ChevronRight size={12} className="text-slate-400" />
+            <li className="text-slate-900 font-semibold truncate" aria-current="page">
+              {sc.shortName}
+            </li>
+          </ol>
+        </nav>
+
+        {/* 2. Scheme Hero Header */}
+        <div className="flex flex-col gap-4 mb-10 border-b border-indigo-100/80 pb-8">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-indigo-900 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60">
+              {sc.category} {'//'} SCHEME GUIDE
+            </span>
+            <span className="text-[10px] font-mono text-slate-500 flex items-center gap-1.5">
+              <Calendar size={12} /> Last Verified: <strong className="text-slate-800 font-semibold">{sc.lastVerifiedDate}</strong>
+            </span>
+          </div>
+
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+            {sc.name}: Eligibility, Benefits, Documents &amp; How to Apply
+          </h1>
+
+          <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 font-medium pt-1">
+            <span className="flex items-center gap-1.5 bg-slate-100/80 px-3 py-1 rounded-md">
+              <Building2 size={13} className="text-slate-600" />
+              <span>Ministry: {sc.ministry}</span>
+            </span>
+            <span className="bg-slate-100/80 px-3 py-1 rounded-md">
+              Agency: {sc.agency}
+            </span>
+          </div>
+        </div>
+
+        {/* 3. Mandatory Independent Disclaimer */}
+        <div className="mb-12 border border-amber-200/80 bg-amber-50/40 rounded-2xl p-5 md:p-6 flex items-start gap-4 text-xs text-amber-950">
+          <AlertCircle size={20} className="text-amber-700 flex-shrink-0 mt-0.5" />
+          <div className="flex flex-col gap-1">
+            <span className="font-bold uppercase tracking-wider text-[10px] text-amber-800 font-mono">
+              Independent Directory Notice
+            </span>
+            <p className="leading-relaxed">
+              {sc.disclaimer}
+            </p>
+          </div>
+        </div>
+
+        {/* 4. Overview Section */}
+        <section className="mb-14">
+          <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
+            <span className="text-indigo-800 font-mono text-xs">01 {'//'}</span> What is this scheme?
+          </h2>
+          <div className="bg-white border border-indigo-100/80 rounded-2xl p-6 md:p-8 shadow-xs">
+            <p className="text-xs md:text-sm text-slate-700 leading-relaxed font-normal">
+              {sc.overview}
+            </p>
+          </div>
+        </section>
+
+        {/* 5. Financial Assistance & Subsidy Table */}
+        <section className="mb-14">
+          <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
+            <span className="text-indigo-800 font-mono text-xs">02 {'//'}</span> Financial Benefits &amp; Subsidy Structure
+          </h2>
+          <div className="bg-white border border-indigo-100/80 rounded-2xl p-6 md:p-8 shadow-xs">
+            <div className="bg-gradient-to-r from-purple-50/40 via-indigo-50/40 to-blue-50/40 border border-indigo-100/60 rounded-xl p-4 mb-6">
+              <span className="text-[10px] font-mono font-bold text-indigo-800 uppercase block mb-1">Benefit Summary</span>
+              <p className="text-sm font-bold text-indigo-950 leading-relaxed">{sc.benefit}</p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-indigo-100 text-[10px] font-mono uppercase text-slate-400">
+                    <th className="pb-3 pr-4 font-bold">Beneficiary / Project Tier</th>
+                    <th className="pb-3 pr-4 font-bold">Government Subsidy / Cover</th>
+                    <th className="pb-3 font-bold">Key Terms &amp; Conditions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-indigo-50">
+                  {sc.subsidyTable.map((row, idx) => (
+                    <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="py-3.5 pr-4 font-bold text-slate-900 align-top">{row.tier}</td>
+                      <td className="py-3.5 pr-4 text-indigo-900 font-semibold align-top">{row.subsidy}</td>
+                      <td className="py-3.5 text-slate-600 leading-relaxed align-top">{row.details}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* 6. Eligibility & Ineligibility (Side-by-Side) */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+          {/* Eligibility */}
+          <div className="bg-white border border-emerald-100/90 rounded-2xl p-6 md:p-8 shadow-xs">
+            <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-emerald-600" />
+              <span>Who is Eligible?</span>
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {sc.eligibility.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed font-medium">
+                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Ineligibility */}
+          <div className="bg-white border border-rose-100/90 rounded-2xl p-6 md:p-8 shadow-xs">
+            <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <XCircle size={16} className="text-rose-600" />
+              <span>Who is NOT Eligible?</span>
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {sc.ineligibility.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed">
+                  <span className="text-rose-500 font-bold mt-0.5">✕</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* 7. Required Documents Checklist */}
+        <section className="mb-14">
+          <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
+            <span className="text-indigo-800 font-mono text-xs">03 {'//'}</span> Required Documents Checklist
+          </h2>
+          <div className="bg-white border border-indigo-100/80 rounded-2xl p-6 md:p-8 shadow-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {sc.docs.map((doc, idx) => (
+                <div key={idx} className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50/60 border border-slate-200/60 text-xs text-slate-700 font-medium">
+                  <FileText size={14} className="text-indigo-600 flex-shrink-0" />
+                  <span>{doc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 8. Step-by-Step Application Process */}
+        <section className="mb-14">
+          <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
+            <span className="text-indigo-800 font-mono text-xs">04 {'//'}</span> How to Apply (Step-by-Step)
+          </h2>
+          <div className="flex flex-col gap-4">
+            {sc.applicationSteps.map((step) => (
+              <div key={step.step} className="border border-indigo-100/80 bg-white rounded-2xl p-6 shadow-xs flex items-start gap-4">
+                <span className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-900 to-indigo-900 text-white font-mono text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5 shadow-xs">
+                  {step.step}
+                </span>
+                <div className="flex flex-col gap-1">
+                  <h3 className="text-sm font-bold text-slate-900">{step.title}</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">{step.instruction}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 9. Where to Apply (Official Government Portals) */}
+        <section className="mb-14">
+          <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
+            <span className="text-indigo-800 font-mono text-xs">05 {'//'}</span> Official Government Sources &amp; Application Portals
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {sc.officialPortals.map((portal, idx) => (
+              <a
+                key={idx}
+                href={portal.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-indigo-100/80 bg-white rounded-2xl p-6 shadow-xs hover:border-indigo-300 transition-all card-hover-effect flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-indigo-900 transition-colors">
+                      {portal.name}
+                    </h3>
+                    <ExternalLink size={14} className="text-slate-400 group-hover:text-indigo-900" />
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                    {portal.description}
+                  </p>
+                </div>
+                <span className="text-[10px] font-mono text-indigo-700 font-bold uppercase truncate">
+                  {portal.url}
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* 10. Frequently Asked Questions */}
+        <section className="mb-14">
+          <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
+            <span className="text-indigo-800 font-mono text-xs">06 {'//'}</span> Frequently Asked Questions
+          </h2>
+          <div className="flex flex-col gap-4">
+            {sc.faqs.map((faq, idx) => (
+              <div key={idx} className="border border-indigo-100/80 bg-white rounded-2xl p-6 shadow-xs">
+                <h3 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
+                  <HelpCircle size={15} className="text-indigo-600 flex-shrink-0" />
+                  <span>{faq.question}</span>
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed pl-5">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 11. Related Schemes */}
+        {relatedSchemes.length > 0 && (
+          <section className="mb-14">
+            <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-2">
+              <span className="text-indigo-800 font-mono text-xs">07 {'//'}</span> Related Government Schemes
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {relatedSchemes.map((rel) => (
+                <Link
+                  key={rel.id}
+                  href={`/schemes/${rel.slug}`}
+                  className="border border-indigo-100/80 bg-white rounded-2xl p-6 shadow-xs hover:border-indigo-300 transition-all card-hover-effect flex flex-col justify-between group"
+                >
+                  <div>
+                    <span className="text-[9px] font-mono uppercase text-slate-400 font-bold block mb-1">{rel.ministry}</span>
+                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-indigo-900 transition-colors mb-2">
+                      {rel.name}
+                    </h3>
+                    <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 mb-4">
+                      {rel.overview}
+                    </p>
+                  </div>
+                  <div className="inline-flex items-center text-xs font-bold text-indigo-900 group-hover:text-indigo-700">
+                    <span>View Scheme Guide</span>
+                    <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* 12. Support Assistance */}
+        <section className="bg-gradient-to-br from-purple-950 via-indigo-950 to-blue-950 text-white rounded-3xl p-8 md:p-12 text-center shadow-xl shadow-indigo-950/15 relative overflow-hidden">
+          <div className="max-w-[500px] mx-auto flex flex-col gap-4 items-center relative z-10">
+            <h3 className="text-xl md:text-2xl font-extrabold uppercase tracking-tight text-white">Need Advisory on Technology Subsidies?</h3>
+            <p className="text-xs text-indigo-200 leading-relaxed">
+              We help industrial units and businesses compile Detailed Project Reports, audit automation feasibility, and structure technical infrastructure.
+            </p>
+            <a 
+              href="https://www.sochyeah.com/contact" 
+              className="text-xs font-bold uppercase tracking-wider bg-white text-indigo-950 hover:bg-indigo-50 transition-all px-8 py-3.5 rounded-full shadow-md hover:scale-[1.02] mt-2 inline-block"
+            >
+              Contact Systems Advisors
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-indigo-100/70 bg-white py-8 px-6 text-center text-xs text-slate-400">
+        <p>© 2026 SEVA Public Information Portal. Independent public directory of Government of India schemes.</p>
+      </footer>
+    </div>
+  );
+}

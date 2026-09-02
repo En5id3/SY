@@ -1,12 +1,10 @@
-import React from 'react';
-import SoftwareDevelopment from '../software-development/page';
+import ServiceDetailPage, { generateMetadata as generateServiceMetadata } from '../services/[slug]/page';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "SaaS Product Engineering & Custom App Development | SOCHYEAH",
-  description: "We build modular, secure SaaS architectures with Stripe tiers integration, customer dashboard interfaces, and scaling database setups."
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return generateServiceMetadata({ params: Promise.resolve({ slug: 'saas-development' }) });
+}
 
-export default function SaaSDevelopmentPage() {
-  return <SoftwareDevelopment />;
+export default async function SaaSDevelopmentPage() {
+  return <ServiceDetailPage params={Promise.resolve({ slug: 'saas-development' })} />;
 }

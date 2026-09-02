@@ -25,6 +25,7 @@ export default function Header() {
   const navLinks = [
     { label: 'Services', href: '/services' },
     { label: 'Case Studies', href: '/case-studies' },
+    { label: 'Journal', href: '/blog' },
     { label: 'Process', href: '/process' },
     { label: 'Industries', href: '/industries' },
     { label: 'About', href: '/about' }
@@ -55,7 +56,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Links */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -94,12 +95,12 @@ export default function Header() {
       {/* Mobile Drawer Overlay */}
       {isOpen && (
         <div className="fixed inset-0 top-[70px] bg-white/95 backdrop-blur-lg z-40 md:hidden flex flex-col px-6 py-8 border-t border-indigo-100/70">
-          <nav className="flex flex-col gap-5 text-lg font-medium mb-10">
+          <nav className="flex flex-col gap-4 text-lg font-medium mb-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`transition-colors py-2.5 border-b border-indigo-50/80 flex items-center justify-between ${
+                className={`transition-colors py-2 border-b border-indigo-50/80 flex items-center justify-between ${
                   isActive(link.href) 
                     ? 'text-indigo-900 font-bold' 
                     : 'text-slate-600 hover:text-indigo-700'

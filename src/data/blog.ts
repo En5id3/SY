@@ -61,7 +61,8 @@ async def handle_twilio_stream(websocket, path):
         q: 'What is the error rate for voice transcription?',
         a: 'Using customized vocabulary lists matching product names and local slang, our streaming STT models achieve a word error rate (WER) of less than 4.5%.'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['ai-agent-development', 'ai-automation', 'ai-chatbot-development']
   },
   {
     id: 'rag-vs-fine-tuning-business-use',
@@ -109,7 +110,8 @@ LIMIT 3;`,
         q: 'What is the optimal chunk size for RAG?',
         a: 'We recommend starting with 512-character chunks with a 10% overlap, which preserves sufficient context without exceeding model context window budgets.'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['rag-development', 'ai-development', 'generative-ai']
   },
   {
     id: 'how-to-build-an-ai-receptionist',
@@ -120,9 +122,9 @@ LIMIT 3;`,
     date: '2026-07-28',
     readTime: '11 min read',
     problem: 'Service businesses lose up to 30% of potential leads because they miss calls after-hours, on weekends, or when receptionists are occupied with in-person clients. Hiring a 24/7 call center is expensive and leads to poor customer service because external agents lack context about business availability and pricing. An automated receptionist must understand natural speech, check calendar availability, and confirm bookings in under a second.',
-    context: 'To automate scheduling, the voice agent must access real-time calendar availability. It cannot guess dates. It must also handle complex conversational turns (e.g. "I want Tuesday morning... actually wait, make that Thursday afternoon"). This requires a state machine that tracks the user\'s current booking parameters (date, time, service) and updates them dynamically as the call progresses.',
+    context: 'To automate scheduling, the voice agent must access real-time calendar availability. It cannot guess dates. It must also handle complex conversational turns (e.g. "I want Tuesday morning... actually wait, make that Thursday afternoon"). This requires a state machine that tracks the user booking parameters (date, time, service) and updates them dynamically as the call progresses.',
     solution: 'We engineer an API-driven voice receptionist. The system routes inbound calls through Twilio, processes audio via a low-latency WebSockets pipeline, and uses an LLM agent equipped with specific calendar tools. The agent checks available slots, proposes them to the caller, collects customer details (name, phone, email), and books the appointment inside the business CRM (like HubSpot or Cal.com) automatically.',
-    implementation: 'We configure a Node.js or FastAPI backend. Twilio sends a webhook on call arrival. We initialize a conversational session with a state schema containing `client_name`, `email`, `selected_time`, and `service_type`. We run the conversational agent in a loop. When the user selects a time, the agent calls the `book_appointment` function, locks the database slot, and triggers a confirmation SMS using Twilio Programmable SMS.',
+    implementation: 'We configure a Node.js or FastAPI backend. Twilio sends a webhook on call arrival. We initialize a conversational session with a state schema containing client_name, email, selected_time, and service_type. We run the conversational agent in a loop. When the user selects a time, the agent calls the book_appointment function, locks the database slot, and triggers a confirmation SMS using Twilio Programmable SMS.',
     architecture: [
       'Customer Call → Twilio Webhook',
       'Audio Processing → Streaming Speech-to-Text Converter',
@@ -166,7 +168,8 @@ function processBookingInput(state: BookingState): boolean {
         q: 'How does it handle accent differences?',
         a: 'Our speech transcriber uses acoustic models trained on international accents, achieving high transcription accuracy even in noisy environments.'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['ai-agent-development', 'ai-automation', 'ai-development']
   },
   {
     id: 'machine-learning-small-businesses',
@@ -217,7 +220,8 @@ joblib.dump(model, 'demand_model.pkl')`,
         q: 'What features are most critical for demand forecasting?',
         a: 'Historical sales, seasonal multipliers, regional weather trends, and marketing budget variables yield the highest predictive significance.'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['machine-learning', 'predictive-analytics', 'software-development']
   },
   {
     id: 'technical-seo-saas-companies',
@@ -262,7 +266,8 @@ joblib.dump(model, 'demand_model.pkl')`,
         q: 'Should I block JavaScript rendering in robots.txt?',
         a: 'No. Search bots must be allowed to read JS assets to confirm mobile responsiveness, but primary text must be available on raw HTML.'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['seo', 'saas-development', 'web-development']
   },
   {
     id: 'how-to-build-a-saas-mvp',
@@ -301,7 +306,7 @@ export async function createBillingPortal(customerId: string) {
   // Generate instant Stripe customer portal link
   const session = await stripe.billingPortal.sessions.create({
     customer: customerId,
-    return_url: 'https://sochyeah.com/dashboard',
+    return_url: 'https://www.sochyeah.com/dashboard',
   });
   return session.url;
 }`,
@@ -314,7 +319,8 @@ export async function createBillingPortal(customerId: string) {
         q: 'How do I prevent early scaling issues?',
         a: 'By serving static pages on CDNs and using serverless database connection poolers (like PgBouncer), your MVP can handle 10,000+ concurrent requests out of the box.'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['saas-development', 'mvp-development', 'product-development']
   },
   {
     id: 'ai-automation-what-to-automate',
@@ -362,7 +368,8 @@ class InvoiceSchema(BaseModel):
         q: 'How does it handle unstructured documents?',
         a: 'By using large language models rather than regex rules, our parsers can extract details from invoices even if layout formats change.'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['ai-automation', 'ai-agent-development', 'software-development']
   },
   {
     id: 'how-ai-search-is-changing-seo',
@@ -411,7 +418,8 @@ class InvoiceSchema(BaseModel):
         q: 'How do I check if AI engines are crawling my site?',
         a: 'Monitor your server access logs for specific AI crawler user-agents, such as GPTBot, ClaudeBot, or PerplexityBot.'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['seo', 'web-development', 'ai-development']
   },
   {
     id: 'building-production-ready-rag',
@@ -461,7 +469,8 @@ class InvoiceSchema(BaseModel):
         q: 'How do I handle document updates in RAG?',
         a: 'We use a hashing function on files. When a document is modified, we recalculate its hash, clear the old chunks from the database, and inject the new vectors.'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['rag-development', 'generative-ai', 'ai-development']
   },
   {
     id: 'how-recommendation-engines-work',
@@ -511,7 +520,8 @@ def cosine_similarity(u, v):
         q: 'What is the difference between collaborative and content filtering?',
         a: 'Collaborative filtering matches users with similar purchase histories, while content filtering recommends items that share attributes (like tags or text similarity).'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['machine-learning', 'predictive-analytics', 'software-development']
   },
   {
     id: 'spreadsheet-to-ai-dashboard',
@@ -559,7 +569,8 @@ ON CONFLICT (date) DO UPDATE SET total_revenue = EXCLUDED.total_revenue;`,
         q: 'How do you secure access to the dashboard?',
         a: 'We implement role-based access control (RBAC) via JSON Web Tokens (JWT), ensuring users can only view data matching their permission tier.'
       }
-    ]
+    ],
+    relatedServiceSlugs: ['predictive-analytics', 'machine-learning', 'software-development']
   }
 ];
 

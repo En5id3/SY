@@ -7,9 +7,9 @@ export default function Footer() {
   return (
     <footer className="bg-white border-t border-indigo-100/70 pt-20 pb-12">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
           {/* Logo & Manifesto Column */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-5 md:col-span-1">
             <Link href="/" className="flex flex-col leading-[0.8] select-none outline-none self-start group">
               <span className="font-sans font-light text-2xl tracking-tighter text-slate-900 lowercase group-hover:text-purple-700 transition-colors">
                 soch
@@ -26,45 +26,63 @@ export default function Footer() {
               </p>
             </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed max-w-[340px]">
-              We turn strategic ideas ("soch") and engineering velocity ("yeah") into intelligent, production-ready software systems.
+            <p className="text-xs text-slate-600 leading-relaxed max-w-[280px]">
+              We turn strategic ideas (&quot;soch&quot;) and engineering velocity (&quot;yeah&quot;) into intelligent, production-ready AI and software systems.
             </p>
           </div>
 
-          {/* Capabilities Column (Blue Accent for Engineering) */}
+          {/* AI & Cognitive Column */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-6 flex items-center gap-2">
-              <span className="text-blue-600 font-mono text-[10px]">01 //</span> Services
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-5 flex items-center gap-2">
+              <span className="text-purple-600 font-mono text-[10px]">01 //</span> AI &amp; Automation
             </h4>
-            <ul className="flex flex-col gap-3 text-xs text-slate-600">
-              <li><Link href="/ai-automation" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">AI & Automation</Link></li>
-              <li><Link href="/software-development" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Software Engineering</Link></li>
-              <li><Link href="/machine-learning" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">Machine Learning</Link></li>
-              <li><Link href="/seo-growth" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">SEO & Growth Systems</Link></li>
-              <li><Link href="/product-development" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Product Development</Link></li>
+            <ul className="flex flex-col gap-2.5 text-xs text-slate-600">
+              <li><Link href="/services/ai-development" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">AI Development</Link></li>
+              <li><Link href="/services/ai-agent-development" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">Autonomous AI Agents</Link></li>
+              <li><Link href="/services/generative-ai" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">Generative AI Systems</Link></li>
+              <li><Link href="/services/rag-development" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">RAG Knowledge Bases</Link></li>
+              <li><Link href="/services/ai-chatbot-development" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">AI Chatbots &amp; Voice</Link></li>
+              <li><Link href="/services/ai-automation" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">Workflow Automation</Link></li>
             </ul>
           </div>
 
-          {/* Company Column (Purple Accent for Philosophy & Creed) */}
+          {/* Engineering & Data Column */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-6 flex items-center gap-2">
-              <span className="text-purple-600 font-mono text-[10px]">02 //</span> Company
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-5 flex items-center gap-2">
+              <span className="text-blue-600 font-mono text-[10px]">02 //</span> Engineering &amp; ML
             </h4>
-            <ul className="flex flex-col gap-3 text-xs text-slate-600">
-              <li><Link href="/about" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">About Us</Link></li>
-              <li><Link href="/process" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Our Process</Link></li>
-              <li><Link href="/case-studies" className="hover:text-indigo-700 hover:translate-x-0.5 transition-all inline-block">Case Studies</Link></li>
+            <ul className="flex flex-col gap-2.5 text-xs text-slate-600">
+              <li><Link href="/services/software-development" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Custom Software</Link></li>
+              <li><Link href="/services/saas-development" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">SaaS Engineering</Link></li>
+              <li><Link href="/services/web-development" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Modern Web Platforms</Link></li>
+              <li><Link href="/services/machine-learning" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Applied Machine Learning</Link></li>
+              <li><Link href="/services/predictive-analytics" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Predictive Analytics</Link></li>
+              <li><Link href="/services/seo" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Technical SEO &amp; Growth</Link></li>
+            </ul>
+          </div>
+
+          {/* Company & Legal Column */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-5 flex items-center gap-2">
+              <span className="text-indigo-600 font-mono text-[10px]">03 //</span> Navigation
+            </h4>
+            <ul className="flex flex-col gap-2.5 text-xs text-slate-600">
+              <li><Link href="/services" className="hover:text-indigo-700 hover:translate-x-0.5 transition-all inline-block font-semibold text-slate-900">All Services Directory</Link></li>
+              <li><Link href="/case-studies" className="hover:text-indigo-700 hover:translate-x-0.5 transition-all inline-block">Client Case Studies</Link></li>
               <li><Link href="/blog" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">Technical Journal</Link></li>
-              <li><Link href="/contact" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Contact & Inquiries</Link></li>
+              <li><Link href="/process" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Development Process</Link></li>
+              <li><Link href="/industries" className="hover:text-indigo-700 hover:translate-x-0.5 transition-all inline-block">Industry Verticals</Link></li>
+              <li><Link href="/about" className="hover:text-purple-700 hover:translate-x-0.5 transition-all inline-block">About SOCHYEAH</Link></li>
+              <li><Link href="/contact" className="hover:text-blue-600 hover:translate-x-0.5 transition-all inline-block">Contact &amp; Inquiries</Link></li>
             </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-          <p>© 2026 SOCHYEAH. Built for ambitious enterprises and growing teams.</p>
+          <p>© 2026 SOCHYEAH. All rights reserved. Built for ambitious enterprises and growing teams.</p>
           <div className="flex gap-6">
-            <span className="text-[11px] text-slate-400">HQ: Hamirpur, HP & NCR, India</span>
+            <span className="text-[11px] text-slate-400">HQ: Hamirpur, HP &amp; NCR, India</span>
           </div>
         </div>
       </div>

@@ -1,12 +1,10 @@
-import React from 'react';
-import AIAutomation from '../ai-automation/page';
+import ServiceDetailPage, { generateMetadata as generateServiceMetadata } from '../services/[slug]/page';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "Voice AI Receptionists & Call Center Schedulers | SOCHYEAH",
-  description: "We deploy streaming voice AI agents capable of answering phone calls, scheduling meetings, and logging leads into CRM automatically."
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return generateServiceMetadata({ params: Promise.resolve({ slug: 'ai-automation' }) });
+}
 
-export default function VoiceAIPage() {
-  return <AIAutomation />;
+export default async function VoiceAIPage() {
+  return <ServiceDetailPage params={Promise.resolve({ slug: 'ai-automation' })} />;
 }

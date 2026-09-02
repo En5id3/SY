@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import HeroFlow from '@/components/HeroFlow';
@@ -7,6 +5,22 @@ import Ticker from '@/components/Ticker';
 import AIDemo from '@/components/AIDemo';
 import { caseStudies } from '@/data/case-studies';
 import { ArrowRight, Sparkles, Code, Cpu, Search } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "AI Development, Software & Automation Agency | SOCHYEAH",
+  description: "SOCHYEAH is a premier AI development company and product engineering partner. We build custom AI agents, LLM architectures, scalable web/SaaS software, and growth systems.",
+  alternates: {
+    canonical: "https://www.sochyeah.com",
+  },
+  openGraph: {
+    title: "AI Development, Software & Automation Agency | SOCHYEAH",
+    description: "We turn business problems and ideas into intelligent software systems, machine learning pipelines, and technical growth infrastructure.",
+    url: "https://www.sochyeah.com",
+    siteName: "SOCHYEAH",
+    type: "website",
+  }
+};
 
 export default function Home() {
   const featuredCases = caseStudies.slice(0, 3);
@@ -16,7 +30,7 @@ export default function Home() {
       num: '01',
       title: 'AI & Automation',
       description: 'Smart AI assistants, custom workflows, and automated voice receptionists that save hours every single day.',
-      href: '/ai-automation',
+      href: '/services/ai-automation',
       icon: <Sparkles className="w-4 h-4 text-indigo-600" />,
       tag: 'Smart Workflows'
     },
@@ -24,7 +38,7 @@ export default function Home() {
       num: '02',
       title: 'Web & Mobile Apps',
       description: 'Fast, beautiful, modern web platforms and SaaS products designed to delight your users and grow your business.',
-      href: '/software-development',
+      href: '/services/software-development',
       icon: <Code className="w-4 h-4 text-violet-600" />,
       tag: 'Modern Software'
     },
@@ -32,7 +46,7 @@ export default function Home() {
       num: '03',
       title: 'Data & Predictive Insights',
       description: 'Turn your everyday business data into clear decisions, smart forecasts, and automated recommendations.',
-      href: '/machine-learning',
+      href: '/services/machine-learning',
       icon: <Cpu className="w-4 h-4 text-indigo-600" />,
       tag: 'Intelligent Data'
     },
@@ -40,25 +54,82 @@ export default function Home() {
       num: '04',
       title: 'Search & Visibility',
       description: 'Targeted search optimization and content systems that help qualified customers discover your business organically.',
-      href: '/seo-growth',
+      href: '/services/seo',
       icon: <Search className="w-4 h-4 text-violet-600" />,
       tag: 'Organic Growth'
     }
   ];
 
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': 'https://www.sochyeah.com/#organization',
+        'name': 'SOCHYEAH',
+        'url': 'https://www.sochyeah.com',
+        'logo': 'https://www.sochyeah.com/logo.png',
+        'description': 'AI Development, Software Engineering, and Technical Growth Partner for ambitious businesses.',
+        'slogan': 'THINK IT. BUILD IT. SCALE IT.',
+        'address': {
+          '@type': 'PostalAddress',
+          'addressCountry': 'IN'
+        },
+        'sameAs': [
+          'https://twitter.com/sochyeah',
+          'https://linkedin.com/company/sochyeah'
+        ]
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://www.sochyeah.com/#website',
+        'url': 'https://www.sochyeah.com',
+        'name': 'SOCHYEAH',
+        'publisher': {
+          '@id': 'https://www.sochyeah.com/#organization'
+        }
+      },
+      {
+        '@type': 'ProfessionalService',
+        '@id': 'https://www.sochyeah.com/#service',
+        'name': 'SOCHYEAH - AI Development & Software Agency',
+        'url': 'https://www.sochyeah.com',
+        'provider': {
+          '@id': 'https://www.sochyeah.com/#organization'
+        },
+        'serviceType': [
+          'AI Development',
+          'AI Agent Development',
+          'Custom Software Development',
+          'Machine Learning Systems',
+          'Technical SEO & Growth Architecture'
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="flex flex-col select-none">
+      {/* Structured Schema Markup */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+
       {/* 1. HERO SECTION (COMPACT) */}
       <section className="max-w-[1200px] mx-auto px-6 pt-8 pb-10 md:pt-14 md:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         <div className="lg:col-span-6 flex flex-col gap-4">
           {/* Micro-badge */}
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-wider text-indigo-900 bg-gradient-to-r from-indigo-50 via-purple-50 to-blue-50 px-3.5 py-1 rounded-full border border-indigo-200/70 self-start shadow-2xs">
             <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 animate-pulse" />
-            <span>AI &amp; DIGITAL PRODUCT STUDIO</span>
+            <span>THINK IT. BUILD IT. SCALE IT.</span>
           </div>
 
-          {/* Compact Headline */}
+          {/* Primary H1 with Semantic Weight */}
           <h1 className="hero-title text-slate-900">
+            <span className="text-xl md:text-2xl font-bold uppercase tracking-wider text-indigo-900 block mb-2 font-mono">
+              AI Development, Software &amp; Growth Systems
+            </span>
             WE TURN BOLD IDEAS<br />
             INTO REMARKABLE<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-700">
@@ -68,7 +139,7 @@ export default function Home() {
 
           {/* Smooth Subtitle */}
           <p className="sub-editorial max-w-[460px]">
-            We partner with founders and forward-thinking companies to design, build, and launch exceptional AI and software solutions — smoothly and without complexity.
+            We partner with founders and forward-thinking companies to design, build, and launch exceptional AI, custom software, and autonomous automation solutions — smoothly and without complexity.
           </p>
 
           {/* Dual CTAs */}
@@ -150,7 +221,7 @@ export default function Home() {
             SOLUTIONS CRAFTED FOR YOUR GROWTH.
           </h2>
           <p className="sub-editorial">
-            Everything you need to modernize your business and delight your customers.
+            Everything you need to modernize your business, automate operations, and delight your customers.
           </p>
         </div>
 
@@ -258,7 +329,7 @@ export default function Home() {
                   ))}
                 </div>
                 <Link 
-                  href={`/case-studies`}
+                  href={`/case-studies/${cs.id}`}
                   className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-indigo-900 hover:text-indigo-700 transition-colors"
                 >
                   <span>Read story</span>

@@ -1,12 +1,10 @@
-import React from 'react';
-import AIAutomation from '../ai-automation/page';
+import ServiceDetailPage, { generateMetadata as generateServiceMetadata } from '../services/[slug]/page';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "AI Consulting, Feasibility Audits & Technical Roadmaps | SOCHYEAH",
-  description: "Identify high-leverage workflows inside your business operations and map exact model schemas, vector architectures, and cost projections."
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return generateServiceMetadata({ params: Promise.resolve({ slug: 'ai-development' }) });
+}
 
-export default function AIConsultingPage() {
-  return <AIAutomation />;
+export default async function AIConsultingPage() {
+  return <ServiceDetailPage params={Promise.resolve({ slug: 'ai-development' })} />;
 }
