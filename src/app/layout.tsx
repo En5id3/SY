@@ -30,19 +30,7 @@ export const metadata: Metadata = {
     default: "AI Development, Software & Automation Agency | SOCHYEAH",
     template: "%s | SOCHYEAH"
   },
-  description: "SOCHYEAH is a premier AI development company and product engineering partner. We build custom AI agents, LLM systems, full-stack software, and automated growth engines.",
-  keywords: [
-    "AI development company",
-    "AI development agency",
-    "software development company",
-    "AI automation company",
-    "machine learning development company",
-    "product development partner",
-    "custom software development",
-    "AI agents",
-    "RAG development",
-    "SaaS development"
-  ],
+  description: "SOCHYEAH is a premier AI development company. We build custom AI agents, LLM architectures, full-stack software, and automated growth engines.",
   authors: [{ name: "SOCHYEAH", url: "https://www.sochyeah.com" }],
   creator: "SOCHYEAH",
   publisher: "SOCHYEAH",
@@ -56,7 +44,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "AI Development, Software & Automation Agency | SOCHYEAH",
-    description: "We turn business problems and ideas into intelligent software systems, machine learning pipelines, and technical growth infrastructure.",
+    description: "SOCHYEAH is a premier AI development company. We build custom AI agents, LLM architectures, full-stack software, and automated growth engines.",
     url: "https://www.sochyeah.com",
     siteName: "SOCHYEAH",
     locale: "en_US",
@@ -65,8 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AI Development, Software & Automation Agency | SOCHYEAH",
-    description: "We turn business problems and ideas into intelligent software systems, machine learning pipelines, and technical growth infrastructure.",
-    creator: "@sochyeah",
+    description: "SOCHYEAH is a premier AI development company. We build custom AI agents, LLM architectures, full-stack software, and automated growth engines.",
   },
   robots: {
     index: true,
@@ -79,6 +66,19 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+};
+
+const globalOrganizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://www.sochyeah.com/#organization",
+  "name": "SOCHYEAH",
+  "url": "https://www.sochyeah.com",
+  "logo": "https://www.sochyeah.com/logo.png",
+  "sameAs": [
+    "https://www.instagram.com/sochyeah/",
+    "https://linkedin.com/company/sochyeah"
+  ]
 };
 
 export default async function RootLayout({
@@ -95,6 +95,10 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(globalOrganizationSchema) }}
+        />
         {!isSevaSubdomain && <Header />}
         <main className={`flex-grow ${isSevaSubdomain ? "" : "pt-[80px]"}`}>{children}</main>
         {!isSevaSubdomain && <Footer />}

@@ -38,20 +38,20 @@ export async function generateMetadata(
   
   if (!post) {
     return {
-      title: 'Article Not Found | SOCHYEAH',
+      title: 'Article Not Found',
     };
   }
 
   const canonicalUrl = `https://www.sochyeah.com/blog/${post.id}`;
 
   return {
-    title: `${post.title} | SOCHYEAH Journal`,
+    title: post.title,
     description: post.summary,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: post.title,
+      title: `${post.title} | SOCHYEAH`,
       description: post.summary,
       url: canonicalUrl,
       siteName: 'SOCHYEAH',
@@ -61,7 +61,7 @@ export async function generateMetadata(
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
+      title: `${post.title} | SOCHYEAH`,
       description: post.summary,
     }
   };

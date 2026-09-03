@@ -4,26 +4,35 @@ import HeroFlow from '@/components/HeroFlow';
 import Ticker from '@/components/Ticker';
 import AIDemo from '@/components/AIDemo';
 import { caseStudies } from '@/data/case-studies';
-import { ArrowRight, Sparkles, Code, Cpu, Search } from 'lucide-react';
+import { blogPosts } from '@/data/blog';
+import { ArrowRight, Sparkles, Code, Cpu, Search, BookOpen, Clock } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "AI Development, Software & Automation Agency | SOCHYEAH",
-  description: "SOCHYEAH is a premier AI development company and product engineering partner. We build custom AI agents, LLM architectures, scalable web/SaaS software, and growth systems.",
+  title: {
+    absolute: "AI Development, Software & Automation Agency | SOCHYEAH",
+  },
+  description: "SOCHYEAH is a premier AI development studio. We build production AI agents, custom software, LLM pipelines, and automated growth engines for founders.",
   alternates: {
     canonical: "https://www.sochyeah.com",
   },
   openGraph: {
     title: "AI Development, Software & Automation Agency | SOCHYEAH",
-    description: "We turn business problems and ideas into intelligent software systems, machine learning pipelines, and technical growth infrastructure.",
+    description: "SOCHYEAH is a premier AI development studio. We build production AI agents, custom software, LLM pipelines, and automated growth engines for founders.",
     url: "https://www.sochyeah.com",
     siteName: "SOCHYEAH",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Development, Software & Automation Agency | SOCHYEAH",
+    description: "SOCHYEAH is a premier AI development studio. We build production AI agents, custom software, LLM pipelines, and automated growth engines for founders.",
   }
 };
 
 export default function Home() {
   const featuredCases = caseStudies.slice(0, 3);
+  const featuredArticles = blogPosts.slice(0, 3);
 
   const pillars = [
     {
@@ -76,7 +85,7 @@ export default function Home() {
           'addressCountry': 'IN'
         },
         'sameAs': [
-          'https://twitter.com/sochyeah',
+          'https://www.instagram.com/sochyeah/',
           'https://linkedin.com/company/sochyeah'
         ]
       },
@@ -341,7 +350,66 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. HOW WE WORK TOGETHER (3 SIMPLE STEPS) */}
+      {/* 7. FEATURED JOURNAL BLUEPRINTS (HOMEPAGE DEEP LINKING) */}
+      <section className="max-w-[1200px] mx-auto px-6 py-12 md:py-18 w-full border-t border-indigo-100/70">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-10">
+          <div className="max-w-[600px] flex flex-col gap-2">
+            <span className="text-[11px] font-semibold tracking-wider uppercase text-indigo-700 flex items-center gap-1.5">
+              <BookOpen size={13} /> TECHNICAL JOURNAL
+            </span>
+            <h2 className="section-title text-slate-900">
+              ENGINEERING BLUEPRINTS &amp; INSIGHTS.
+            </h2>
+            <p className="sub-editorial">
+              Deep-dive architectural breakdowns, MLOps lessons, and system design patterns from our engineering team.
+            </p>
+          </div>
+          <Link 
+            href="/blog" 
+            className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 text-white px-6 py-2.5 rounded-full hover:opacity-95 transition-all shadow-sm shadow-indigo-950/15 self-start md:self-auto"
+          >
+            EXPLORE ALL BLUEPRINTS
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {featuredArticles.map((art) => (
+            <article 
+              key={art.id}
+              className="border border-indigo-100/90 bg-white rounded-2xl p-6 flex flex-col justify-between min-h-[260px] shadow-sm shadow-indigo-900/5 card-hover-effect group"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-800 border border-purple-200/50">
+                    {art.category}
+                  </span>
+                  <span className="text-[10px] font-mono text-slate-400 flex items-center gap-1">
+                    <Clock size={11} className="text-indigo-600" /> {art.readTime}
+                  </span>
+                </div>
+                <h3 className="text-base font-bold text-slate-900 mt-2 mb-2 group-hover:text-indigo-950 transition-colors line-clamp-2">
+                  {art.title}
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                  {art.summary}
+                </p>
+              </div>
+
+              <div className="border-t border-indigo-50 pt-4 mt-auto">
+                <Link 
+                  href={`/blog/${art.id}`}
+                  className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-indigo-900 hover:text-indigo-700 transition-colors"
+                >
+                  <span>Read blueprint</span>
+                  <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* 8. HOW WE WORK TOGETHER (3 SIMPLE STEPS) */}
       <section className="bg-gradient-to-b from-blue-50/20 via-purple-50/20 to-indigo-50/20 border-y border-indigo-100/70 py-12 md:py-18">
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="max-w-[600px] mb-10 flex flex-col gap-2">
@@ -396,7 +464,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. WARM FINAL INVITATION (COMPACT) */}
+      {/* 9. WARM FINAL INVITATION (COMPACT) */}
       <section className="max-w-[1200px] mx-auto px-6 py-14 md:py-20">
         <div className="bg-gradient-to-br from-indigo-950 via-slate-950 to-violet-950 text-white rounded-3xl p-8 md:p-14 text-center shadow-xl shadow-indigo-950/20 relative overflow-hidden border border-indigo-500/20">
           

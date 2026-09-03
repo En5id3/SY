@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   title: {
     absolute: "Government Schemes Directory India | SEVA",
   },
-  description: "Find government schemes, subsidies and welfare programs in India for businesses, farmers, health, energy and communities. Explore schemes and verify details through official sources.",
+  description: "Find Indian government schemes, MSME subsidies and welfare programs for business, solar energy, and healthcare. Verify details via official sources.",
   alternates: {
     canonical: "https://seva.sochyeah.com/",
   },
   openGraph: {
     title: "Government Schemes Directory India | SEVA",
-    description: "Find government schemes, subsidies and welfare programs in India for businesses, farmers, health, energy and communities. Explore schemes and verify details through official sources.",
+    description: "Find Indian government schemes, MSME subsidies and welfare programs for business, solar energy, and healthcare. Verify details via official sources.",
     url: "https://seva.sochyeah.com/",
     siteName: "SEVA Directory",
     type: "website",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Government Schemes Directory India | SEVA",
-    description: "Find government schemes, subsidies and welfare programs in India for businesses, farmers, health, energy and communities. Explore schemes and verify details through official sources.",
+    description: "Find Indian government schemes, MSME subsidies and welfare programs for business, solar energy, and healthcare. Verify details via official sources.",
   }
 };
 

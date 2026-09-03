@@ -6,7 +6,7 @@ export const schemeCategories: Record<'business' | 'health' | 'energy' | 'agricu
     name: 'MSME & Business Support',
     title: 'Government Schemes for Businesses in India | SEVA',
     metaTitle: 'Government Schemes for Businesses in India | SEVA Directory',
-    metaDescription: 'Discover verified central government credit-linked capital subsidies, collateral-free credit guarantees, and early-stage startup grants including PMEGP, CGTMSE, SISFS, and ZED.',
+    metaDescription: 'Discover verified Indian government capital subsidies, collateral-free credit guarantees, and startup grants including PMEGP, CGTMSE, SISFS, and ZED.',
     h1: 'Government Schemes for Businesses',
     shortDescription: 'Credit-linked capital subsidies, collateral-free credit guarantees up to ₹5 Crore, and startup seed grants for micro, small, and medium enterprises across India.',
     detailedOverview: 'The Government of India, primarily through the Ministry of Micro, Small and Medium Enterprises (MoMSME) and the Department for Promotion of Industry and Internal Trade (DPIIT), operates multiple flagship schemes to empower entrepreneurs, foster domestic manufacturing, and provide debt-free credit backing.',

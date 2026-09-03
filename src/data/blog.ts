@@ -1,11 +1,17 @@
 import { BlogPost } from './types';
 
+/**
+ * EDITORIAL & SEO NOTE FOR CONTENT TEAM (SEO Audit Issue 4):
+ * Currently, 4 images (ai_systems_flow.jpg, predictive_data_science.jpg, saas_mvp_architecture.jpg, technical_seo_graph.jpg)
+ * are reused across all 11 articles. In upcoming content cycles, each post should receive a unique, topic-specific
+ * featured illustration/graphic to maximize user trust and Google Images organic search indexation.
+ */
 export const blogPosts: BlogPost[] = [
   {
     id: 'ai-voice-agents-customer-support',
     title: 'How AI Voice Agents Are Changing Customer Support',
     category: 'AI',
-    summary: 'A deep-dive technical study on streaming voice AI pipelines. We analyze real-time WebSockets integration, Speech-to-Text transcription delays, conversational logic models, and Text-to-Speech playback latency optimization to deliver seamless user calls.',
+    summary: 'A technical study on streaming voice AI pipelines: real-time WebSockets, STT latency, LLM turn-taking, and sub-400ms ElevenLabs audio synthesis.',
     content: 'Voice AI agents are transitioning from rigid robot recordings to fluid, human-like conversations. Historically, the lag in speech processing prevented natural turn-taking. This article breaks down the engineering architecture required to achieve sub-400ms end-to-end latency using modern streaming pipelines and Twilio integrations.',
     date: '2026-08-15',
     readTime: '12 min read',
@@ -90,7 +96,7 @@ async def handle_twilio_stream(websocket, path):
     id: 'rag-vs-fine-tuning-business-use',
     title: 'RAG vs Fine-Tuning: Which Should Your Business Use?',
     category: 'AI',
-    summary: 'An architectural evaluation comparing Retrieval-Augmented Generation (RAG) and model fine-tuning. We analyze performance across data freshness, hallucination control, and compute costs.',
+    summary: 'An architectural guide comparing RAG and fine-tuning: evaluate database lookups vs weight updates across data freshness, hallucination, and compute cost.',
     content: 'Determining the correct path to feed corporate data into LLMs is a critical architectural decision. Many teams default to fine-tuning, thinking it is the only way to teach a model their domain data. However, fine-tuning is static and prone to hallucinations. This article provides a structured framework to compare RAG and fine-tuning, explaining when to choose each approach.',
     date: '2026-08-02',
     readTime: '10 min read',

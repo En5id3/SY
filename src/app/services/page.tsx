@@ -5,17 +5,22 @@ import { ArrowRight, Sparkles, Code, Cpu, Search, ShieldCheck } from 'lucide-rea
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Commercial Services & Technical Capabilities | SOCHYEAH",
-  description: "Explore SOCHYEAH's end-to-end engineering capabilities: custom AI development, autonomous agents, RAG knowledge bases, SaaS engineering, machine learning, and technical SEO.",
+  title: "Commercial Services & Technical Capabilities",
+  description: "Explore SOCHYEAH's engineering capabilities: custom AI development, autonomous agents, RAG systems, SaaS engineering, ML pipelines, and technical SEO.",
   alternates: {
     canonical: "https://www.sochyeah.com/services",
   },
   openGraph: {
     title: "Commercial Services & Technical Capabilities | SOCHYEAH",
-    description: "Explore SOCHYEAH's end-to-end engineering capabilities: custom AI development, autonomous agents, RAG knowledge bases, SaaS engineering, machine learning, and technical SEO.",
+    description: "Explore SOCHYEAH's engineering capabilities: custom AI development, autonomous agents, RAG systems, SaaS engineering, ML pipelines, and technical SEO.",
     url: "https://www.sochyeah.com/services",
     siteName: "SOCHYEAH",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Commercial Services & Technical Capabilities | SOCHYEAH",
+    description: "Explore SOCHYEAH's engineering capabilities: custom AI development, autonomous agents, RAG systems, SaaS engineering, ML pipelines, and technical SEO.",
   }
 };
 

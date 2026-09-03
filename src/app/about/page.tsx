@@ -4,17 +4,22 @@ import { ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "About SOCHYEAH | AI & Digital Product Studio",
-  description: "Learn about SOCHYEAH's engineering philosophy: combining deep strategic thinking (soch) and rapid engineering shipping (yeah) to build high-leverage software systems.",
+  title: "About Our Studio & Engineering Creed",
+  description: "Learn about SOCHYEAH: combining deep strategic thinking (soch) and rapid engineering velocity (yeah) to build production AI and software systems.",
   alternates: {
     canonical: "https://www.sochyeah.com/about",
   },
   openGraph: {
-    title: "About SOCHYEAH | AI & Digital Product Studio",
-    description: "Learn about SOCHYEAH's engineering philosophy: combining deep strategic thinking (soch) and rapid engineering shipping (yeah) to build high-leverage software systems.",
+    title: "About Our Studio & Engineering Creed | SOCHYEAH",
+    description: "Learn about SOCHYEAH: combining deep strategic thinking (soch) and rapid engineering velocity (yeah) to build production AI and software systems.",
     url: "https://www.sochyeah.com/about",
     siteName: "SOCHYEAH",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Our Studio & Engineering Creed | SOCHYEAH",
+    description: "Learn about SOCHYEAH: combining deep strategic thinking (soch) and rapid engineering velocity (yeah) to build production AI and software systems.",
   }
 };
 

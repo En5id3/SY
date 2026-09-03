@@ -78,7 +78,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const canonicalUrl = `https://seva.sochyeah.com/schemes/${sc.slug}`;
   const seoTitle = `${sc.shortName || sc.name}: Eligibility, Benefits & How to Apply | SEVA`;
-  const seoDescription = `Learn about the ${sc.name}, including eligibility, benefits, subsidy details, required documents and how to apply through official resources.`;
+  const seoDescription = `Comprehensive guide to ${sc.shortName || sc.name}: eligibility criteria, subsidy benefits, required documents, and how to apply online.`;
 
   return {
     title: {

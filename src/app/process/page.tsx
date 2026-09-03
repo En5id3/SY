@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Our Engineering Process & Roadmap | SOCHYEAH",
+  title: "Our Engineering Process & Roadmap",
   description: "Explore SOCHYEAH's 5-stage development roadmap: from discovery (soch) to rapid engineering and edge deployment (yeah) in 6-week production sprints.",
   alternates: {
     canonical: "https://www.sochyeah.com/process",
@@ -14,6 +14,11 @@ export const metadata: Metadata = {
     url: "https://www.sochyeah.com/process",
     siteName: "SOCHYEAH",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Our Engineering Process & Roadmap | SOCHYEAH",
+    description: "Explore SOCHYEAH's 5-stage development roadmap: from discovery (soch) to rapid engineering and edge deployment (yeah) in 6-week production sprints.",
   }
 };
 

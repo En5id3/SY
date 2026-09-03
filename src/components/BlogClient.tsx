@@ -91,7 +91,7 @@ export default function BlogClient() {
                       src={post.image} 
                       alt={post.title} 
                       fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
                       className="object-cover transition-transform duration-500 group-hover:scale-105" 
                     />
                   </div>

@@ -35,29 +35,30 @@ export async function generateMetadata(
   
   if (!cs) {
     return {
-      title: 'Case Study Not Found | SOCHYEAH',
+      title: 'Case Study Not Found',
     };
   }
 
   const canonicalUrl = `https://www.sochyeah.com/case-studies/${cs.id}`;
+  const description = cs.metaDescription || cs.challenge;
 
   return {
-    title: `${cs.title} | SOCHYEAH Case Study`,
-    description: cs.challenge,
+    title: cs.title,
+    description,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: cs.title,
-      description: cs.challenge,
+      title: `${cs.title} | SOCHYEAH`,
+      description,
       url: canonicalUrl,
       siteName: 'SOCHYEAH',
       type: 'article',
     },
     twitter: {
       card: 'summary_large_image',
-      title: cs.title,
-      description: cs.challenge,
+      title: `${cs.title} | SOCHYEAH`,
+      description,
     }
   };
 }

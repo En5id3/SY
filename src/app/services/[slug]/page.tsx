@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!svc) {
     return {
-      title: 'Service Not Found | SOCHYEAH',
+      title: 'Service Not Found',
     };
   }
 
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: svc.metaTitle,
+      title: `${svc.metaTitle} | SOCHYEAH`,
       description: svc.metaDescription,
       url: canonicalUrl,
       siteName: 'SOCHYEAH',
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     twitter: {
       card: 'summary_large_image',
-      title: svc.metaTitle,
+      title: `${svc.metaTitle} | SOCHYEAH`,
       description: svc.metaDescription,
     }
   };

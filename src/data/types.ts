@@ -84,6 +84,7 @@ export interface SchemeItem {
 export interface CaseStudy {
   id: string;
   title: string;
+  metaDescription?: string;
   category: string;
   challenge: string;
   solution: string;

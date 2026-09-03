@@ -4,6 +4,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'ai-receptionist',
     title: 'AI Receptionist for a Service Business',
+    metaDescription: 'How we built a production AI Voice Receptionist with sub-180ms latency, handling inbound bookings and reducing missed calls by 35%.',
     category: 'AI / Voice / Automation',
     challenge: 'A growing multi-location service firm was losing up to 22% of inbound appointment enquiries because front-desk staff were occupied assisting in-person clients or answering basic pricing questions, resulting in long call queues and missed revenue.',
     solution: 'We engineered a production-grade AI Voice Receptionist integrated directly into their local telephony routing and CRM scheduler, capable of holding complex natural-language phone calls, confirming availability, answering service FAQs, and booking calendar openings.',
@@ -33,6 +34,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'ai-document-assistant',
     title: 'AI Assistant for Business Documents',
+    metaDescription: 'How we built an enterprise RAG document intelligence platform with pgvector, cutting internal audit and search resolution times by 85%.',
     category: 'Generative AI / RAG',
     challenge: 'Operations analysts and legal clerks spent an average of 9 hours per week searching through scattered PDFs, internal manuals, compliance briefs, and historical project files to answer customer enquiries and complete technical audits.',
     solution: 'We built a secure, high-performance Document Intelligence platform using Retrieval-Augmented Generation (RAG). The platform indexes company knowledge bases and enables secure natural-language chat queries with accurate source citations.',
@@ -62,6 +64,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'ecommerce-recommendation-engine',
     title: 'Personalized Product Recommendations',
+    metaDescription: 'How we engineered a real-time ML product recommendation engine with PyTorch and Redis, lifting Average Order Value by 18.4%.',
     category: 'Machine Learning / E-commerce',
     challenge: 'A high-traffic e-commerce retailer had a catalog of 20,000+ items but was relying on manual product groupings, leading to low click-through rates on cross-sales and under-optimized average order value (AOV).',
     solution: 'We trained and deployed a custom hybrid Recommendation System using collaborative filtering, content features, and browse histories. The system serves custom API recommendations to the front-end in under 40ms.',
@@ -91,6 +94,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'seo-growth-engine',
     title: 'Building an Organic Growth Engine',
+    metaDescription: 'How we built a programmatic SEO engine generating 3,500+ fast landing pages, delivering a 340% increase in organic B2B search traffic.',
     category: 'SEO / Growth',
     challenge: 'A high-ticket B2B service platform had high acquisition costs via paid channels but lacked search engine visibility, driving a need for a sustainable organic distribution pipeline.',
     solution: 'We engineered a database-driven Programmatic SEO framework, generating 3,500+ structured, fast-loading service landing pages targeting long-tail intent search phrases, backed by topic clusters and technical indexing setups.',
@@ -120,6 +124,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'ai-sales-automation',
     title: 'From Lead to Conversation Automatically',
+    metaDescription: 'How we automated multi-channel lead qualification and CRM sync with autonomous AI agents, boosting lead-to-booking conversions by 40%.',
     category: 'AI / Sales / Automation',
     challenge: 'A business consultancy received hundreds of inbound lead enquiries weekly across ads, socials, and web forms, but inconsistent follow-up delays caused a drop in lead-to-booking conversions.',
     solution: 'We built a cognitive Sales Automation workflow that screens incoming messages, scores buy-intent, drafts contextual responses in minutes, updates the company CRM, and schedules discovery calls automatically.',
@@ -149,6 +154,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'business-analytics-platform',
     title: 'From Spreadsheets to Intelligence',
+    metaDescription: 'How we unified fragmented ERP, Excel, and SQL data into a real-time executive dashboard, cutting weekly reporting time by 12 hours.',
     category: 'Data / Analytics / ML',
     challenge: 'A manufacturing firm had operational metrics split across Excel sheets, legacy databases, ERP systems, and cloud tracking tools, preventing management from viewing cohesive profitability data.',
     solution: 'We constructed an ELT (Extract, Load, Transform) data pipeline feeding into an analytical data warehouse, complete with responsive Next.js dashboards showing historical KPIs and predictive demand trends.',
