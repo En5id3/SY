@@ -29,6 +29,16 @@ export default function Footer() {
             <p className="text-xs text-slate-600 leading-relaxed max-w-[280px]">
               We turn strategic ideas (&quot;soch&quot;) and engineering velocity (&quot;yeah&quot;) into intelligent, production-ready AI and software systems.
             </p>
+
+            <div className="flex flex-col gap-1 text-[11px] text-slate-600 border border-indigo-100/80 bg-slate-50/80 rounded-xl p-3 max-w-[280px]">
+              <div className="flex items-center gap-1.5 font-semibold text-slate-900">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span>Govt. Registered MSME</span>
+              </div>
+              <p className="font-mono text-[10px] text-indigo-950 font-medium tracking-wide">
+                UDYAM-HP-03-0017605
+              </p>
+            </div>
           </div>
 
           {/* AI & Cognitive Column */}
@@ -80,7 +90,13 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-          <p>© 2026 SOCHYEAH. All rights reserved. Built for ambitious enterprises and growing teams.</p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-center sm:text-left">
+            <p>© 2026 SOCHYEAH. All rights reserved.</p>
+            <span className="hidden sm:inline text-slate-300">|</span>
+            <p className="text-slate-600">
+              Govt. MSME Reg: <span className="font-mono font-medium text-slate-800">UDYAM-HP-03-0017605</span>
+            </p>
+          </div>
           <div className="flex gap-6">
             <span className="text-[11px] text-slate-400">HQ: Hamirpur, HP &amp; NCR, India</span>
           </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -128,6 +128,47 @@ export default function About() {
             <span>Start a project with our team</span>
             <ArrowRight size={13} />
           </Link>
+        </div>
+      </section>
+
+      {/* 4. Enterprise Credentials & Udyam Registration */}
+      <section className="mt-20 border-t border-indigo-100/70 pt-16">
+        <div className="border border-indigo-100/90 bg-gradient-to-br from-white via-indigo-50/20 to-purple-50/20 rounded-3xl p-8 md:p-10 shadow-sm shadow-indigo-900/5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-200/80 flex items-center justify-center text-indigo-700 flex-shrink-0">
+              <ShieldCheck className="w-6 h-6 text-indigo-600" />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-900 bg-indigo-100/60 px-2.5 py-0.5 rounded-full border border-indigo-200">
+                  Government Registered Enterprise
+                </span>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  Verified MSME
+                </span>
+              </div>
+              <h3 className="text-lg md:text-xl font-bold text-slate-900">
+                Ministry of Micro, Small &amp; Medium Enterprises (MSME), Govt. of India
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed max-w-[620px]">
+                SOCHYEAH is officially registered under the Udyam Registration portal, affirming our commitment to structured governance, engineering reliability, and transparent business operations.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white/95 backdrop-blur-xs border border-indigo-100/90 rounded-2xl px-6 py-5 flex flex-col gap-1.5 shadow-xs flex-shrink-0 w-full lg:w-auto">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400">
+              Udyam Registration Number
+            </span>
+            <span className="font-mono text-base md:text-lg font-bold text-indigo-950 tracking-wider select-all">
+              UDYAM-HP-03-0017605
+            </span>
+            <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-100">
+              <span>Himachal Pradesh, India</span>
+              <span className="text-emerald-600 font-medium font-mono text-[10px]">Active &amp; Valid</span>
+            </div>
+          </div>
         </div>
       </section>
     </div>
